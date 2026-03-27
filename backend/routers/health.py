@@ -1,15 +1,12 @@
 from fastapi import APIRouter, Request
-import asyncpg
 
-# ── Health ──────────────────────────────────────────────────────────────────
-health_router = APIRouter()
-router = health_router
+router = APIRouter()
 
-@health_router.get("/")
+@router.get("/")
 async def health(request: Request):
     try:
         async with request.app.state.pool.acquire() as conn:
             await conn.fetchval("SELECT 1")
-        return {"status": "ok", "db": "connected"}
+        return {"status": "ok", "db": "connected", "service": "CCTswiss.ch"}
     except Exception as e:
-        return {"status": "error", "db": str(e)}
+        return {"status": "error", "detail": str(e)}
