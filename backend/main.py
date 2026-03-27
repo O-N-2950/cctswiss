@@ -11,7 +11,7 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.responses import JSONResponse
 
 from backend.db.schema import init_schema
-from backend.routers import cct, search, health, changelog
+from backend.routers import cct, search, health, changelog, seed
 from backend.scrapers.auto_updater import start_scheduler, run_auto_update
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
@@ -74,6 +74,7 @@ app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_methods=["GET","PO
 app.include_router(health.router,    prefix="/health",        tags=["health"])
 app.include_router(cct.router,       prefix="/api/cct",       tags=["cct"])
 app.include_router(search.router,    prefix="/api/search",    tags=["search"])
+app.include_router(seed.router,     prefix="/api/admin",    tags=["admin"])
 app.include_router(changelog.router, prefix="/api/changelog", tags=["changelog"])
 
 # Admin (protected by SEED_SECRET header)
