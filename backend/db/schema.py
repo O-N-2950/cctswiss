@@ -9,9 +9,6 @@ TABLES = [
         id                      UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
         rs_number               VARCHAR(50) UNIQUE NOT NULL,
         name                    TEXT NOT NULL,
-        name_de                 TEXT, name_it TEXT, name_en TEXT,
-        name_pt TEXT, name_es TEXT, name_sq TEXT, name_bs TEXT,
-        name_tr TEXT, name_uk TEXT,
         branch                  VARCHAR(100),
         emoji                   VARCHAR(10),
         is_dfo                  BOOLEAN DEFAULT FALSE,
@@ -63,11 +60,31 @@ TABLES = [
     "CREATE INDEX IF NOT EXISTS idx_cct_updated ON cct(updated_at DESC)",
 ]
 
+# Migration: add multilingual columns if they don't exist
+MIGRATIONS = [
+    "ALTER TABLE cct ADD COLUMN IF NOT EXISTS name_de TEXT",
+    "ALTER TABLE cct ADD COLUMN IF NOT EXISTS name_it TEXT",
+    "ALTER TABLE cct ADD COLUMN IF NOT EXISTS name_en TEXT",
+    "ALTER TABLE cct ADD COLUMN IF NOT EXISTS name_pt TEXT",
+    "ALTER TABLE cct ADD COLUMN IF NOT EXISTS name_es TEXT",
+    "ALTER TABLE cct ADD COLUMN IF NOT EXISTS name_sq TEXT",
+    "ALTER TABLE cct ADD COLUMN IF NOT EXISTS name_bs TEXT",
+    "ALTER TABLE cct ADD COLUMN IF NOT EXISTS name_tr TEXT",
+    "ALTER TABLE cct ADD COLUMN IF NOT EXISTS name_uk TEXT",
+    "ALTER TABLE cct ADD COLUMN IF NOT EXISTS name_rm TEXT",
+]
+
 async def init_schema(pool):
     async with pool.acquire() as conn:
         for stmt in TABLES:
             try:
                 await conn.execute(stmt)
             except Exception as e:
-                log.warning(f"Schema stmt warning: {e}")
+                log.warning(f"Schema stmt: {e}")
+        # Run migrations
+        for stmt in MIGRATIONS:
+            try:
+                await conn.execute(stmt)
+            except Exception as e:
+                log.debug(f"Migration (may already exist): {e}")
     log.info("✅ Schema initialized")
