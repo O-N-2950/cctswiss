@@ -129,11 +129,13 @@ app.include_router(cct.router,          prefix="/api/cct",        tags=["cct"], 
 app.include_router(search.router,       prefix="/api/search",     tags=["search"],     dependencies=[rl])
 app.include_router(changelog.router,    prefix="/api/changelog",  tags=["changelog"])
 
-# Compliance & NOGA (WIN WIN + SwissRH)
+# Compliance & NOGA MUST come before cct.router (route order)
 try:
     from backend.routers.compliance import router as compliance_router
-    app.include_router(compliance_router, prefix="/api/cct", tags=["compliance"], dependencies=[rl])
-    log.info("✅ Compliance router (by-noga, check-compliance, dfo-list)")
+    # NOTE: included AFTER cct.router but routes starting with /by-noga, /dfo-list, /check-compliance
+    # are fixed paths — move them to a dedicated sub-prefix to avoid /{rs_number} collision
+    app.include_router(compliance_router, prefix="/api/v2", tags=["compliance"], dependencies=[rl])
+    log.info("✅ Compliance router at /api/v2 (avoids route collision)")
 except Exception as e:
     log.warning(f"Compliance: {e}")
 
