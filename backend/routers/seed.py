@@ -153,3 +153,23 @@ async def clear_ccts(request: Request):
         await conn.execute("TRUNCATE TABLE cct_views, cct_changelog, cct_wages_cache RESTART IDENTITY")
         await conn.execute("TRUNCATE TABLE cct RESTART IDENTITY CASCADE")
     return {"cleared": True}
+
+
+@router.post("/purge-old")
+async def purge_old_records(request: Request):
+    """Remove all CCTs from old seeds with wrong rs_numbers"""
+    secret = request.headers.get("X-Seed-Secret","")
+    if secret != SEED_SECRET:
+        raise HTTPException(403, "Not authorized")
+    pool = getattr(request.app.state, "pool", None)
+    KEEP_RS = {c["rs_number"] for c in CCT_DATA}
+    async with pool.acquire() as conn:
+        all_rs = await conn.fetch("SELECT rs_number FROM cct")
+        deleted = 0
+        for row in all_rs:
+            rs = row["rs_number"]
+            if rs not in KEEP_RS:
+                await conn.execute("DELETE FROM cct WHERE rs_number=$1", rs)
+                deleted += 1
+        total = await conn.fetchval("SELECT COUNT(*) FROM cct")
+    return {"deleted_old": deleted, "total_remaining": total}
