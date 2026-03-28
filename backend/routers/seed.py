@@ -55,7 +55,9 @@ async def seed_cct(request: Request):
     inserted = 0
     async with pool.acquire() as conn:
         # Clear existing data for clean reseed
-        await conn.execute("TRUNCATE TABLE cct RESTART IDENTITY CASCADE")
+        await conn.execute("DELETE FROM cct_views WHERE true")
+        await conn.execute("DELETE FROM cct_changelog WHERE true") 
+        await conn.execute("DELETE FROM cct WHERE true")
         
         for cct in CCT_DATA:
             try:
