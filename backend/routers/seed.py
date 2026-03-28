@@ -43,7 +43,7 @@ CCT_DATA = [
     {"rs_number":"CCT_MEM","name":"CCT industries MEM (machines, électronique, métallurgie)","branch":"industrie","emoji":"🔩","is_dfo":False,"min_wage_chf":4500,"vacation_weeks":5,"weekly_hours":40,"has_13th_salary":False,"dfo_until":None,"source_url":"https://www.swissmem.ch/fr/themes/la-cct.html","scope_description_fr":"Industrie des machines, appareils électriques et métaux"},
 ]
 
-@router.post("/seed")
+@router.post("/seed-full")
 async def seed_cct(request: Request):
     secret = request.headers.get("X-Seed-Secret","")
     if secret != SEED_SECRET:
@@ -88,7 +88,7 @@ async def seed_cct(request: Request):
                 pass
     return {"inserted": inserted, "total_in_db": len(CCT_DATA)}
 
-@router.post("/translate")
+@router.post("/translate-ai")
 async def translate_ccts(request: Request):
     secret = request.headers.get("X-Seed-Secret","")
     if secret != SEED_SECRET:
@@ -142,7 +142,7 @@ Input: {json.dumps(names, ensure_ascii=False)}"""
     return {"translated": translated, "errors": errors}
 
 
-@router.post("/clear")
+@router.post("/clear-all")
 async def clear_ccts(request: Request):
     """Clear all CCT data for fresh reseed"""
     secret = request.headers.get("X-Seed-Secret","")
