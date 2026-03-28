@@ -23,6 +23,12 @@ async def seed_database(request: Request, x_seed_secret: str = Header(None)):
         for cct in CCT_SEED_DATA:
             try:
                 cantons = cct.get("scope_cantons")
+                # Convert date string to date object
+                lcd_raw = cct.get("last_consolidation_date")
+                if lcd_raw and isinstance(lcd_raw, str):
+                    from datetime import date as _d
+                    parts = lcd_raw.split("-")
+                    lcd_raw = _d(int(parts[0]), int(parts[1]), int(parts[2]))
                 if True:  # Always upsert
                     await conn.execute("""
                         INSERT INTO cct (
@@ -49,7 +55,7 @@ async def seed_database(request: Request, x_seed_secret: str = Header(None)):
                         cct.get("vacation_weeks"), cct.get("weekly_hours"),
                         cct.get("has_13th_salary", False),
                         cct.get("source_url",""), cct.get("fedlex_uri",""),
-                        cct.get("last_consolidation_date"),
+                        lcd_raw,
                         cct.get("content_hash",""),
                         cct.get("legal_disclaimer_fr",""),
                     )
