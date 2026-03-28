@@ -75,3 +75,61 @@ async def admin_stats(request: Request):
         views = await conn.fetchval("SELECT COALESCE(SUM(count),0) FROM cct_views")
     return {"total_ccts":total,"dfo_count":dfo,"total_views":views,
             "by_branch":[dict(r) for r in branches]}
+
+
+@router.post("/reset")
+async def reset_and_reseed(request: Request, x_seed_secret: str = Header(None)):
+    """Vide la DB et recharge les données enrichies depuis zéro."""
+    if x_seed_secret != SEED_SECRET:
+        raise HTTPException(403, "Invalid seed secret")
+    pool = getattr(request.app.state, "pool", None)
+    if not pool: raise HTTPException(503, "DB not connected")
+    
+    async with pool.acquire() as conn:
+        # Clear everything
+        await conn.execute("DELETE FROM cct_views")
+        await conn.execute("DELETE FROM cct_changelog")
+        await conn.execute("DELETE FROM cct")
+    
+    # Reseed with enriched data
+    inserted = errors = 0
+    async with pool.acquire() as conn:
+        for cct in CCT_SEED_DATA:
+            try:
+                cantons = cct.get("scope_cantons")
+                lc = cct.get("last_consolidation_date")
+                from datetime import date as d_
+                lcd = d_(int(lc.split("-")[0]),int(lc.split("-")[1]),int(lc.split("-")[2])) if lc else None
+                await conn.execute("""
+                    INSERT INTO cct (
+                        rs_number, name, name_de, name_it, name_en,
+                        name_pt, name_es, name_sq, name_bs, name_tr, name_uk,
+                        branch, emoji, is_dfo, scope_cantons, scope_description_fr,
+                        min_wage_chf, vacation_weeks, weekly_hours, has_13th_salary,
+                        source_url, fedlex_uri, last_consolidation_date,
+                        content_hash, legal_disclaimer_fr
+                    ) VALUES (
+                        ,,,,,,,,,0,1,
+                        2,3,4,5,6,7,8,9,0,
+                        1,2,3,4,5
+                    )
+                """,
+                    cct["rs_number"], cct["name"],
+                    cct.get("name_de"), cct.get("name_it"), cct.get("name_en"),
+                    cct.get("name_pt"), cct.get("name_es"),
+                    cct.get("name_sq"), cct.get("name_bs"),
+                    cct.get("name_tr"), cct.get("name_uk"),
+                    cct["branch"], cct["emoji"], cct["is_dfo"],
+                    cantons, cct.get("scope_description_fr",""),
+                    cct.get("min_wage_chf"), cct.get("vacation_weeks"),
+                    cct.get("weekly_hours"), cct.get("has_13th_salary",False),
+                    cct.get("source_url",""), cct.get("fedlex_uri",""),
+                    lcd,
+                    cct.get("content_hash","v2025"),
+                    cct.get("legal_disclaimer_fr","")
+                )
+                inserted += 1
+            except Exception as e:
+                errors += 1
+    
+    return {"cleared": True, "inserted": inserted, "errors": errors, "total": len(CCT_SEED_DATA)}
