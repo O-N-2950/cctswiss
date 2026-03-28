@@ -304,14 +304,10 @@ async def seed_enriched(request: Request, x_seed_secret: str = Header(None)):
                     "SELECT COUNT(*) FROM cct WHERE rs_number=$1", rs
                 )
 
+                # Skip if record doesn't exist (run /seed first)
                 if not exists:
-                    # Minimal INSERT if missing (shouldn't happen after /seed)
-                    await conn.execute("""
-                        INSERT INTO cct (rs_number, name, branch, is_dfo, content_hash)
-                        VALUES ($1, $2, 'divers', $3, 'enriched-v2')
-                        ON CONFLICT (rs_number) DO NOTHING
-                    """, rs, f"CCT {rs}", d.get("dfo", False))
-                    inserted += 1
+                    errors.append(f"{rs}: not found - run /api/admin/seed first")
+                    continue
 
                 # UPDATE enriched fields
                 by_cat = None
