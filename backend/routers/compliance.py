@@ -127,7 +127,7 @@ async def dfo_list(pool: asyncpg.Pool = Depends(get_pool)):
         rows = await conn.fetch("""
             SELECT rs_number, name, branch, emoji, noga_codes,
                    dfo_cantons, dfo_since, salary_min_hourly, data_complete
-            FROM cct WHERE (is_dfo=true OR dfo=true)
+            FROM cct WHERE (is_dfo=true OR dfo=true OR (noga_codes IS NOT NULL AND dfo IS NOT DISTINCT FROM true))
             ORDER BY name
         """)
 
