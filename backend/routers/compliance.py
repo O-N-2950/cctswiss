@@ -127,12 +127,12 @@ async def dfo_list(pool: asyncpg.Pool = Depends(get_pool)):
         rows = await conn.fetch("""
             SELECT rs_number, name, branch, emoji, noga_codes,
                    dfo_cantons, dfo_since, salary_min_hourly, data_complete
-            FROM cct WHERE is_dfo=true OR dfo=true
+            FROM cct WHERE (is_dfo=true OR dfo=true)
             ORDER BY name
         """)
 
     result = {
-        "total": len(rows),
+        "total": len(rows), "dfo_count": len(rows),
         "data": [
             {
                 "rs_number": r["rs_number"],
