@@ -42,6 +42,23 @@ async def seed_database(request: Request, x_seed_secret: str = Header(None)):
                             $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,
                             $17,$18,$19,$20,$21,$22,$23,$24,$25,$26,NOW(),NOW(),NOW()
                         )
+                        ON CONFLICT (rs_number) DO UPDATE SET
+                            name=EXCLUDED.name, name_de=EXCLUDED.name_de,
+                            name_it=EXCLUDED.name_it, name_en=EXCLUDED.name_en,
+                            name_pt=EXCLUDED.name_pt, name_es=EXCLUDED.name_es,
+                            name_sq=EXCLUDED.name_sq, name_bs=EXCLUDED.name_bs,
+                            name_tr=EXCLUDED.name_tr, name_uk=EXCLUDED.name_uk,
+                            branch=EXCLUDED.branch, emoji=EXCLUDED.emoji,
+                            is_dfo=EXCLUDED.is_dfo, scope_cantons=EXCLUDED.scope_cantons,
+                            scope_description_fr=EXCLUDED.scope_description_fr,
+                            min_wage_chf=EXCLUDED.min_wage_chf,
+                            vacation_weeks=EXCLUDED.vacation_weeks,
+                            weekly_hours=EXCLUDED.weekly_hours,
+                            has_13th_salary=EXCLUDED.has_13th_salary,
+                            source_url=EXCLUDED.source_url,
+                            content_hash=EXCLUDED.content_hash,
+                            legal_disclaimer_fr=EXCLUDED.legal_disclaimer_fr,
+                            updated_at=NOW()
                     """,
                         cct["rs_number"], cct["name"],
                         cct.get("name_de"), cct.get("name_it"), cct.get("name_en"),

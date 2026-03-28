@@ -82,9 +82,36 @@ async def lifespan(app: FastAPI):
                                 cct_d.get("legal_disclaimer_fr",""), lcd)
                         except Exception as e:
                             log.warning(f"Seed {cct_d['rs_number']}: {e}")
-                log.info(f"✅ Auto-seeded {len(CCT_SEED_DATA)} CCTs")
+                log.info(f"✅ Auto-seeded {len(CCT_SEED_DATA)} CCTs from admin")
             except Exception as e:
-                log.warning(f"Auto-seed: {e}")
+                log.warning(f"Auto-seed admin: {e}")
+            
+            # Also seed from seed.py (29 DFO CCTs)
+            try:
+                from backend.routers.seed import CCT_DATA as SEED_DATA
+                async with pool.acquire() as conn:
+                    for s in SEED_DATA:
+                        try:
+                            dfu = None
+                            if s.get("dfo_until"):
+                                from datetime import date
+                                p = s["dfo_until"].split("-")
+                                dfu = date(int(p[0]), int(p[1]), int(p[2]))
+                            await conn.execute("""
+                                INSERT INTO cct (rs_number,name,branch,emoji,is_dfo,dfo_until,
+                                    min_wage_chf,vacation_weeks,weekly_hours,has_13th_salary,
+                                    source_url,scope_cantons,scope_description_fr,content_hash)
+                                VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,'seeded-v2')
+                                ON CONFLICT (rs_number) DO NOTHING
+                            """, s["rs_number"],s["name"],s["branch"],s["emoji"],
+                                s.get("is_dfo",True),dfu,s.get("min_wage_chf"),
+                                s.get("vacation_weeks"),s.get("weekly_hours"),
+                                s.get("has_13th_salary",False),s.get("source_url",""),
+                                s.get("scope_cantons"),s.get("scope_description_fr",""))
+                        except: pass
+                log.info(f"✅ Auto-seeded {len(SEED_DATA)} CCTs from seed.py")
+            except Exception as e:
+                log.warning(f"Auto-seed seed.py: {e}")
     except Exception as e:
         log.warning(f"Count: {e}")
 
@@ -154,6 +181,14 @@ try:
     log.info("✅ NOGA seed router")
 except Exception as e:
     log.warning(f"NOGA seed: {e}")
+
+# Seed.py router (29 CCTs DFO complets)
+try:
+    from backend.routers.seed import router as seed_router
+    app.include_router(seed_router, prefix="/api/admin", tags=["admin"])
+    log.info("✅ Seed router (29 CCTs)")
+except Exception as e:
+    log.warning(f"Seed: {e}")
 
 # Frontend statique
 if os.path.isdir(FRONTEND_PATH):
