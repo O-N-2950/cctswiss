@@ -138,3 +138,16 @@ Input: {json.dumps(names, ensure_ascii=False)}"""
             errors.append(f"batch {i}: {str(e)[:80]}")
     
     return {"translated": translated, "errors": errors}
+
+
+@router.delete("/clear")
+async def clear_ccts(request: Request):
+    """Clear all CCT data for fresh reseed"""
+    secret = request.headers.get("X-Seed-Secret","")
+    if secret != SEED_SECRET:
+        raise HTTPException(403, "Not authorized")
+    pool = getattr(request.app.state, "pool", None)
+    async with pool.acquire() as conn:
+        await conn.execute("TRUNCATE TABLE cct_views, cct_changelog, cct_wages_cache RESTART IDENTITY")
+        await conn.execute("TRUNCATE TABLE cct RESTART IDENTITY CASCADE")
+    return {"cleared": True}
