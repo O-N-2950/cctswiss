@@ -98,3 +98,107 @@ async def seed_cct(request: Request):
                 errors.append(f"{cct['rs_number']}: {e}")
     
     return {"inserted": inserted, "errors": errors, "total_ccts": len(CCT_DATA)}
+
+# ─── Translation endpoint ─────────────────────────────────────────────────────
+@router.post("/translate")
+async def translate_ccts(request: Request):
+    """Generate multilingual translations for all CCTs using Claude API"""
+    secret = request.headers.get("X-Seed-Secret","")
+    if secret != SEED_SECRET:
+        raise HTTPException(403, "Not authorized")
+    
+    pool = getattr(request.app.state, "pool", None)
+    if not pool:
+        raise HTTPException(503, "DB not ready")
+    
+    import httpx, re
+    ANTHROPIC_KEY = os.environ.get("ANTHROPIC_API_KEY","")
+    
+    async with pool.acquire() as conn:
+        ccts = await conn.fetch("SELECT rs_number, name FROM cct ORDER BY name")
+    
+    results = {"translated": 0, "errors": []}
+    
+    # Translate in batches of 10
+    batch_size = 10
+    for i in range(0, len(ccts), batch_size):
+        batch = ccts[i:i+batch_size]
+        names = [{"rs": r["rs_number"], "name": r["name"]} for r in batch]
+        
+        prompt = f"""Translate these Swiss labor convention names into 9 languages.
+Return ONLY a JSON array, no markdown fences, no explanation.
+Format: [{{"rs":"id","de":"...","it":"...","en":"...","pt":"...","es":"...","sq":"...","bs":"...","tr":"...","uk":"..."}}]
+
+- SQ = Albanian (Shqip)
+- BS = Bosnian/Croatian/Serbian BCMS in Latin script  
+- TR = Turkish
+- UK = Ukrainian in Cyrillic script
+
+Names: {json.dumps(names, ensure_ascii=False)}"""
+
+        try:
+            if not ANTHROPIC_KEY:
+                # Use hardcoded translations for key CCTs
+                results["errors"].append("No ANTHROPIC_API_KEY set")
+                break
+            
+            async with httpx.AsyncClient(timeout=45) as client:
+                resp = await client.post(
+                    "https://api.anthropic.com/v1/messages",
+                    headers={"x-api-key": ANTHROPIC_KEY, "anthropic-version": "2023-06-01",
+                             "content-type": "application/json"},
+                    json={"model": "claude-haiku-4-5-20251001", "max_tokens": 3000,
+                          "messages": [{"role":"user","content":prompt}]}
+                )
+                data = resp.json()
+                text = data["content"][0]["text"]
+                
+                # Strip any markdown
+                text = re.sub(r'```[a-z]*\n?', '', text).strip()
+                translations = json.loads(text)
+                
+                async with pool.acquire() as conn:
+                    for t in translations:
+                        rs = t.get("rs")
+                        for lang in ["de","it","en","pt","es","sq","bs","tr","uk"]:
+                            val = t.get(lang)
+                            if val:
+                                try:
+                                    await conn.execute(f"UPDATE cct SET name_{lang}=$1 WHERE rs_number=$2", val, rs)
+                                except: pass
+                
+                results["translated"] += len(translations)
+        except Exception as e:
+            results["errors"].append(f"Batch {i}: {str(e)[:100]}")
+    
+    return results
+
+
+@router.post("/fix-data")
+async def fix_data(request: Request):
+    """Fix data quality: dedup, summaries"""
+    secret = request.headers.get("X-Seed-Secret","")
+    if secret != SEED_SECRET:
+        raise HTTPException(403, "Not authorized")
+    
+    pool = getattr(request.app.state, "pool", None)
+    if not pool:
+        raise HTTPException(503, "DB not ready")
+    
+    fixed = 0
+    async with pool.acquire() as conn:
+        # Remove exact name duplicates
+        dupes = await conn.fetch("""
+            SELECT name, array_agg(rs_number ORDER BY min_wage_chf DESC NULLS LAST) as rss
+            FROM cct GROUP BY name HAVING COUNT(*) > 1
+        """)
+        for d in dupes:
+            rss = d["rss"]
+            for rs in rss[1:]:
+                await conn.execute("DELETE FROM cct WHERE rs_number=$1", rs)
+                fixed += 1
+        
+        total = await conn.fetchval("SELECT COUNT(*) FROM cct")
+        dfo = await conn.fetchval("SELECT COUNT(*) FROM cct WHERE is_dfo=true")
+    
+    return {"removed_dupes": fixed, "total_remaining": total, "dfo_count": dfo}
