@@ -284,6 +284,13 @@ async def seed_enriched(request: Request, x_seed_secret: str = Header(None)):
     if not pool:
         raise HTTPException(503, "DB not ready")
 
+    # Invalidate all caches so fresh data is returned
+    try:
+        from backend.routers.compliance import _cache as compliance_cache
+        compliance_cache.clear()
+        from backend.routers.salary import _cache as salary_cache  
+        salary_cache.clear()
+    except: pass
     updated = 0
     inserted = 0
     errors = []
