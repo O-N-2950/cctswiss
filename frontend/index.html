@@ -1,1567 +1,1147 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" data-lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CCTswiss.ch — Le répertoire suisse des conventions collectives de travail</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="description" content="CCTswiss.ch — Conventions collectives de travail en Suisse. Gratuit, multilingue, à jour.">
+<meta name="theme-color" content="#C8102E">
+<title>CCTswiss.ch</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --red: #D4001A;
-    --red-light: #FF1A35;
-    --red-pale: #FFF0F2;
-    --black: #0A0A0A;
-    --gray-900: #1A1A1A;
-    --gray-700: #4A4A4A;
-    --gray-500: #8A8A8A;
-    --gray-200: #E8E8E8;
-    --gray-100: #F5F5F5;
-    --white: #FFFFFF;
-    --blue: #1A3D8F;
-    --green: #0A6E3C;
-    --gold: #C4922A;
-  }
+/* ═══════════════════════════════════════════════
+   DESIGN SYSTEM — Swiss Precision / Mobile App
+═══════════════════════════════════════════════ */
+:root {
+  --red:      #C8102E;
+  --red-d:    #9B0B22;
+  --red-pale: #FFF0F2;
+  --winwin:   #1a6eb5;
+  --winwin-d: #124f87;
+  --winwin-pale: #EBF4FF;
+  --black:    #0A0A0A;
+  --gray-9:   #1C1C1E;
+  --gray-7:   #3A3A3C;
+  --gray-5:   #8E8E93;
+  --gray-3:   #C7C7CC;
+  --gray-1:   #F2F2F7;
+  --white:    #FFFFFF;
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bot: env(safe-area-inset-bottom, 0px);
+  --r-sm: 10px;
+  --r-md: 14px;
+  --r-lg: 20px;
+  --shadow: 0 2px 12px rgba(0,0,0,.07), 0 1px 3px rgba(0,0,0,.05);
+  --shadow-lg: 0 8px 32px rgba(0,0,0,.12);
+}
 
-  * { margin: 0; padding: 0; box-sizing: border-box; }
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+html { scroll-behavior: smooth; font-size: 16px; }
+body { font-family:'DM Sans',sans-serif; background:var(--gray-1); color:var(--black); overflow-x:hidden; -webkit-font-smoothing:antialiased; }
 
-  html { scroll-behavior: smooth; }
+/* ── HEADER MOBILE-FIRST ── */
+.header {
+  position: sticky; top:0; z-index:100;
+  background:rgba(255,255,255,.95);
+  backdrop-filter: blur(20px) saturate(1.8);
+  -webkit-backdrop-filter: blur(20px) saturate(1.8);
+  border-bottom: 1px solid rgba(0,0,0,.06);
+  padding-top: var(--safe-top);
+}
+.header-inner {
+  display:flex; align-items:center; justify-content:space-between;
+  padding: 12px 16px; gap:12px;
+}
+.logo { display:flex; align-items:center; gap:9px; text-decoration:none; flex-shrink:0; }
+.logo-badge {
+  width:32px; height:32px; background:var(--red); border-radius:8px;
+  display:flex; align-items:center; justify-content:center;
+  font-family:'DM+Mono',monospace; font-size:10px; font-weight:600;
+  color:#fff; letter-spacing:-.5px; flex-shrink:0;
+}
+.logo-text { font-family:'Syne',sans-serif; font-size:17px; font-weight:700; color:var(--black); letter-spacing:-.5px; }
+.logo-text b { color:var(--red); font-weight:700; }
 
-  body {
-    font-family: 'DM Sans', sans-serif;
-    background: var(--white);
-    color: var(--black);
-    line-height: 1.6;
-    overflow-x: hidden;
-  }
+/* Lang pills in header */
+.lang-row {
+  display:flex; gap:4px; align-items:center; flex-wrap:wrap;
+  justify-content:flex-end; flex:1;
+}
+.lang-pill {
+  height:28px; padding:0 9px;
+  border:1.5px solid var(--gray-3);
+  border-radius:20px; background:transparent;
+  font-family:'DM Sans',sans-serif; font-size:11px; font-weight:600;
+  color:var(--gray-5); cursor:pointer; transition:all .15s;
+  white-space:nowrap;
+}
+.lang-pill.active { background:var(--red); border-color:var(--red); color:#fff; }
+.lang-pill:not(.active):hover { border-color:var(--gray-7); color:var(--gray-7); }
 
-  /* ─── TOP BAR ─── */
-  .topbar {
-    background: var(--black);
-    color: var(--white);
-    font-size: 12px;
-    font-weight: 500;
-    letter-spacing: 0.08em;
-    padding: 8px 40px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  .topbar-left { opacity: 0.7; }
-  .lang-switcher {
-    display: flex;
-    gap: 16px;
-  }
-  .lang-btn {
-    background: none;
-    border: none;
-    color: rgba(255,255,255,0.5);
-    font-family: 'DM Mono', monospace;
-    font-size: 11px;
-    letter-spacing: 0.1em;
-    cursor: pointer;
-    transition: color 0.2s;
-    padding: 0;
-  }
-  .lang-btn.active, .lang-btn:hover { color: var(--white); }
-  .lang-btn.active {
-    color: var(--red-light);
-    text-decoration: underline;
-  }
+/* ── HERO SEARCH ── */
+.hero {
+  background:#fff;
+  padding: 28px 16px 24px;
+}
+.hero-badge {
+  display:inline-flex; align-items:center; gap:6px;
+  background:var(--red-pale); color:var(--red);
+  padding:5px 12px; border-radius:20px;
+  font-size:11px; font-weight:700; letter-spacing:.06em; text-transform:uppercase;
+  margin-bottom:16px;
+}
+.hero-badge span { width:6px; height:6px; background:var(--red); border-radius:50%; animation:pulse 2s infinite; display:block; }
+@keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.4;transform:scale(1.4)} }
 
-  /* ─── NAVBAR ─── */
-  nav {
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    background: rgba(255,255,255,0.96);
-    backdrop-filter: blur(12px);
-    border-bottom: 1px solid var(--gray-200);
-    padding: 0 40px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    height: 64px;
-  }
-  .logo {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    text-decoration: none;
-  }
-  .logo-mark {
-    width: 36px;
-    height: 36px;
-    background: var(--red);
-    border-radius: 6px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: 'DM Mono', monospace;
-    font-size: 13px;
-    font-weight: 500;
-    color: white;
-    letter-spacing: -0.02em;
-    flex-shrink: 0;
-  }
-  .logo-text {
-    font-family: 'DM Serif Display', serif;
-    font-size: 20px;
-    color: var(--black);
-    letter-spacing: -0.02em;
-  }
-  .logo-text span { color: var(--red); }
+.hero h1 {
+  font-family:'Syne',sans-serif;
+  font-size:clamp(26px,7vw,44px);
+  font-weight:800; line-height:1.08;
+  letter-spacing:-.03em; color:var(--black);
+  margin-bottom:8px;
+}
+.hero h1 em { font-style:italic; color:var(--red); }
+.hero-sub { font-size:14px; color:var(--gray-5); line-height:1.6; margin-bottom:20px; }
 
-  .nav-links {
-    display: flex;
-    gap: 32px;
-    list-style: none;
-  }
-  .nav-links a {
-    text-decoration: none;
-    color: var(--gray-700);
-    font-size: 14px;
-    font-weight: 500;
-    transition: color 0.2s;
-  }
-  .nav-links a:hover { color: var(--red); }
+/* SEARCH BOX */
+.search-wrap {
+  position:relative; margin-bottom:12px;
+}
+.search-input {
+  width:100%; height:52px;
+  padding:0 52px 0 48px;
+  border:2px solid var(--gray-3); border-radius:var(--r-lg);
+  font-family:'DM Sans',sans-serif; font-size:16px; color:var(--black);
+  background:#fff; outline:none; transition:border .2s, box-shadow .2s;
+  -webkit-appearance:none;
+}
+.search-input:focus { border-color:var(--red); box-shadow:0 0 0 4px rgba(200,16,46,.1); }
+.search-input::placeholder { color:var(--gray-3); }
+.search-icon {
+  position:absolute; left:16px; top:50%; transform:translateY(-50%);
+  color:var(--gray-5); font-size:18px; pointer-events:none;
+}
+.search-clear {
+  position:absolute; right:16px; top:50%; transform:translateY(-50%);
+  width:24px; height:24px; background:var(--gray-3); border:none;
+  border-radius:50%; color:#fff; font-size:14px; cursor:pointer;
+  display:none; align-items:center; justify-content:center;
+}
+.search-clear.visible { display:flex; }
 
-  .nav-cta {
-    background: var(--red);
-    color: white;
-    border: none;
-    padding: 10px 22px;
-    border-radius: 6px;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 13px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background 0.2s, transform 0.15s;
-    text-decoration: none;
-    display: inline-block;
-  }
-  .nav-cta:hover { background: var(--red-light); transform: translateY(-1px); }
+/* FILTERS */
+.filters {
+  display:flex; gap:7px; overflow-x:auto; padding-bottom:4px;
+  scrollbar-width:none;
+}
+.filters::-webkit-scrollbar { display:none; }
+.filter-chip {
+  flex-shrink:0; height:32px; padding:0 14px;
+  border:1.5px solid var(--gray-3); border-radius:20px;
+  background:#fff; font-size:13px; font-weight:500; color:var(--gray-7);
+  cursor:pointer; transition:all .15s; white-space:nowrap;
+}
+.filter-chip.active { background:var(--red); border-color:var(--red); color:#fff; }
 
-  /* ─── HERO ─── */
-  .hero {
-    background: var(--white);
-    padding: 100px 40px 80px;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 80px;
-    align-items: center;
-    max-width: 1200px;
-    margin: 0 auto;
-  }
+/* ── SEARCH RESULTS DROPDOWN ── */
+.search-dropdown {
+  position:absolute; top:calc(100% + 6px); left:0; right:0;
+  background:#fff; border-radius:var(--r-md);
+  box-shadow: var(--shadow-lg);
+  border:1px solid rgba(0,0,0,.06);
+  max-height:380px; overflow-y:auto;
+  z-index:200; display:none;
+}
+.search-dropdown.open { display:block; }
+.dropdown-item {
+  display:flex; align-items:center; gap:12px;
+  padding:12px 16px; cursor:pointer;
+  transition:background .1s; text-decoration:none; color:inherit;
+}
+.dropdown-item:hover, .dropdown-item:focus { background:var(--gray-1); }
+.dropdown-item + .dropdown-item { border-top:1px solid var(--gray-1); }
+.d-icon { width:36px; height:36px; border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:18px; flex-shrink:0; }
+.d-info { flex:1; min-width:0; }
+.d-name { font-size:14px; font-weight:600; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.d-meta { font-size:12px; color:var(--gray-5); margin-top:1px; }
+.d-tag { font-size:10px; font-weight:700; background:#E8F5E9; color:#1B5E20; padding:2px 7px; border-radius:8px; flex-shrink:0; }
+.dropdown-empty { padding:20px; text-align:center; color:var(--gray-5); font-size:14px; }
 
-  .hero-eyebrow {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background: var(--red-pale);
-    color: var(--red);
-    padding: 6px 14px;
-    border-radius: 20px;
-    font-size: 12px;
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    margin-bottom: 24px;
-  }
-  .hero-eyebrow::before {
-    content: '';
-    width: 6px;
-    height: 6px;
-    background: var(--red);
-    border-radius: 50%;
-    animation: pulse 2s infinite;
-  }
-  @keyframes pulse {
-    0%, 100% { opacity: 1; transform: scale(1); }
-    50% { opacity: 0.5; transform: scale(1.3); }
-  }
+/* ── STATS BAR ── */
+.stats-bar {
+  display:grid; grid-template-columns:repeat(4,1fr);
+  gap:1px; background:var(--gray-3);
+  border-top:1px solid var(--gray-3);
+}
+.stat {
+  background:#fff; padding:12px 8px; text-align:center;
+}
+.stat-val { font-family:'Syne',sans-serif; font-size:20px; font-weight:800; color:var(--black); display:block; }
+.stat-lbl { font-size:10px; color:var(--gray-5); font-weight:500; text-transform:uppercase; letter-spacing:.05em; }
 
-  .hero h1 {
-    font-family: 'DM Serif Display', serif;
-    font-size: clamp(38px, 5vw, 58px);
-    line-height: 1.1;
-    letter-spacing: -0.03em;
-    color: var(--black);
-    margin-bottom: 20px;
-  }
-  .hero h1 em {
-    font-style: italic;
-    color: var(--red);
-  }
+/* ── WIN WIN BANNER ── */
+.winwin-banner {
+  margin:16px; border-radius:var(--r-lg);
+  background:linear-gradient(135deg, var(--winwin-d) 0%, var(--winwin) 100%);
+  padding:20px; position:relative; overflow:hidden;
+}
+.winwin-banner::after {
+  content:''; position:absolute; right:-30px; top:-30px;
+  width:140px; height:140px; border-radius:50%;
+  background:rgba(255,255,255,.07);
+}
+.winwin-badge {
+  display:inline-flex; align-items:center; gap:6px;
+  background:rgba(255,255,255,.15); color:#fff;
+  padding:4px 10px; border-radius:20px;
+  font-size:10px; font-weight:700; letter-spacing:.08em; text-transform:uppercase;
+  margin-bottom:10px;
+}
+.winwin-banner h2 {
+  font-family:'Syne',sans-serif; font-size:19px; font-weight:800;
+  color:#fff; line-height:1.2; margin-bottom:6px;
+}
+.winwin-banner p { font-size:13px; color:rgba(255,255,255,.8); line-height:1.5; margin-bottom:14px; }
+.winwin-cta {
+  display:inline-flex; align-items:center; gap:6px;
+  background:#fff; color:var(--winwin-d);
+  padding:10px 18px; border-radius:10px;
+  font-size:13px; font-weight:700; text-decoration:none;
+  transition:transform .15s, box-shadow .15s;
+}
+.winwin-cta:hover { transform:translateY(-1px); box-shadow:0 4px 16px rgba(0,0,0,.2); }
+.winwin-claim {
+  position:absolute; right:16px; bottom:16px;
+  font-size:10px; color:rgba(255,255,255,.5);
+  text-align:right; line-height:1.4;
+}
 
-  .hero-subtitle {
-    font-size: 17px;
-    color: var(--gray-700);
-    line-height: 1.65;
-    margin-bottom: 36px;
-    max-width: 480px;
-  }
+/* ── SECTION ── */
+.section { padding:0 16px 20px; }
+.section-header {
+  display:flex; align-items:center; justify-content:space-between;
+  margin-bottom:14px; padding-top:20px;
+}
+.section-title { font-family:'Syne',sans-serif; font-size:18px; font-weight:800; letter-spacing:-.02em; }
+.section-more { font-size:13px; color:var(--red); font-weight:600; text-decoration:none; }
 
-  .hero-actions {
-    display: flex;
-    gap: 14px;
-    align-items: center;
-    flex-wrap: wrap;
-  }
+/* ── CCT CARDS ── */
+.cct-list { display:flex; flex-direction:column; gap:10px; }
+.cct-card {
+  background:#fff; border-radius:var(--r-md);
+  padding:16px; box-shadow:var(--shadow);
+  text-decoration:none; color:inherit;
+  transition:transform .15s, box-shadow .15s;
+  position:relative; overflow:hidden;
+  display:block;
+}
+.cct-card:active { transform:scale(.98); }
+.cct-card::before {
+  content:''; position:absolute; left:0; top:0; bottom:0; width:3px;
+  background:var(--red); border-radius:3px 0 0 3px;
+  opacity:0; transition:opacity .2s;
+}
+.cct-card:hover::before { opacity:1; }
 
-  .btn-primary {
-    background: var(--red);
-    color: white;
-    padding: 14px 28px;
-    border-radius: 8px;
-    font-size: 15px;
-    font-weight: 600;
-    text-decoration: none;
-    transition: all 0.2s;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    border: none;
-    cursor: pointer;
-  }
-  .btn-primary:hover { background: var(--red-light); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(212,0,26,0.3); }
+.cct-card-top { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:10px; }
+.cct-card-left { display:flex; align-items:center; gap:10px; }
+.cct-emoji { width:44px; height:44px; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:20px; flex-shrink:0; }
+.cct-name { font-family:'Syne',sans-serif; font-size:14px; font-weight:700; line-height:1.3; }
+.cct-branch { font-size:12px; color:var(--gray-5); margin-top:2px; }
 
-  .btn-secondary {
-    background: transparent;
-    color: var(--black);
-    padding: 14px 28px;
-    border-radius: 8px;
-    font-size: 15px;
-    font-weight: 500;
-    text-decoration: none;
-    border: 1.5px solid var(--gray-200);
-    transition: all 0.2s;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    cursor: pointer;
-  }
-  .btn-secondary:hover { border-color: var(--black); background: var(--gray-100); }
+.cct-badges { display:flex; gap:5px; align-items:center; flex-shrink:0; flex-wrap:wrap; justify-content:flex-end; }
+.badge-dfo { font-size:10px; font-weight:700; background:#E8F5E9; color:#1B5E20; padding:3px 8px; border-radius:8px; }
+.badge-reg { font-size:10px; font-weight:700; background:#EEF2FF; color:#3730A3; padding:3px 8px; border-radius:8px; }
+.badge-fed { font-size:10px; font-weight:700; background:var(--red-pale); color:var(--red); padding:3px 8px; border-radius:8px; }
 
-  /* Hero Stats */
-  .hero-stats {
-    display: flex;
-    gap: 32px;
-    margin-top: 40px;
-    padding-top: 32px;
-    border-top: 1px solid var(--gray-200);
-  }
-  .stat-item { }
-  .stat-number {
-    font-family: 'DM Serif Display', serif;
-    font-size: 32px;
-    color: var(--black);
-    letter-spacing: -0.03em;
-    display: block;
-  }
-  .stat-label {
-    font-size: 12px;
-    color: var(--gray-500);
-    font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-  }
+.cct-stats {
+  display:grid; grid-template-columns:repeat(3,1fr);
+  gap:1px; background:var(--gray-1);
+  border-radius:8px; overflow:hidden; margin-bottom:12px;
+}
+.cct-stat { background:#fff; padding:8px 10px; }
+.cct-stat-val { font-size:13px; font-weight:700; color:var(--black); display:block; }
+.cct-stat-lbl { font-size:10px; color:var(--gray-5); }
 
-  /* Hero visual side */
-  .hero-visual {
-    position: relative;
-  }
+/* Action buttons */
+.cct-actions { display:flex; gap:8px; }
+.btn-action {
+  flex:1; height:36px; border-radius:8px; border:none; cursor:pointer;
+  font-family:'DM Sans',sans-serif; font-size:12px; font-weight:600;
+  display:flex; align-items:center; justify-content:center; gap:5px;
+  transition:all .15s; text-decoration:none;
+}
+.btn-detail { background:var(--red-pale); color:var(--red); }
+.btn-share { background:var(--gray-1); color:var(--gray-7); }
+.btn-print { background:var(--gray-1); color:var(--gray-7); }
+.btn-detail:hover { background:var(--red); color:#fff; }
+.btn-share:hover { background:#E8F5FB; color:#0C8CE9; }
 
-  .search-card {
-    background: var(--white);
-    border: 1px solid var(--gray-200);
-    border-radius: 16px;
-    padding: 28px;
-    box-shadow: 0 20px 60px rgba(0,0,0,0.08), 0 2px 8px rgba(0,0,0,0.04);
-  }
+/* ── PARTNER APPS ── */
+.apps-grid { display:flex; flex-direction:column; gap:10px; }
+.app-card {
+  display:flex; align-items:center; gap:14px;
+  background:#fff; border-radius:var(--r-md); padding:14px 16px;
+  box-shadow:var(--shadow); text-decoration:none; color:inherit;
+  transition:transform .15s;
+}
+.app-card:active { transform:scale(.98); }
+.app-icon {
+  width:48px; height:48px; border-radius:12px;
+  display:flex; align-items:center; justify-content:center;
+  font-size:22px; flex-shrink:0;
+}
+.app-info { flex:1; min-width:0; }
+.app-name { font-family:'Syne',sans-serif; font-size:14px; font-weight:700; }
+.app-url { font-size:11px; color:var(--gray-5); font-family:monospace; }
+.app-desc { font-size:12px; color:var(--gray-7); margin-top:3px; line-height:1.4; }
+.app-arrow { color:var(--gray-3); font-size:18px; flex-shrink:0; }
 
-  .search-label {
-    font-size: 12px;
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--gray-500);
-    margin-bottom: 12px;
-    display: block;
-  }
+/* Winwin app card special */
+.app-card.featured {
+  border:2px solid var(--winwin);
+  background:var(--winwin-pale);
+}
+.app-card.featured .app-name { color:var(--winwin-d); }
 
-  .search-box {
-    display: flex;
-    gap: 0;
-    border: 1.5px solid var(--gray-200);
-    border-radius: 10px;
-    overflow: hidden;
-    transition: border-color 0.2s, box-shadow 0.2s;
-    margin-bottom: 16px;
-  }
-  .search-box:focus-within {
-    border-color: var(--red);
-    box-shadow: 0 0 0 3px rgba(212,0,26,0.1);
-  }
-  .search-input {
-    flex: 1;
-    border: none;
-    padding: 14px 16px;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 15px;
-    color: var(--black);
-    background: transparent;
-    outline: none;
-  }
-  .search-input::placeholder { color: var(--gray-500); }
-  .search-btn {
-    background: var(--red);
-    border: none;
-    padding: 14px 20px;
-    cursor: pointer;
-    color: white;
-    font-size: 18px;
-    transition: background 0.2s;
-  }
-  .search-btn:hover { background: var(--red-light); }
+/* ── BOTTOM NAV (mobile only) ── */
+.bottom-nav {
+  position:fixed; bottom:0; left:0; right:0;
+  background:rgba(255,255,255,.96);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-top:1px solid rgba(0,0,0,.08);
+  display:flex; align-items:stretch;
+  padding-bottom:var(--safe-bot);
+  z-index:100;
+}
+.nav-tab {
+  flex:1; padding:8px 4px 6px;
+  display:flex; flex-direction:column; align-items:center; gap:3px;
+  cursor:pointer; border:none; background:none;
+  font-family:'DM Sans',sans-serif; font-size:10px; color:var(--gray-5);
+  transition:color .15s; text-decoration:none;
+}
+.nav-tab .nav-icon { font-size:22px; line-height:1; }
+.nav-tab.active { color:var(--red); }
+.nav-tab.active .nav-icon { transform:scale(1.1); }
 
-  .search-filters {
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
-    margin-bottom: 20px;
-  }
-  .filter-chip {
-    background: var(--gray-100);
-    border: 1.5px solid transparent;
-    padding: 6px 14px;
-    border-radius: 20px;
-    font-size: 13px;
-    font-weight: 500;
-    color: var(--gray-700);
-    cursor: pointer;
-    transition: all 0.2s;
-  }
-  .filter-chip:hover, .filter-chip.active {
-    background: var(--red-pale);
-    border-color: var(--red);
-    color: var(--red);
-  }
+/* ── CCT DETAIL SHEET ── */
+.sheet-overlay {
+  position:fixed; inset:0; background:rgba(0,0,0,.5);
+  z-index:300; opacity:0; pointer-events:none; transition:opacity .25s;
+}
+.sheet-overlay.open { opacity:1; pointer-events:all; }
 
-  .cct-results {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-  }
-  .cct-result-item {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 12px 14px;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background 0.15s;
-    border: 1px solid transparent;
-  }
-  .cct-result-item:hover { background: var(--gray-100); border-color: var(--gray-200); }
-  .cct-badge {
-    width: 38px;
-    height: 38px;
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 18px;
-    flex-shrink: 0;
-  }
-  .cct-info { flex: 1; min-width: 0; }
-  .cct-name {
-    font-size: 14px;
-    font-weight: 600;
-    color: var(--black);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-  .cct-meta { font-size: 12px; color: var(--gray-500); }
-  .cct-arrow {
-    color: var(--gray-300);
-    font-size: 16px;
-    flex-shrink: 0;
-  }
-  .dfo-badge {
-    background: #E8F5E9;
-    color: var(--green);
-    font-size: 10px;
-    font-weight: 600;
-    padding: 2px 8px;
-    border-radius: 10px;
-    letter-spacing: 0.05em;
-  }
+.sheet {
+  position:fixed; bottom:0; left:0; right:0;
+  background:#fff; border-radius:20px 20px 0 0;
+  z-index:400; transform:translateY(100%);
+  transition:transform .3s cubic-bezier(.4,0,.2,1);
+  max-height:92vh; overflow-y:auto;
+  padding-bottom:calc(80px + var(--safe-bot));
+}
+.sheet.open { transform:translateY(0); }
 
-  /* Floating decorative elements */
-  .hero-visual::before {
-    content: '';
-    position: absolute;
-    top: -30px;
-    right: -30px;
-    width: 120px;
-    height: 120px;
-    background: var(--red-pale);
-    border-radius: 50%;
-    z-index: -1;
-  }
-  .hero-visual::after {
-    content: '';
-    position: absolute;
-    bottom: -20px;
-    left: -20px;
-    width: 80px;
-    height: 80px;
-    background: var(--gray-100);
-    border-radius: 50%;
-    z-index: -1;
-  }
+.sheet-handle {
+  width:36px; height:4px; background:var(--gray-3); border-radius:2px;
+  margin:10px auto 0;
+}
+.sheet-header { padding:16px 16px 12px; }
+.sheet-emoji { font-size:40px; margin-bottom:10px; display:block; }
+.sheet-title { font-family:'Syne',sans-serif; font-size:22px; font-weight:800; line-height:1.2; margin-bottom:6px; }
+.sheet-scope { font-size:13px; color:var(--gray-5); line-height:1.5; }
 
-  /* ─── DIVIDER ─── */
-  .section-divider {
-    border: none;
-    border-top: 1px solid var(--gray-200);
-    max-width: 1200px;
-    margin: 0 auto;
-  }
+.sheet-section { padding:0 16px 16px; }
+.sheet-section-title {
+  font-size:11px; font-weight:700; letter-spacing:.08em;
+  text-transform:uppercase; color:var(--gray-5);
+  margin-bottom:10px; margin-top:16px;
+}
+.sheet-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+.sheet-stat {
+  background:var(--gray-1); border-radius:10px; padding:12px;
+}
+.sheet-stat-val { font-family:'Syne',sans-serif; font-size:20px; font-weight:800; display:block; margin-bottom:2px; }
+.sheet-stat-lbl { font-size:11px; color:var(--gray-5); }
 
-  /* ─── TRUSTED BY ─── */
-  .trusted-section {
-    background: var(--gray-100);
-    padding: 32px 40px;
-    text-align: center;
-  }
-  .trusted-label {
-    font-size: 12px;
-    font-weight: 600;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--gray-500);
-    margin-bottom: 20px;
-  }
-  .trusted-logos {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 48px;
-    flex-wrap: wrap;
-  }
-  .trusted-logo {
-    font-family: 'DM Serif Display', serif;
-    font-size: 16px;
-    color: var(--gray-500);
-    text-decoration: none;
-    transition: color 0.2s;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-  }
-  .trusted-logo:hover { color: var(--red); }
-  .trusted-logo-dot {
-    width: 6px;
-    height: 6px;
-    background: currentColor;
-    border-radius: 50%;
-    opacity: 0.5;
-  }
+.disclaimer {
+  background:#FFFBEB; border:1px solid #FDE68A;
+  border-radius:10px; padding:12px 14px; margin:0 16px 16px;
+  font-size:12px; color:#92400E; line-height:1.5;
+}
 
-  /* ─── SECTIONS COMMUNES ─── */
-  section {
-    padding: 90px 40px;
-    max-width: 1200px;
-    margin: 0 auto;
-  }
+/* Share actions in sheet */
+.share-grid {
+  display:grid; grid-template-columns:repeat(4,1fr); gap:10px;
+  margin:0 16px 16px;
+}
+.share-btn {
+  display:flex; flex-direction:column; align-items:center; gap:5px;
+  background:var(--gray-1); border-radius:var(--r-sm); padding:12px 8px;
+  border:none; cursor:pointer; font-family:'DM Sans',sans-serif;
+  font-size:11px; font-weight:500; color:var(--gray-7);
+  transition:background .15s;
+}
+.share-btn:hover { background:var(--gray-3); }
+.share-btn .share-icon { font-size:22px; }
+.share-btn.whatsapp .share-icon::before { content:'📱'; }
+.share-btn.email .share-icon::before { content:'📧'; }
+.share-btn.copy .share-icon::before { content:'🔗'; }
+.share-btn.print .share-icon::before { content:'🖨️'; }
+.share-btn.whatsapp { background:#E7F8EF; color:#128C7E; }
+.share-btn.email { background:#EBF4FF; color:#1A6EB5; }
 
-  .section-eyebrow {
-    font-size: 12px;
-    font-weight: 700;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--red);
-    margin-bottom: 12px;
-    display: block;
-  }
+/* Source link */
+.source-link {
+  display:flex; align-items:center; justify-content:space-between;
+  background:var(--gray-1); border-radius:10px; padding:14px;
+  margin:0 16px 16px; text-decoration:none; color:var(--black);
+}
+.source-link:hover { background:var(--gray-3); }
 
-  .section-title {
-    font-family: 'DM Serif Display', serif;
-    font-size: clamp(28px, 4vw, 44px);
-    letter-spacing: -0.03em;
-    line-height: 1.15;
-    color: var(--black);
-    margin-bottom: 16px;
-  }
+/* ── DESKTOP OVERRIDES ── */
+@media(min-width:680px) {
+  .header-inner { padding:14px 32px; }
+  .hero { padding:48px 32px 36px; max-width:800px; margin:0 auto; }
+  .section { padding:0 32px 24px; max-width:800px; margin:0 auto; }
+  .winwin-banner { margin:16px 32px; max-width:736px; margin-left:auto; margin-right:auto; }
+  .stats-bar { max-width:800px; margin:0 auto; }
+  .cct-list { display:grid; grid-template-columns:1fr 1fr; }
+  .apps-grid { display:grid; grid-template-columns:1fr 1fr; }
+  .bottom-nav { display:none; }
+  .sheet { max-width:480px; left:50%; transform:translateX(-50%) translateY(100%); border-radius:20px; bottom:20px; }
+  .sheet.open { transform:translateX(-50%) translateY(0); }
+  body { padding-bottom:0; }
+}
+@media(max-width:679px) {
+  body { padding-bottom:calc(56px + var(--safe-bot)); }
+}
 
-  .section-subtitle {
-    font-size: 17px;
-    color: var(--gray-700);
-    line-height: 1.65;
-    max-width: 560px;
-  }
+/* ── PRINT ── */
+@media print {
+  .header, .bottom-nav, .sheet-overlay, .winwin-banner, .apps-grid, .cct-actions, .search-wrap, .filters, .stats-bar { display:none!important; }
+  .cct-card { break-inside:avoid; box-shadow:none; border:1px solid #ddd; }
+  body { background:#fff; padding:0; }
+  .section { padding:8px 0; max-width:none; }
+}
 
-  /* ─── CCT DIRECTORY SECTION ─── */
-  .directory-section { background: var(--white); }
+/* ── SKELETON LOADING ── */
+.skeleton { background:linear-gradient(90deg,var(--gray-1) 25%,var(--gray-3) 50%,var(--gray-1) 75%); background-size:200% 100%; animation:shimmer 1.5s infinite; border-radius:8px; }
+@keyframes shimmer { 0%{background-position:200% 0} 100%{background-position:-200% 0} }
 
-  .directory-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    margin-bottom: 48px;
-    gap: 24px;
-    flex-wrap: wrap;
-  }
+/* ── TOAST ── */
+.toast {
+  position:fixed; bottom:calc(72px + var(--safe-bot)); left:50%; transform:translateX(-50%) translateY(20px);
+  background:var(--gray-9); color:#fff; padding:10px 20px;
+  border-radius:20px; font-size:13px; font-weight:500;
+  opacity:0; transition:all .3s; pointer-events:none; white-space:nowrap; z-index:500;
+}
+.toast.show { opacity:1; transform:translateX(-50%) translateY(0); }
+@media(min-width:680px) { .toast { bottom:40px; } }
 
-  .cct-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-    gap: 16px;
-    margin-bottom: 40px;
-  }
+/* ── UPDATE INDICATOR ── */
+.update-dot {
+  display:inline-flex; align-items:center; gap:5px;
+  font-size:11px; color:#16a34a; font-weight:600;
+}
+.update-dot::before { content:''; width:6px; height:6px; background:#22c55e; border-radius:50%; animation:pulse 2s infinite; }
 
-  .cct-card {
-    background: var(--white);
-    border: 1px solid var(--gray-200);
-    border-radius: 12px;
-    padding: 24px;
-    transition: all 0.2s;
-    cursor: pointer;
-    position: relative;
-    overflow: hidden;
-    text-decoration: none;
-    display: block;
-    color: inherit;
-  }
-  .cct-card::before {
-    content: '';
-    position: absolute;
-    left: 0; top: 0; bottom: 0;
-    width: 3px;
-    background: var(--red);
-    transform: scaleY(0);
-    transform-origin: bottom;
-    transition: transform 0.2s;
-  }
-  .cct-card:hover { border-color: var(--red); box-shadow: 0 8px 32px rgba(0,0,0,0.08); transform: translateY(-2px); }
-  .cct-card:hover::before { transform: scaleY(1); }
+/* ACTIVE TAB PAGES */
+.page { display:none; }
+.page.active { display:block; }
 
-  .cct-card-header {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    margin-bottom: 12px;
-    gap: 12px;
-  }
-  .cct-card-icon {
-    width: 48px;
-    height: 48px;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 22px;
-    flex-shrink: 0;
-  }
-  .cct-card-badges { display: flex; gap: 6px; flex-wrap: wrap; }
-  .badge {
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 0.06em;
-    padding: 3px 9px;
-    border-radius: 10px;
-  }
-  .badge-dfo { background: #E8F5E9; color: #0A6E3C; }
-  .badge-canton { background: #EEF2FF; color: #3730A3; }
-  .badge-fed { background: var(--red-pale); color: var(--red); }
-
-  .cct-card-title {
-    font-size: 16px;
-    font-weight: 700;
-    color: var(--black);
-    margin-bottom: 6px;
-    line-height: 1.3;
-  }
-  .cct-card-sub {
-    font-size: 13px;
-    color: var(--gray-500);
-    margin-bottom: 16px;
-  }
-  .cct-card-stats {
-    display: flex;
-    gap: 20px;
-    padding-top: 14px;
-    border-top: 1px solid var(--gray-200);
-  }
-  .cct-stat { font-size: 12px; color: var(--gray-500); }
-  .cct-stat strong { color: var(--black); font-weight: 600; display: block; font-size: 14px; }
-
-  /* ─── LANGUAGES SECTION ─── */
-  .languages-section {
-    background: var(--black);
-    color: var(--white);
-    max-width: 100%;
-    padding: 80px 40px;
-  }
-  .languages-inner {
-    max-width: 1200px;
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 80px;
-    align-items: center;
-  }
-  .languages-section .section-eyebrow { color: rgba(255,255,255,0.5); }
-  .languages-section .section-title { color: var(--white); }
-  .languages-section .section-subtitle { color: rgba(255,255,255,0.65); }
-
-  .lang-cards {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
-  }
-  .lang-card {
-    background: rgba(255,255,255,0.06);
-    border: 1px solid rgba(255,255,255,0.1);
-    border-radius: 12px;
-    padding: 20px;
-    transition: all 0.2s;
-  }
-  .lang-card:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.2); }
-  .lang-flag { font-size: 28px; margin-bottom: 10px; display: block; }
-  .lang-name { font-size: 15px; font-weight: 600; color: var(--white); margin-bottom: 4px; }
-  .lang-desc { font-size: 12px; color: rgba(255,255,255,0.5); }
-  .lang-card.featured { border-color: var(--red); background: rgba(212,0,26,0.15); }
-
-  /* ─── ECOSYSTEM SECTION ─── */
-  .ecosystem-section {
-    background: var(--gray-100);
-    max-width: 100%;
-    padding: 80px 40px;
-  }
-  .ecosystem-inner {
-    max-width: 1200px;
-    margin: 0 auto;
-  }
-  .ecosystem-header { text-align: center; margin-bottom: 56px; }
-  .ecosystem-header .section-subtitle { margin: 0 auto; }
-
-  .apps-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 16px;
-  }
-
-  .app-card {
-    background: var(--white);
-    border: 1px solid var(--gray-200);
-    border-radius: 14px;
-    padding: 28px;
-    transition: all 0.2s;
-    text-decoration: none;
-    display: block;
-    color: inherit;
-    position: relative;
-  }
-  .app-card:hover { box-shadow: 0 12px 40px rgba(0,0,0,0.1); transform: translateY(-3px); border-color: transparent; }
-
-  .app-card-top {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    margin-bottom: 16px;
-  }
-  .app-icon {
-    width: 52px;
-    height: 52px;
-    border-radius: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 24px;
-    flex-shrink: 0;
-  }
-  .app-name {
-    font-size: 16px;
-    font-weight: 700;
-    color: var(--black);
-    margin-bottom: 2px;
-  }
-  .app-url {
-    font-family: 'DM Mono', monospace;
-    font-size: 11px;
-    color: var(--gray-500);
-  }
-  .app-desc {
-    font-size: 14px;
-    color: var(--gray-700);
-    line-height: 1.6;
-    margin-bottom: 16px;
-  }
-  .app-link {
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--red);
-    display: flex;
-    align-items: center;
-    gap: 4px;
-  }
-  .app-card-tag {
-    position: absolute;
-    top: 16px;
-    right: 16px;
-    font-size: 10px;
-    font-weight: 600;
-    letter-spacing: 0.05em;
-    background: var(--gray-100);
-    color: var(--gray-500);
-    padding: 3px 9px;
-    border-radius: 10px;
-  }
-
-  /* ─── HOW IT WORKS ─── */
-  .steps-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 0;
-    margin-top: 56px;
-    position: relative;
-  }
-  .steps-grid::before {
-    content: '';
-    position: absolute;
-    top: 28px;
-    left: 60px;
-    right: 60px;
-    height: 1px;
-    background: var(--gray-200);
-    z-index: 0;
-  }
-  .step {
-    text-align: center;
-    padding: 0 24px;
-    position: relative;
-    z-index: 1;
-  }
-  .step-num {
-    width: 56px;
-    height: 56px;
-    background: var(--white);
-    border: 2px solid var(--gray-200);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto 20px;
-    font-family: 'DM Serif Display', serif;
-    font-size: 22px;
-    color: var(--black);
-    transition: all 0.2s;
-  }
-  .step:hover .step-num { background: var(--red); border-color: var(--red); color: white; }
-  .step-title { font-size: 15px; font-weight: 700; color: var(--black); margin-bottom: 8px; }
-  .step-desc { font-size: 13px; color: var(--gray-500); line-height: 1.6; }
-
-  /* ─── CTA SECTION ─── */
-  .cta-section {
-    background: var(--red);
-    max-width: 100%;
-    padding: 80px 40px;
-    text-align: center;
-  }
-  .cta-inner { max-width: 600px; margin: 0 auto; }
-  .cta-section .section-title { color: white; margin-bottom: 16px; }
-  .cta-subtitle { font-size: 18px; color: rgba(255,255,255,0.8); margin-bottom: 36px; line-height: 1.6; }
-  .btn-white {
-    background: white;
-    color: var(--red);
-    padding: 16px 36px;
-    border-radius: 8px;
-    font-size: 15px;
-    font-weight: 700;
-    text-decoration: none;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    transition: all 0.2s;
-    border: none;
-    cursor: pointer;
-  }
-  .btn-white:hover { background: var(--red-pale); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.2); }
-
-  /* ─── FOOTER ─── */
-  footer {
-    background: var(--gray-900);
-    color: rgba(255,255,255,0.6);
-    padding: 60px 40px 32px;
-  }
-  .footer-inner {
-    max-width: 1200px;
-    margin: 0 auto;
-  }
-  .footer-top {
-    display: grid;
-    grid-template-columns: 2fr 1fr 1fr 1fr;
-    gap: 48px;
-    padding-bottom: 48px;
-    border-bottom: 1px solid rgba(255,255,255,0.08);
-    margin-bottom: 32px;
-  }
-  .footer-brand .logo-text { color: white; font-size: 22px; }
-  .footer-brand .logo-mark { width: 32px; height: 32px; font-size: 11px; }
-  .footer-tagline {
-    font-size: 14px;
-    line-height: 1.7;
-    color: rgba(255,255,255,0.5);
-    margin-top: 16px;
-  }
-  .footer-col h4 {
-    font-size: 12px;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: rgba(255,255,255,0.4);
-    margin-bottom: 16px;
-  }
-  .footer-col ul { list-style: none; }
-  .footer-col li { margin-bottom: 10px; }
-  .footer-col a {
-    font-size: 14px;
-    color: rgba(255,255,255,0.6);
-    text-decoration: none;
-    transition: color 0.2s;
-  }
-  .footer-col a:hover { color: white; }
-
-  .footer-bottom {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 13px;
-    color: rgba(255,255,255,0.35);
-    flex-wrap: wrap;
-    gap: 12px;
-  }
-  .footer-bottom a { color: rgba(255,255,255,0.35); text-decoration: none; }
-  .footer-bottom a:hover { color: white; }
-  .footer-swiss {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-  .swiss-cross {
-    width: 18px;
-    height: 18px;
-    background: var(--red);
-    border-radius: 2px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 11px;
-    color: white;
-    font-weight: 700;
-  }
-
-  /* ─── ANIMATIONS ─── */
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(24px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-  .fade-up {
-    animation: fadeUp 0.6s ease forwards;
-  }
-  .fade-up-1 { animation-delay: 0.1s; }
-  .fade-up-2 { animation-delay: 0.2s; }
-  .fade-up-3 { animation-delay: 0.3s; }
-  .fade-up-4 { animation-delay: 0.4s; }
-
-  /* ─── SWISS FLAG ACCENT ─── */
-  .swiss-accent {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-  }
-  .swiss-flag {
-    width: 20px;
-    height: 20px;
-    background: #D4001A;
-    border-radius: 3px;
-    position: relative;
-    display: inline-block;
-    flex-shrink: 0;
-  }
-  .swiss-flag::before {
-    content: '+';
-    position: absolute;
-    inset: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    font-size: 14px;
-    font-weight: 700;
-    line-height: 1;
-  }
-
-  /* ─── RESPONSIVE ─── */
-  @media (max-width: 900px) {
-    .hero { grid-template-columns: 1fr; gap: 48px; padding: 60px 24px; }
-    .apps-grid { grid-template-columns: 1fr 1fr; }
-    .steps-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
-    .steps-grid::before { display: none; }
-    .footer-top { grid-template-columns: 1fr 1fr; gap: 32px; }
-    .languages-inner { grid-template-columns: 1fr; gap: 40px; }
-    nav { padding: 0 24px; }
-    section { padding: 60px 24px; }
-    .topbar { display: none; }
-  }
-  @media (max-width: 600px) {
-    .apps-grid { grid-template-columns: 1fr; }
-    .cct-grid { grid-template-columns: 1fr; }
-    .hero-stats { gap: 20px; }
-    .nav-links { display: none; }
-  }
-
-  /* ─── NOTICE BAR ─── */
-  .notice-bar {
-    background: linear-gradient(90deg, var(--red), #FF4458);
-    color: white;
-    text-align: center;
-    padding: 10px 40px;
-    font-size: 13px;
-    font-weight: 500;
-  }
-  .notice-bar a { color: white; font-weight: 700; text-decoration: underline; }
+/* Soluris card */
+.soluris-card {
+  margin:0 16px 16px; background:linear-gradient(135deg,#1a1a2e,#16213e);
+  border-radius:var(--r-lg); padding:18px; display:flex; gap:14px; align-items:center;
+  text-decoration:none;
+}
+.soluris-card:hover { opacity:.9; }
+.soluris-icon { font-size:32px; flex-shrink:0; }
+.soluris-info { flex:1; }
+.soluris-name { font-family:'Syne',sans-serif; font-size:15px; font-weight:700; color:#fff; margin-bottom:4px; }
+.soluris-desc { font-size:12px; color:rgba(255,255,255,.6); line-height:1.4; }
+.soluris-arrow { color:rgba(255,255,255,.4); font-size:20px; }
 </style>
 </head>
 <body>
 
-<!-- TOP BAR -->
-<div class="topbar">
-  <div class="topbar-left">🇨🇭 Le répertoire officieux des CCT en Suisse — Gratuit et indépendant</div>
-  <div class="lang-switcher">
-    <button class="lang-btn active" onclick="setLang('fr')">FR</button>
-    <button class="lang-btn" onclick="setLang('de')">DE</button>
-    <button class="lang-btn" onclick="setLang('it')">IT</button>
-    <button class="lang-btn" onclick="setLang('rm')">RM</button>
-    <button class="lang-btn" onclick="setLang('en')">EN</button>
-    <button class="lang-btn" onclick="setLang('pt')">PT</button>
-    <button class="lang-btn" onclick="setLang('es')">ES</button>
-  </div>
-</div>
-
-<!-- NAVBAR -->
-<nav>
-    <a href="#" class="logo">
-    <div class="logo-mark">CCT</div>
-    <span class="logo-text">swiss<span>.ch</span></span>
-  </a>
-  <ul class="nav-links">
-    <li><a href="#repertoire">Répertoire</a></li>
-    <li><a href="#branches">Branches</a></li>
-    <li><a href="#outils">Outils</a></li>
-    <li><a href="#langues">Langues</a></li>
-    <li><a href="#faq">FAQ</a></li>
-  </ul>
-  <a href="#repertoire" class="nav-cta">Trouver ma CCT →</a>
-</nav>
-
-<!-- HERO -->
-<div style="background: var(--white);">
-  <div class="hero">
-    <div class="hero-content">
-      <div class="hero-eyebrow fade-up fade-up-1">Nouveau · Lancement 2025</div>
-      <h1 class="fade-up fade-up-2">Trouvez votre <em>Convention Collective</em> en 30 secondes</h1>
-      <p class="hero-subtitle fade-up fade-up-3">
-        Le premier répertoire suisse des CCT — clair, gratuit, multilingue. 
-        Hôtellerie, construction, nettoyage, horlogerie et bien plus. 
-        Disponible en 7 langues pour tous les actifs de Suisse.
-      </p>
-      <div class="hero-actions fade-up fade-up-4">
-        <a href="#repertoire" class="btn-primary">🔍 Chercher une CCT</a>
-        <a href="#branches" class="btn-secondary">Toutes les branches →</a>
-      </div>
-      <div class="hero-stats fade-up fade-up-4">
-        <div class="stat-item">
-          <span class="stat-number">600+</span>
-          <span class="stat-label">CCT répertoriées</span>
-        </div>
-        <div class="stat-item">
-          <span class="stat-number">7</span>
-          <span class="stat-label">Langues</span>
-        </div>
-        <div class="stat-item">
-          <span class="stat-number">100%</span>
-          <span class="stat-label">Gratuit</span>
-        </div>
-        <div class="stat-item">
-          <span class="stat-number">26</span>
-          <span class="stat-label">Cantons</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="hero-visual fade-up fade-up-3">
-      <div class="search-card">
-        <span class="search-label">🔍 Recherche rapide</span>
-        <div class="search-box">
-          <input class="search-input" type="text" placeholder="ex: restaurant, construction, nettoyage…" id="heroSearch">
-          <button class="search-btn" onclick="doSearch()">→</button>
-        </div>
-        <div class="search-filters">
-          <div class="filter-chip active" onclick="toggleFilter(this)">Toutes branches</div>
-          <div class="filter-chip" onclick="toggleFilter(this)">DFO uniquement</div>
-          <div class="filter-chip" onclick="toggleFilter(this)">Mon canton</div>
-          <div class="filter-chip" onclick="toggleFilter(this)">Fédéral</div>
-        </div>
-        <div class="cct-results">
-          <div class="cct-result-item">
-            <div class="cct-badge" style="background:#FFF0F0">🍽️</div>
-            <div class="cct-info">
-              <div class="cct-name">CCNT Hôtellerie-restauration (L-GAV)</div>
-              <div class="cct-meta">Fédérale · 230 000+ employés</div>
-            </div>
-            <span class="dfo-badge">DFO</span>
-            <span class="cct-arrow">›</span>
-          </div>
-          <div class="cct-result-item">
-            <div class="cct-badge" style="background:#F0F4FF">🏗️</div>
-            <div class="cct-info">
-              <div class="cct-name">Convention nationale du principal (CN)</div>
-              <div class="cct-meta">Fédérale · Construction</div>
-            </div>
-            <span class="dfo-badge">DFO</span>
-            <span class="cct-arrow">›</span>
-          </div>
-          <div class="cct-result-item">
-            <div class="cct-badge" style="background:#F0FFF4">🧹</div>
-            <div class="cct-info">
-              <div class="cct-name">CCT Nettoyage et hygiène</div>
-              <div class="cct-meta">Fédérale · 50 000+ employés</div>
-            </div>
-            <span class="dfo-badge">DFO</span>
-            <span class="cct-arrow">›</span>
-          </div>
-          <div class="cct-result-item">
-            <div class="cct-badge" style="background:#FFFAF0">⌚</div>
-            <div class="cct-info">
-              <div class="cct-name">CCT Industrie horlogère</div>
-              <div class="cct-meta">Arc jurassien · Régionale</div>
-            </div>
-            <span class="cct-arrow">›</span>
-          </div>
-        </div>
-      </div>
+<!-- HEADER -->
+<header class="header">
+  <div class="header-inner">
+    <a href="#" class="logo" onclick="showPage('home')">
+      <div class="logo-badge">CCT</div>
+      <span class="logo-text">swiss<b>.ch</b></span>
+    </a>
+    <div class="lang-row" id="langRow">
+      <button class="lang-pill active" data-lang="fr">FR</button>
+      <button class="lang-pill" data-lang="de">DE</button>
+      <button class="lang-pill" data-lang="it">IT</button>
+      <button class="lang-pill" data-lang="en">EN</button>
+      <button class="lang-pill" data-lang="pt">PT</button>
+      <button class="lang-pill" data-lang="es">ES</button>
+      <button class="lang-pill" data-lang="sq">SQ</button>
+      <button class="lang-pill" data-lang="bs">BS</button>
+      <button class="lang-pill" data-lang="tr">TR</button>
+      <button class="lang-pill" data-lang="uk">UK</button>
     </div>
   </div>
-</div>
+</header>
 
-<!-- TRUSTED BY -->
-<div class="trusted-section">
-  <p class="trusted-label">Écosystème d'outils pratiques pour employeurs & fiduciaires</p>
-  <div class="trusted-logos">
-    <a href="https://swissrh.ch" class="trusted-logo" target="_blank">
-      <span class="trusted-logo-dot"></span> SwissRH
-    </a>
-    <a href="https://winwin.swiss" class="trusted-logo" target="_blank">
-      <span class="trusted-logo-dot"></span> WinWin.swiss
-    </a>
-    <a href="https://matcho.digital" class="trusted-logo" target="_blank">
-      <span class="trusted-logo-dot"></span> Matcho.digital
-    </a>
-    <a href="https://devispro.ch" class="trusted-logo" target="_blank">
-      <span class="trusted-logo-dot"></span> DevisPro.ch
-    </a>
-    <a href="https://boom.contact" class="trusted-logo" target="_blank">
-      <span class="trusted-logo-dot"></span> Boom.contact
-    </a>
-    <a href="https://horlogis.ch" class="trusted-logo" target="_blank">
-      <span class="trusted-logo-dot"></span> Horlogis.ch
-    </a>
-  </div>
-</div>
+<!-- HOME PAGE -->
+<div id="page-home" class="page active">
 
-<!-- DIRECTORY SECTION -->
-<section id="repertoire">
-  <div class="directory-header">
-    <div>
-      <span class="section-eyebrow">Répertoire complet</span>
-      <h2 class="section-title">Les CCT les plus consultées</h2>
-      <p class="section-subtitle">Chaque fiche contient les conditions essentielles, salaires minimaux, contributions et liens officiels.</p>
+  <!-- HERO SEARCH -->
+  <section class="hero">
+    <div class="hero-badge"><span></span> <span data-i18n="live_badge">Mis à jour automatiquement · Fedlex officiel</span></div>
+    <h1 data-i18n="hero_title">Votre <em>convention collective</em> en 30 secondes</h1>
+    <p class="hero-sub" data-i18n="hero_sub">Cherchez votre CCT par branche, métier ou secteur. Gratuit, sans inscription.</p>
+    <div class="search-wrap">
+      <span class="search-icon">🔍</span>
+      <input type="search" id="mainSearch" class="search-input"
+        placeholder="restaurant, construction, nettoyage…"
+        autocomplete="off" autocorrect="off" spellcheck="false">
+      <button class="search-clear" id="searchClear" onclick="clearSearch()">✕</button>
+      <div class="search-dropdown" id="searchDropdown"></div>
     </div>
-    <a href="#" class="btn-secondary">Voir toutes les CCT →</a>
-  </div>
+    <div class="filters" id="filters">
+      <button class="filter-chip active" data-filter="all" onclick="setFilter(this,'all')" data-i18n="filter_all">Toutes</button>
+      <button class="filter-chip" data-filter="dfo" onclick="setFilter(this,'dfo')" data-i18n="filter_dfo">DFO ✓</button>
+      <button class="filter-chip" data-filter="restauration" onclick="setFilter(this,'restauration')">🍽️ Restau</button>
+      <button class="filter-chip" data-filter="construction" onclick="setFilter(this,'construction')">🏗️ Construc.</button>
+      <button class="filter-chip" data-filter="nettoyage" onclick="setFilter(this,'nettoyage')">🧹 Nettoyage</button>
+      <button class="filter-chip" data-filter="horlogerie" onclick="setFilter(this,'horlogerie')">⌚ Horlogerie</button>
+      <button class="filter-chip" data-filter="artisanat" onclick="setFilter(this,'artisanat')">🪵 Artisanat</button>
+      <button class="filter-chip" data-filter="industrie" onclick="setFilter(this,'industrie')">⚙️ Industrie</button>
+    </div>
+  </section>
 
-  <div class="cct-grid" id="repertoire">
-    <!-- Card 1 -->
-    <a href="#" class="cct-card">
-      <div class="cct-card-header">
-        <div class="cct-card-icon" style="background:#FFF0F0">🍽️</div>
-        <div class="cct-card-badges">
-          <span class="badge badge-dfo">DFO</span>
-          <span class="badge badge-fed">Fédéral</span>
-        </div>
-      </div>
-      <div class="cct-card-title">CCNT Hôtellerie-Restauration (L-GAV)</div>
-      <div class="cct-card-sub">Restaurants, hôtels, cafés, traiteurs, take-away</div>
-      <div class="cct-card-stats">
-        <div class="cct-stat"><strong>CHF 3'880–5'200</strong> Salaire min./mois</div>
-        <div class="cct-stat"><strong>5 sem.</strong> Vacances</div>
-        <div class="cct-stat"><strong>13e sal.</strong> inclus</div>
-      </div>
-    </a>
-
-    <!-- Card 2 -->
-    <a href="#" class="cct-card">
-      <div class="cct-card-header">
-        <div class="cct-card-icon" style="background:#F0F4FF">🏗️</div>
-        <div class="cct-card-badges">
-          <span class="badge badge-dfo">DFO</span>
-          <span class="badge badge-fed">Fédéral</span>
-        </div>
-      </div>
-      <div class="cct-card-title">Convention Nationale du Principal (CN)</div>
-      <div class="cct-card-sub">Construction, maçonnerie, génie civil, terrassement</div>
-      <div class="cct-card-stats">
-        <div class="cct-stat"><strong>CHF 5'200+</strong> Salaire min./mois</div>
-        <div class="cct-stat"><strong>5 sem.</strong> Vacances</div>
-        <div class="cct-stat"><strong>42h</strong> Hebdo</div>
-      </div>
-    </a>
-
-    <!-- Card 3 -->
-    <a href="#" class="cct-card">
-      <div class="cct-card-header">
-        <div class="cct-card-icon" style="background:#F0FFF4">🧹</div>
-        <div class="cct-card-badges">
-          <span class="badge badge-dfo">DFO</span>
-          <span class="badge badge-fed">Fédéral</span>
-        </div>
-      </div>
-      <div class="cct-card-title">CCT Nettoyage et Hygiène des Bâtiments</div>
-      <div class="cct-card-sub">Nettoyage intérieur, service d'entretien, conciergerie</div>
-      <div class="cct-card-stats">
-        <div class="cct-stat"><strong>CHF 3'600+</strong> Salaire min./mois</div>
-        <div class="cct-stat"><strong>4–5 sem.</strong> Vacances</div>
-        <div class="cct-stat"><strong>50 000+</strong> Employés</div>
-      </div>
-    </a>
-
-    <!-- Card 4 -->
-    <a href="#" class="cct-card">
-      <div class="cct-card-header">
-        <div class="cct-card-icon" style="background:#FFFAF0">⌚</div>
-        <div class="cct-card-badges">
-          <span class="badge badge-canton">Régionale</span>
-        </div>
-      </div>
-      <div class="cct-card-title">CCT Industrie Horlogère</div>
-      <div class="cct-card-sub">Fabrication, assemblage, réparation de montres et composants</div>
-      <div class="cct-card-stats">
-        <div class="cct-stat"><strong>Arc jurassien</strong> Zone</div>
-        <div class="cct-stat"><strong>5 sem.</strong> Vacances</div>
-        <div class="cct-stat"><strong>40h</strong> Hebdo</div>
-      </div>
-    </a>
-
-    <!-- Card 5 -->
-    <a href="#" class="cct-card">
-      <div class="cct-card-header">
-        <div class="cct-card-icon" style="background:#F5F0FF">💈</div>
-        <div class="cct-card-badges">
-          <span class="badge badge-dfo">DFO</span>
-          <span class="badge badge-fed">Fédéral</span>
-        </div>
-      </div>
-      <div class="cct-card-title">CCT Coiffure</div>
-      <div class="cct-card-sub">Salons de coiffure, barbiers, instituts capillaires</div>
-      <div class="cct-card-stats">
-        <div class="cct-stat"><strong>CHF 3'500+</strong> Salaire min./mois</div>
-        <div class="cct-stat"><strong>4 sem.</strong> Vacances</div>
-        <div class="cct-stat"><strong>42h</strong> Hebdo</div>
-      </div>
-    </a>
-
-    <!-- Card 6 -->
-    <a href="#" class="cct-card">
-      <div class="cct-card-header">
-        <div class="cct-card-icon" style="background:#F0FAFF">🔧</div>
-        <div class="cct-card-badges">
-          <span class="badge badge-dfo">DFO</span>
-          <span class="badge badge-fed">Fédéral</span>
-        </div>
-      </div>
-      <div class="cct-card-title">CCT Industries MEM</div>
-      <div class="cct-card-sub">Machines, électronique, métallurgie, industrie manufacturière</div>
-      <div class="cct-card-stats">
-        <div class="cct-stat"><strong>CHF 4'500+</strong> Salaire min./mois</div>
-        <div class="cct-stat"><strong>5 sem.</strong> Vacances</div>
-        <div class="cct-stat"><strong>40h</strong> Hebdo</div>
-      </div>
-    </a>
+  <!-- STATS -->
+  <div class="stats-bar">
+    <div class="stat"><span class="stat-val" id="statTotal">—</span><span class="stat-lbl" data-i18n="stat_ccts">CCTs</span></div>
+    <div class="stat"><span class="stat-val" id="statDfo">—</span><span class="stat-lbl">DFO</span></div>
+    <div class="stat"><span class="stat-val">11</span><span class="stat-lbl" data-i18n="stat_langs">Langues</span></div>
+    <div class="stat"><span class="stat-val">26</span><span class="stat-lbl" data-i18n="stat_cantons">Cantons</span></div>
   </div>
 
-  <!-- Steps / How it works -->
-  <div style="margin-top: 80px;">
-    <span class="section-eyebrow">Comment ça marche</span>
-    <h2 class="section-title">Trouver sa CCT en 4 étapes</h2>
-    <div class="steps-grid">
-      <div class="step">
-        <div class="step-num">1</div>
-        <div class="step-title">Décris ta branche</div>
-        <div class="step-desc">Tape ton secteur d'activité ou le nom de ton métier dans la barre de recherche.</div>
-      </div>
-      <div class="step">
-        <div class="step-num">2</div>
-        <div class="step-title">Filtre par canton</div>
-        <div class="step-desc">Certaines CCT sont cantonales. Choisis ta région pour affiner les résultats.</div>
-      </div>
-      <div class="step">
-        <div class="step-num">3</div>
-        <div class="step-title">Consulte la fiche</div>
-        <div class="step-desc">Salaires minimaux, vacances, contributions, liens officiels — tout est là.</div>
-      </div>
-      <div class="step">
-        <div class="step-num">4</div>
-        <div class="step-title">Applique avec les bons outils</div>
-        <div class="step-desc">Utilise SwissRH, DevisPro ou WinWin pour mettre la CCT en pratique.</div>
-      </div>
-    </div>
+  <!-- WIN WIN BANNER -->
+  <div class="winwin-banner">
+    <div class="winwin-badge">⭐ Partenaire principal</div>
+    <h2>WIN WIN Finance Group</h2>
+    <p>Assurances obligatoires liées à votre CCT — LAA, LPP, perte de gain. Courtage indépendant. Mieux assuré. Sans payer plus.</p>
+    <a href="https://winwin.swiss" target="_blank" class="winwin-cta">
+      🛡️ Obtenir mon offre gratuite
+    </a>
+    <div class="winwin-claim">FINMA F01042365<br>Groupe NEO</div>
   </div>
-</section>
 
-<!-- LANGUAGES -->
-<div class="languages-section" id="langues">
-  <div class="languages-inner">
-    <div>
-      <span class="section-eyebrow">Multilingue · Mehrsprachig · Multilingue</span>
-      <h2 class="section-title">Pour tous les actifs de Suisse</h2>
-      <p class="section-subtitle">Les CCT s'appliquent à toutes et tous — qu'on parle français, allemand, italien ou qu'on soit arrivé de l'étranger. Chaque fiche est disponible dans votre langue.</p>
-      <div style="margin-top: 32px; display: flex; gap: 12px; flex-wrap: wrap;">
-        <a href="#" class="btn-primary" style="background: white; color: var(--red);">Changer de langue →</a>
-      </div>
+  <!-- CCT LIST -->
+  <section class="section">
+    <div class="section-header">
+      <span class="section-title" data-i18n="section_ccts">Conventions collectives</span>
+      <span class="update-dot" id="updateDot">À jour</span>
     </div>
-    <div class="lang-cards">
-      <div class="lang-card featured">
-        <span class="lang-flag">🇨🇭</span>
-        <div class="lang-name">Français</div>
-        <div class="lang-desc">Suisse romande — Jura, Neuchâtel, Vaud, Genève…</div>
-      </div>
-      <div class="lang-card">
-        <span class="lang-flag">🇩🇪</span>
-        <div class="lang-name">Deutsch</div>
-        <div class="lang-desc">Deutschschweiz — Zürich, Bern, Basel…</div>
-      </div>
-      <div class="lang-card">
-        <span class="lang-flag">🇮🇹</span>
-        <div class="lang-name">Italiano</div>
-        <div class="lang-desc">Ticino e Grigioni italofono</div>
-      </div>
-      <div class="lang-card">
-        <span class="lang-flag">🇬🇧</span>
-        <div class="lang-name">English</div>
-        <div class="lang-desc">For expats and international workers</div>
-      </div>
-      <div class="lang-card">
-        <span class="lang-flag">🇵🇹</span>
-        <div class="lang-name">Português</div>
-        <div class="lang-desc">Para trabalhadores portugueses e brasileiros</div>
-      </div>
-      <div class="lang-card">
-        <span class="lang-flag">🇪🇸</span>
-        <div class="lang-name">Español</div>
-        <div class="lang-desc">Para trabajadores hispanohablantes</div>
-      </div>
+    <div class="cct-list" id="cctList">
+      <!-- Skeletons -->
+      <div style="height:160px;border-radius:14px" class="skeleton"></div>
+      <div style="height:160px;border-radius:14px" class="skeleton"></div>
+      <div style="height:160px;border-radius:14px" class="skeleton"></div>
     </div>
-  </div>
-</div>
+  </section>
 
-<!-- ECOSYSTEM APPS -->
-<div class="ecosystem-section" id="outils">
-  <div class="ecosystem-inner">
-    <div class="ecosystem-header">
-      <span class="section-eyebrow">Écosystème · Outils pratiques</span>
-      <h2 class="section-title">Vous avez trouvé votre CCT. Et maintenant ?</h2>
-      <p class="section-subtitle">Mettre une CCT en pratique demande des outils adaptés. Voici ceux que nous recommandons — tous conçus pour la Suisse.</p>
+  <!-- PARTNER APPS -->
+  <section class="section">
+    <div class="section-header">
+      <span class="section-title" data-i18n="section_apps">Outils partenaires</span>
     </div>
-
     <div class="apps-grid">
       <a href="https://swissrh.ch" target="_blank" class="app-card">
-        <div class="app-card-tag">RH & Salaires</div>
-        <div class="app-card-top">
-          <div class="app-icon" style="background:#FFF0F0">👥</div>
-          <div>
-            <div class="app-name">SwissRH</div>
-            <div class="app-url">swissrh.ch</div>
-          </div>
+        <div class="app-icon" style="background:#FFF0F2">👥</div>
+        <div class="app-info">
+          <div class="app-name">SwissRH</div>
+          <div class="app-url">swissrh.ch</div>
+          <div class="app-desc">Salaires & RH conformes CCT</div>
         </div>
-        <div class="app-desc">Gérez vos salaires, contrats et temps de travail en conformité avec les CCT. Calculs automatiques, bulletins de salaire, déclarations AVS.</div>
-        <div class="app-link">Découvrir SwissRH ›</div>
+        <span class="app-arrow">›</span>
       </a>
-
-      <a href="https://winwin.swiss" target="_blank" class="app-card">
-        <div class="app-card-tag">Assurances</div>
-        <div class="app-card-top">
-          <div class="app-icon" style="background:#F0FFF4">🛡️</div>
-          <div>
-            <div class="app-name">WinWin.swiss</div>
-            <div class="app-url">winwin.swiss</div>
-          </div>
-        </div>
-        <div class="app-desc">Les assurances obligatoires liées aux CCT (LAA, LPP, perte de gain maladie) — comparez et souscrivez en ligne. Courtage indépendant.</div>
-        <div class="app-link">Découvrir WinWin ›</div>
-      </a>
-
       <a href="https://matcho.digital" target="_blank" class="app-card">
-        <div class="app-card-tag">Finances</div>
-        <div class="app-card-top">
-          <div class="app-icon" style="background:#F0F4FF">💳</div>
-          <div>
-            <div class="app-name">Matcho.digital</div>
-            <div class="app-url">matcho.digital</div>
-          </div>
+        <div class="app-icon" style="background:#EBF4FF">💳</div>
+        <div class="app-info">
+          <div class="app-name">Matcho</div>
+          <div class="app-url">matcho.digital</div>
+          <div class="app-desc">Réconciliation bancaire auto</div>
         </div>
-        <div class="app-desc">Réconciliation bancaire automatisée. Associez vos paiements salaires et contributions CCT à vos écritures comptables en un clic.</div>
-        <div class="app-link">Découvrir Matcho ›</div>
+        <span class="app-arrow">›</span>
       </a>
-
       <a href="https://devispro.ch" target="_blank" class="app-card">
-        <div class="app-card-tag">Artisans</div>
-        <div class="app-card-top">
-          <div class="app-icon" style="background:#FFFAF0">📋</div>
-          <div>
-            <div class="app-name">DevisPro.ch</div>
-            <div class="app-url">devispro.ch</div>
-          </div>
+        <div class="app-icon" style="background:#FFFAF0">📋</div>
+        <div class="app-info">
+          <div class="app-name">DevisPro</div>
+          <div class="app-url">devispro.ch</div>
+          <div class="app-desc">Devis artisans avec coûts CCT</div>
         </div>
-        <div class="app-desc">Créez vos devis professionnels en intégrant les coûts CCT réels. Idéal pour artisans soumis à la CN Construction ou CCT second œuvre.</div>
-        <div class="app-link">Découvrir DevisPro ›</div>
+        <span class="app-arrow">›</span>
       </a>
-
       <a href="https://boom.contact" target="_blank" class="app-card">
-        <div class="app-card-tag">Mobilité</div>
-        <div class="app-card-top">
-          <div class="app-icon" style="background:#F5F0FF">🚗</div>
-          <div>
-            <div class="app-name">Boom.contact</div>
-            <div class="app-url">boom.contact</div>
-          </div>
+        <div class="app-icon" style="background:#F5F0FF">🚗</div>
+        <div class="app-info">
+          <div class="app-name">Boom</div>
+          <div class="app-url">boom.contact</div>
+          <div class="app-desc">Constat numérique 42 langues</div>
         </div>
-        <div class="app-desc">Constat amiable numérique pour accidents de la route. Vos collaborateurs en déplacement gèrent les sinistres en 3 minutes, depuis leur smartphone.</div>
-        <div class="app-link">Découvrir Boom ›</div>
+        <span class="app-arrow">›</span>
       </a>
-
       <a href="https://horlogis.ch" target="_blank" class="app-card">
-        <div class="app-card-tag">Horlogerie</div>
-        <div class="app-card-top">
-          <div class="app-icon" style="background:#F0FAFF">⌚</div>
-          <div>
-            <div class="app-name">Horlogis.ch</div>
-            <div class="app-url">horlogis.ch</div>
-          </div>
+        <div class="app-icon" style="background:#F0FAFF">⌚</div>
+        <div class="app-info">
+          <div class="app-name">Horlogis</div>
+          <div class="app-url">horlogis.ch</div>
+          <div class="app-desc">Portail métiers horlogerie</div>
         </div>
-        <div class="app-desc">Le portail dédié aux métiers de l'horlogerie en Suisse. CCT, formations, emplois, ressources sectorielles pour l'Arc jurassien et au-delà.</div>
-        <div class="app-link">Découvrir Horlogis ›</div>
+        <span class="app-arrow">›</span>
+      </a>
+      <a href="https://devispro.ch" target="_blank" class="app-card">
+        <div class="app-icon" style="background:#FFF0F2">🏠</div>
+        <div class="app-info">
+          <div class="app-name">immo.cool</div>
+          <div class="app-url">immo.cool</div>
+          <div class="app-desc">Immobilier 100% gratuit</div>
+        </div>
+        <span class="app-arrow">›</span>
       </a>
     </div>
-  </div>
+  </section>
+
+  <!-- SOLURIS -->
+  <a href="https://soluris.ch" target="_blank" class="soluris-card">
+    <div class="soluris-icon">⚖️</div>
+    <div class="soluris-info">
+      <div class="soluris-name">Soluris.ch — IA juridique suisse</div>
+      <div class="soluris-desc">Questions complexes sur votre CCT ? Fedlex, jurisprudence TF, droit du travail suisse.</div>
+    </div>
+    <span class="soluris-arrow">›</span>
+  </a>
+
+  <div style="height:8px"></div>
 </div>
 
-<!-- CTA -->
-<div class="cta-section">
-  <div class="cta-inner">
-    <h2 class="section-title">Votre CCT en 30 secondes.</h2>
-    <p class="cta-subtitle">Gratuit, sans inscription, disponible en 7 langues. Parce que le droit du travail doit être accessible à tous.</p>
-    <a href="#repertoire" class="btn-white">🔍 Chercher ma convention collective</a>
-  </div>
+<!-- SEARCH PAGE -->
+<div id="page-search" class="page">
+  <section class="section">
+    <div class="section-header" style="padding-top:16px">
+      <span class="section-title" data-i18n="search_title">Recherche</span>
+    </div>
+    <div class="search-wrap" style="margin-bottom:16px">
+      <span class="search-icon">🔍</span>
+      <input type="search" id="pageSearch" class="search-input" placeholder="CCT, branche, métier…">
+      <div class="search-dropdown" id="pageDropdown"></div>
+    </div>
+    <div id="searchResults" class="cct-list"></div>
+  </section>
 </div>
 
-<!-- FOOTER -->
-<footer>
-  <div class="footer-inner">
-    <div class="footer-top">
-      <div class="footer-brand">
-                <div class="logo">
-          <div class="logo-mark">CCT</div>
-          <span class="logo-text" style="color:white">swiss<span style="color:var(--red)">.ch</span></span>
-        </div>
-        <p class="footer-tagline">Le répertoire suisse indépendant des conventions collectives de travail. Gratuit, multilingue, à jour. Ni syndicat, ni association — juste l'info claire.</p>
-      </div>
-
-      <div class="footer-col">
-        <h4>Répertoire</h4>
-        <ul>
-          <li><a href="#">Hôtellerie-restauration</a></li>
-          <li><a href="#">Construction</a></li>
-          <li><a href="#">Nettoyage</a></li>
-          <li><a href="#">Horlogerie</a></li>
-          <li><a href="#">Industries MEM</a></li>
-          <li><a href="#">Toutes les branches →</a></li>
-        </ul>
-      </div>
-
-      <div class="footer-col">
-        <h4>Informations</h4>
-        <ul>
-          <li><a href="#">Qu'est-ce qu'une CCT ?</a></li>
-          <li><a href="#">DFO — Force obligatoire</a></li>
-          <li><a href="#">Travailleurs étrangers</a></li>
-          <li><a href="#">Contrôles CCT</a></li>
-          <li><a href="#">FAQ</a></li>
-        </ul>
-      </div>
-
-      <div class="footer-col">
-        <h4>Nos outils</h4>
-        <ul>
-          <li><a href="https://swissrh.ch" target="_blank">SwissRH →</a></li>
-          <li><a href="https://winwin.swiss" target="_blank">WinWin.swiss →</a></li>
-          <li><a href="https://matcho.digital" target="_blank">Matcho.digital →</a></li>
-          <li><a href="https://devispro.ch" target="_blank">DevisPro.ch →</a></li>
-          <li><a href="https://boom.contact" target="_blank">Boom.contact →</a></li>
-          <li><a href="https://horlogis.ch" target="_blank">Horlogis.ch →</a></li>
-        </ul>
+<!-- INFO PAGE -->
+<div id="page-info" class="page">
+  <section class="section">
+    <div class="section-header" style="padding-top:16px">
+      <span class="section-title">À propos</span>
+    </div>
+    <div style="background:#fff;border-radius:var(--r-md);padding:18px;font-size:14px;line-height:1.7;color:var(--gray-7)">
+      <p style="margin-bottom:12px"><strong>CCTswiss.ch</strong> est le répertoire suisse indépendant des conventions collectives de travail (CCT).</p>
+      <p style="margin-bottom:12px">Gratuit, sans publicité intrusive, disponible en <strong>11 langues</strong> — français, allemand, italien, romanche, anglais, portugais, espagnol, albanais, BCMS, turc et ukrainien.</p>
+      <p style="margin-bottom:12px">Les données sont mises à jour <strong>chaque nuit à 02:00 CET</strong> depuis Fedlex (source officielle de la Confédération suisse).</p>
+      <div style="background:#FFFBEB;border:1px solid #FDE68A;border-radius:8px;padding:12px;font-size:12px;color:#92400E;margin-top:16px">
+        ⚠️ CCTswiss.ch est un outil d'orientation. Il ne remplace pas un avis juridique. Consultez toujours le texte officiel sur Fedlex ou un spécialiste du droit du travail.
       </div>
     </div>
-
-    <div class="footer-bottom">
-      <div>© 2025 CCTswiss.ch — Tous droits réservés · <a href="#">Mentions légales</a> · <a href="#">Politique de confidentialité</a></div>
-      <div class="footer-swiss">
-        <span class="swiss-cross">+</span>
-        <span>Fait en Suisse · Gemacht in der Schweiz · Fatto in Svizzera</span>
-      </div>
+    <div style="text-align:center;padding:24px 0;font-size:12px;color:var(--gray-5)">
+      🇨🇭 Fait en Suisse · Groupe NEO · © 2025 CCTswiss.ch<br>
+      <a href="https://winwin.swiss" style="color:var(--winwin)">winwin.swiss</a> ·
+      <a href="https://soluris.ch" style="color:var(--gray-5)">soluris.ch</a>
     </div>
-  </div>
-</footer>
+  </section>
+</div>
+
+<!-- BOTTOM NAV -->
+<nav class="bottom-nav">
+  <button class="nav-tab active" id="tab-home" onclick="showPage('home')">
+    <span class="nav-icon">🏠</span>
+    <span data-i18n="nav_home">Accueil</span>
+  </button>
+  <button class="nav-tab" id="tab-search" onclick="showPage('search')">
+    <span class="nav-icon">🔍</span>
+    <span data-i18n="nav_search">Recherche</span>
+  </button>
+  <button class="nav-tab" id="tab-info" onclick="showPage('info')">
+    <span class="nav-icon">ℹ️</span>
+    <span data-i18n="nav_info">Info</span>
+  </button>
+</nav>
+
+<!-- CCT DETAIL SHEET -->
+<div class="sheet-overlay" id="sheetOverlay" onclick="closeSheet()"></div>
+<div class="sheet" id="sheet">
+  <div class="sheet-handle"></div>
+  <div id="sheetContent"></div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
 
 <script>
-  function setLang(lang) {
-    document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
-    event.target.classList.add('active');
-    // Future: load translations
-  }
+// ═══════════════════════════════════════════════
+// DATA & STATE
+// ═══════════════════════════════════════════════
+let allCCTs = [];
+let currentLang = 'fr';
+let currentFilter = 'all';
+let searchTimeout;
 
-  function toggleFilter(el) {
-    document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
-    el.classList.add('active');
-  }
+// ── i18n translations ──
+const TRANSLATIONS = {
+  fr: { hero_title:"Votre <em>convention collective</em> en 30 secondes", hero_sub:"Cherchez votre CCT par branche ou métier. Gratuit, sans inscription.", live_badge:"Mis à jour · Fedlex officiel", filter_all:"Toutes", filter_dfo:"DFO ✓", stat_ccts:"CCTs", stat_langs:"Langues", stat_cantons:"Cantons", section_ccts:"Conventions collectives", section_apps:"Outils partenaires", search_title:"Recherche", nav_home:"Accueil", nav_search:"Recherche", nav_info:"Info", btn_detail:"Voir", btn_share:"Partager", btn_print:"Imprimer", share_wp:"WhatsApp", share_email:"Email", share_copy:"Copier", share_print:"Imprimer", disclaimer:"Ce résumé est fourni à titre informatif. Il ne constitue pas un avis juridique.", source_link:"Texte officiel →", dfo_label:"DFO · Force obligatoire", not_dfo:"Pas de DFO" },
+  de: { hero_title:"Ihr <em>Gesamtarbeitsvertrag</em> in 30 Sekunden", hero_sub:"Suchen Sie Ihren GAV nach Branche oder Beruf. Kostenlos, ohne Anmeldung.", live_badge:"Automatisch aktualisiert · Fedlex offiziell", filter_all:"Alle", filter_dfo:"AVE ✓", stat_ccts:"GAV", stat_langs:"Sprachen", stat_cantons:"Kantone", section_ccts:"Gesamtarbeitsverträge", section_apps:"Partner-Tools", search_title:"Suche", nav_home:"Startseite", nav_search:"Suche", nav_info:"Info", btn_detail:"Ansehen", btn_share:"Teilen", btn_print:"Drucken", share_wp:"WhatsApp", share_email:"E-Mail", share_copy:"Kopieren", share_print:"Drucken", disclaimer:"Diese Zusammenfassung ist nur informativ. Sie ersetzt keine Rechtsberatung.", source_link:"Offizieller Text →", dfo_label:"AVE · Allgemeinverbindlich", not_dfo:"Nicht AVE" },
+  it: { hero_title:"Il tuo <em>contratto collettivo</em> in 30 secondi", hero_sub:"Cerca il tuo CCL per settore o professione. Gratuito, senza registrazione.", live_badge:"Aggiornato · Fedlex ufficiale", filter_all:"Tutti", filter_dfo:"DCO ✓", stat_ccts:"CCL", stat_langs:"Lingue", stat_cantons:"Cantoni", section_ccts:"Contratti collettivi", section_apps:"Strumenti partner", search_title:"Ricerca", nav_home:"Home", nav_search:"Ricerca", nav_info:"Info", btn_detail:"Vedi", btn_share:"Condividi", btn_print:"Stampa", share_wp:"WhatsApp", share_email:"Email", share_copy:"Copia", share_print:"Stampa", disclaimer:"Questo riassunto è solo informativo. Non costituisce consulenza legale.", source_link:"Testo ufficiale →", dfo_label:"DCO · Obbligatorio", not_dfo:"No DCO" },
+  en: { hero_title:"Your <em>collective agreement</em> in 30 seconds", hero_sub:"Find your CLA by sector or profession. Free, no sign-up.", live_badge:"Auto-updated · Official Fedlex", filter_all:"All", filter_dfo:"ECB ✓", stat_ccts:"CLAs", stat_langs:"Languages", stat_cantons:"Cantons", section_ccts:"Collective agreements", section_apps:"Partner tools", search_title:"Search", nav_home:"Home", nav_search:"Search", nav_info:"About", btn_detail:"View", btn_share:"Share", btn_print:"Print", share_wp:"WhatsApp", share_email:"Email", share_copy:"Copy link", share_print:"Print", disclaimer:"This summary is for information only. It does not constitute legal advice.", source_link:"Official text →", dfo_label:"ECB · Extended", not_dfo:"Not ECB" },
+  pt: { hero_title:"A sua <em>convenção coletiva</em> em 30 segundos", hero_sub:"Procure a sua CCT por setor ou profissão. Gratuito, sem registo.", live_badge:"Atualizado · Fedlex oficial", filter_all:"Todas", filter_dfo:"DFO ✓", stat_ccts:"CCTs", stat_langs:"Línguas", stat_cantons:"Cantões", section_ccts:"Convenções coletivas", section_apps:"Ferramentas parceiras", search_title:"Pesquisa", nav_home:"Início", nav_search:"Pesquisa", nav_info:"Info", btn_detail:"Ver", btn_share:"Partilhar", btn_print:"Imprimir", share_wp:"WhatsApp", share_email:"Email", share_copy:"Copiar", share_print:"Imprimir", disclaimer:"Este resumo é apenas informativo. Não constitui aconselhamento jurídico.", source_link:"Texto oficial →", dfo_label:"DFO · Obrigatório", not_dfo:"Sem DFO" },
+  es: { hero_title:"Tu <em>convenio colectivo</em> en 30 segundos", hero_sub:"Busca tu CCT por sector o profesión. Gratis, sin registro.", live_badge:"Actualizado · Fedlex oficial", filter_all:"Todos", filter_dfo:"DFO ✓", stat_ccts:"CCTs", stat_langs:"Idiomas", stat_cantons:"Cantones", section_ccts:"Convenios colectivos", section_apps:"Herramientas", search_title:"Búsqueda", nav_home:"Inicio", nav_search:"Buscar", nav_info:"Info", btn_detail:"Ver", btn_share:"Compartir", btn_print:"Imprimir", share_wp:"WhatsApp", share_email:"Email", share_copy:"Copiar", share_print:"Imprimir", disclaimer:"Este resumen es solo informativo. No constituye asesoramiento jurídico.", source_link:"Texto oficial →", dfo_label:"DFO · Obligatorio", not_dfo:"Sin DFO" },
+  sq: { hero_title:"Marrëveshja juaj <em>kolektive</em> në 30 sekonda", hero_sub:"Kërkoni marrëveshjen kolektive sipas sektorit. Falas, pa regjistrim.", live_badge:"Përditësuar · Fedlex zyrtar", filter_all:"Të gjitha", filter_dfo:"DFO ✓", stat_ccts:"CCT", stat_langs:"Gjuhë", stat_cantons:"Kantone", section_ccts:"Marrëveshjet kolektive", section_apps:"Mjete partnere", search_title:"Kërkim", nav_home:"Kryefaqe", nav_search:"Kërkim", nav_info:"Info", btn_detail:"Shiko", btn_share:"Ndaj", btn_print:"Printo", share_wp:"WhatsApp", share_email:"Email", share_copy:"Kopjo", share_print:"Printo", disclaimer:"Ky përmbledhje është vetëm informuese. Nuk përbën këshillim juridik.", source_link:"Teksti zyrtar →", dfo_label:"DFO · E detyrueshme", not_dfo:"Jo DFO" },
+  bs: { hero_title:"Vaš <em>kolektivni ugovor</em> za 30 sekundi", hero_sub:"Pronađite KU po sektoru ili struci. Besplatno, bez registracije.", live_badge:"Ažurirano · Fedlex zvanično", filter_all:"Svi", filter_dfo:"DFO ✓", stat_ccts:"KU", stat_langs:"Jezici", stat_cantons:"Kantoni", section_ccts:"Kolektivni ugovori", section_apps:"Partnerski alati", search_title:"Pretraga", nav_home:"Početna", nav_search:"Pretraga", nav_info:"Info", btn_detail:"Pogledaj", btn_share:"Podijeli", btn_print:"Štampaj", share_wp:"WhatsApp", share_email:"Email", share_copy:"Kopiraj", share_print:"Štampaj", disclaimer:"Ovaj sažetak je samo informativan. Ne predstavlja pravni savjet.", source_link:"Zvanični tekst →", dfo_label:"DFO · Obavezno", not_dfo:"Nije DFO" },
+  tr: { hero_title:"30 saniyede <em>toplu iş sözleşmeniz</em>", hero_sub:"TİS'inizi sektöre veya mesleğe göre bulun. Ücretsiz, kayıt gerektirmez.", live_badge:"Otomatik güncellendi · Fedlex resmi", filter_all:"Tümü", filter_dfo:"DFO ✓", stat_ccts:"TİS", stat_langs:"Dil", stat_cantons:"Kanton", section_ccts:"Toplu iş sözleşmeleri", section_apps:"Ortak araçlar", search_title:"Arama", nav_home:"Ana sayfa", nav_search:"Arama", nav_info:"Hakkında", btn_detail:"Görüntüle", btn_share:"Paylaş", btn_print:"Yazdır", share_wp:"WhatsApp", share_email:"E-posta", share_copy:"Kopyala", share_print:"Yazdır", disclaimer:"Bu özet yalnızca bilgi amaçlıdır. Hukuki tavsiye niteliği taşımaz.", source_link:"Resmi metin →", dfo_label:"DFO · Zorunlu", not_dfo:"DFO yok" },
+  uk: { hero_title:"Ваша <em>колективна угода</em> за 30 секунд", hero_sub:"Знайдіть свою КУ за галуззю або професією. Безкоштовно, без реєстрації.", live_badge:"Автооновлення · Fedlex офіційний", filter_all:"Всі", filter_dfo:"ЗОБ ✓", stat_ccts:"КУ", stat_langs:"Мов", stat_cantons:"Кантони", section_ccts:"Колективні угоди", section_apps:"Інструменти партнерів", search_title:"Пошук", nav_home:"Головна", nav_search:"Пошук", nav_info:"Про нас", btn_detail:"Переглянути", btn_share:"Поділитись", btn_print:"Друкувати", share_wp:"WhatsApp", share_email:"Email", share_copy:"Копіювати", share_print:"Друкувати", disclaimer:"Цей огляд є лише інформативним. Не є юридичною консультацією.", source_link:"Офіційний текст →", dfo_label:"ЗОБ · Обов'язково", not_dfo:"Немає ЗОБ" },
+};
 
-  function doSearch() {
-    const q = document.getElementById('heroSearch').value;
-    if (q) document.getElementById('repertoire').scrollIntoView({ behavior: 'smooth' });
-  }
+function t(key) { return (TRANSLATIONS[currentLang]||TRANSLATIONS['fr'])[key] || key; }
 
-  document.getElementById('heroSearch').addEventListener('keydown', function(e) {
-    if (e.key === 'Enter') doSearch();
+function applyTranslations() {
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    const val = t(key);
+    if(key === 'hero_title') el.innerHTML = val;
+    else el.textContent = val;
   });
-
-  // Scroll animations
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.style.opacity = '1';
-        entry.target.style.transform = 'translateY(0)';
-      }
-    });
-  }, { threshold: 0.1 });
-
-  document.querySelectorAll('.cct-card, .app-card, .step, .lang-card').forEach(el => {
-    el.style.opacity = '0';
-    el.style.transform = 'translateY(20px)';
-    el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-    observer.observe(el);
-  });
-</script>
-
-<script>
-// Load real CCT data from API
-async function loadCCTs() {
-  try {
-    const resp = await fetch('/api/cct/?is_dfo=true');
-    const data = await resp.json();
-    if (data.total > 0) {
-      // Update stats
-      document.querySelectorAll('.hero-num-val').forEach((el, i) => {
-        if (i === 0) el.textContent = data.total + '+';
-      });
-      // Update grid with real data
-      renderCCTGrid(data.data.slice(0, 6));
-    }
-  } catch(e) { console.log('API not available, using demo data'); }
+  document.documentElement.lang = currentLang;
+  // Re-render CCTs with new lang
+  if(allCCTs.length) renderCCTs(allCCTs);
 }
 
-function renderCCTGrid(ccts) {
-  const grid = document.getElementById('cctGrid');
-  if (!grid || !ccts.length) return;
-  const colors = {restauration:'#FFF0F2',construction:'#F0F4FF',nettoyage:'#F0FFF4',
+// ═══════════════════════════════════════════════
+// NAVIGATION
+// ═══════════════════════════════════════════════
+function showPage(page) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('page-'+page).classList.add('active');
+  const tab = document.getElementById('tab-'+page);
+  if(tab) tab.classList.add('active');
+  window.scrollTo({top:0});
+}
+
+// ═══════════════════════════════════════════════
+// LANGUAGE SWITCHING
+// ═══════════════════════════════════════════════
+document.getElementById('langRow').addEventListener('click', e => {
+  const btn = e.target.closest('.lang-pill');
+  if(!btn) return;
+  document.querySelectorAll('.lang-pill').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  currentLang = btn.dataset.lang;
+  applyTranslations();
+  showToast(getToastMsg(currentLang));
+});
+
+function getToastMsg(lang) {
+  const msgs = {fr:'Français activé',de:'Deutsch aktiviert',it:'Italiano attivato',
+    en:'English activated',pt:'Português ativado',es:'Español activado',
+    sq:'Shqip aktivizuar',bs:'Bosanski aktiviran',tr:'Türkçe etkinleştirildi',uk:'Українська увімкнена'};
+  return msgs[lang] || lang;
+}
+
+// ═══════════════════════════════════════════════
+// API & DATA
+// ═══════════════════════════════════════════════
+async function loadCCTs() {
+  try {
+    const [r1, r2] = await Promise.all([
+      fetch('/api/cct/'),
+      fetch('/api/cct/status')
+    ]);
+    const data = await r1.json();
+    const status = await r2.json();
+    
+    allCCTs = data.data || [];
+    
+    // Update stats
+    document.getElementById('statTotal').textContent = allCCTs.length;
+    document.getElementById('statDfo').textContent = allCCTs.filter(c=>c.is_dfo).length;
+    
+    // Update indicator
+    if(status.last_auto_check) {
+      const d = new Date(status.last_auto_check);
+      document.getElementById('updateDot').innerHTML = 
+        `<span class="update-dot">Fedlex ${d.toLocaleDateString('fr-CH')}</span>`;
+    }
+    
+    renderCCTs(allCCTs);
+  } catch(e) {
+    document.getElementById('cctList').innerHTML = 
+      '<p style="padding:20px;color:var(--gray-5);text-align:center">Chargement impossible. Réessayez.</p>';
+  }
+}
+
+function getCCTName(cct) {
+  const key = 'name_' + currentLang;
+  return cct[key] || cct.name;
+}
+
+function renderCCTs(ccts) {
+  const filtered = currentFilter === 'all' ? ccts :
+    currentFilter === 'dfo' ? ccts.filter(c=>c.is_dfo) :
+    ccts.filter(c=>c.branch===currentFilter);
+  
+  const container = document.getElementById('cctList');
+  if(!filtered.length) {
+    container.innerHTML = '<p style="padding:20px;color:var(--gray-5);text-align:center" data-i18n="no_results">Aucun résultat</p>';
+    return;
+  }
+  
+  const bgMap = {restauration:'#FFF0F2',construction:'#F0F4FF',nettoyage:'#F0FFF4',
     coiffure:'#FFF0FA',horlogerie:'#FFFAF0',industrie:'#F0F8FF',artisanat:'#FFFDF0',
-    alimentation:'#FFF8F0',securite:'#F5F5FF',services:'#F0F8FF',automobile:'#F5F0FF'};
-  grid.innerHTML = ccts.map(cct => {
-    const bg = colors[cct.branch] || '#F5F5F3';
-    const wage = cct.min_wage_chf ? `CHF ${Number(cct.min_wage_chf).toLocaleString('fr-CH')}/m` : '—';
+    alimentation:'#FFF8F0',securite:'#F5F5FF',services:'#EFF9FF',automobile:'#F5F0FF',
+    commerce:'#FFFFF0',sante:'#F0FFF8',electricite:'#FFFEF0',interim:'#FFF5F0',
+    second_oeuvre:'#F8F5FF',location_services:'#F0F5FF'};
+  
+  container.innerHTML = filtered.map(cct => {
+    const name = getCCTName(cct);
+    const bg = bgMap[cct.branch] || '#F5F5F3';
+    const wage = cct.min_wage_chf ? `CHF ${Math.round(cct.min_wage_chf).toLocaleString('fr-CH')}` : '—';
     const vac = cct.vacation_weeks ? `${cct.vacation_weeks} sem.` : '—';
     const hrs = cct.weekly_hours ? `${cct.weekly_hours}h` : '—';
-    const until = cct.dfo_until ? `Valable jusqu'au ${new Date(cct.dfo_until).toLocaleDateString('fr-CH')}` : '';
-    return `<a href="/api/cct/${cct.rs_number}" class="cct-card">
+    const badgeDfo = cct.is_dfo ? `<span class="badge-dfo">DFO</span>` : '';
+    const badgeScope = cct.scope_cantons ? `<span class="badge-reg">Régionale</span>` : `<span class="badge-fed">CH</span>`;
+    
+    return `<a class="cct-card" href="#" onclick="openSheet('${cct.rs_number}');return false;">
       <div class="cct-card-top">
-        <div class="cct-emoji" style="background:${bg}">${cct.emoji || '📄'}</div>
-        <div class="cct-badges">
-          ${cct.is_dfo ? '<span class="badge badge-dfo">DFO</span>' : ''}
-          ${!cct.scope_cantons ? '<span class="badge badge-fed">Fédéral</span>' : '<span class="badge badge-reg">Régionale</span>'}
+        <div class="cct-card-left">
+          <div class="cct-emoji" style="background:${bg}">${cct.emoji||'📄'}</div>
+          <div>
+            <div class="cct-name">${name}</div>
+            <div class="cct-branch">${cct.scope_description_fr||cct.branch||''}</div>
+          </div>
         </div>
+        <div class="cct-badges">${badgeDfo}${badgeScope}</div>
       </div>
-      <div class="cct-name">${cct.name}</div>
-      <div class="cct-branch">${cct.scope_description_fr || cct.branch || ''}</div>
-      ${until ? `<div style="font-size:11px;color:#888;margin-bottom:8px">${until}</div>` : ''}
       <div class="cct-stats">
-        <div class="cct-stat"><strong>${wage}</strong>Salaire min.</div>
-        <div class="cct-stat"><strong>${vac}</strong>Vacances</div>
-        <div class="cct-stat"><strong>${hrs}</strong>Hebdo</div>
+        <div class="cct-stat"><span class="cct-stat-val">${wage}</span><span class="cct-stat-lbl">Min./mois</span></div>
+        <div class="cct-stat"><span class="cct-stat-val">${vac}</span><span class="cct-stat-lbl">Vacances</span></div>
+        <div class="cct-stat"><span class="cct-stat-val">${hrs}</span><span class="cct-stat-lbl">Hebdo</span></div>
+      </div>
+      <div class="cct-actions">
+        <span class="btn-action btn-detail">${t('btn_detail')} →</span>
+        <span class="btn-action btn-share" onclick="shareCCT(event,'${cct.rs_number}','${name.replace(/'/g,"\\'")}')">⬆ ${t('btn_share')}</span>
+        <span class="btn-action btn-print" onclick="printCCT(event,'${cct.rs_number}')">⎙ ${t('btn_print')}</span>
       </div>
     </a>`;
   }).join('');
-  // Re-observe for animations
-  document.querySelectorAll('.cct-card').forEach(el => {
-    el.style.opacity = '0'; el.style.transform = 'translateY(20px)';
-    el.style.transition = 'opacity 0.55s ease, transform 0.55s ease';
-    observer.observe(el);
+}
+
+// ═══════════════════════════════════════════════
+// FILTERS
+// ═══════════════════════════════════════════════
+function setFilter(el, filter) {
+  document.querySelectorAll('.filter-chip').forEach(c=>c.classList.remove('active'));
+  el.classList.add('active');
+  currentFilter = filter;
+  renderCCTs(allCCTs);
+}
+
+// ═══════════════════════════════════════════════
+// SEARCH — Real-time with dropdown
+// ═══════════════════════════════════════════════
+function setupSearch(inputId, dropdownId) {
+  const input = document.getElementById(inputId);
+  const dropdown = document.getElementById(dropdownId);
+  if(!input) return;
+  
+  input.addEventListener('input', () => {
+    const q = input.value.trim();
+    const clearBtn = document.getElementById('searchClear');
+    if(clearBtn) clearBtn.classList.toggle('visible', q.length > 0);
+    
+    clearTimeout(searchTimeout);
+    if(q.length < 2) { dropdown.classList.remove('open'); return; }
+    
+    searchTimeout = setTimeout(async () => {
+      // Local search first (instant)
+      const local = allCCTs.filter(c => {
+        const haystack = [c.name, c.branch, c.scope_description_fr,
+          c['name_'+currentLang], c.name_de, c.name_it, c.name_en,
+          c.name_tr, c.name_uk, c.name_sq, c.name_bs].filter(Boolean).join(' ').toLowerCase();
+        return haystack.includes(q.toLowerCase());
+      }).slice(0,6);
+      
+      showDropdown(local, dropdown, q);
+      
+      // Then API search for better results
+      try {
+        const r = await fetch(`/api/search/?q=${encodeURIComponent(q)}`);
+        const d = await r.json();
+        if(d.data && d.data.length) showDropdown(d.data.slice(0,6), dropdown, q);
+      } catch(e) {}
+    }, 180);
+  });
+  
+  input.addEventListener('keydown', e => {
+    if(e.key === 'Escape') { dropdown.classList.remove('open'); input.blur(); }
+    if(e.key === 'Enter' && allCCTs.length) {
+      const q = input.value.trim();
+      if(q) { dropdown.classList.remove('open'); }
+    }
+  });
+  
+  document.addEventListener('click', e => {
+    if(!input.contains(e.target) && !dropdown.contains(e.target))
+      dropdown.classList.remove('open');
   });
 }
 
-// Load search results from real API
-async function doSearch() {
-  const q = document.getElementById('searchInput').value.trim();
-  if (q.length < 2) return;
-  try {
-    const resp = await fetch(`/api/search/?q=${encodeURIComponent(q)}`);
-    const data = await resp.json();
-    const container = document.getElementById('heroResults');
-    if (data.data && data.data.length) {
-      container.innerHTML = data.data.slice(0,5).map(cct => `
-        <a href="#" class="sw-item">
-          <div class="sw-icon" style="background:#F5F5F3">${cct.emoji || '📄'}</div>
-          <div class="sw-info">
-            <div class="sw-name">${cct.name}</div>
-            <div class="sw-meta">${cct.branch || ''} ${cct.is_dfo ? '· DFO' : ''}</div>
-          </div>
-          ${cct.is_dfo ? '<span class="dfo-tag">DFO</span>' : ''}
-          <span class="sw-arrow">›</span>
-        </a>`).join('');
-    } else {
-      document.getElementById('repertoire').scrollIntoView({behavior:'smooth'});
-    }
-  } catch(e) {
-    document.getElementById('repertoire').scrollIntoView({behavior:'smooth'});
+function showDropdown(ccts, dropdown, query) {
+  if(!ccts.length) {
+    dropdown.innerHTML = `<div class="dropdown-empty">Aucun résultat pour « ${query} »</div>`;
+    dropdown.classList.add('open');
+    return;
+  }
+  const bgMap = {restauration:'#FFF0F2',construction:'#F0F4FF',nettoyage:'#F0FFF4',coiffure:'#FFF0FA',horlogerie:'#FFFAF0'};
+  dropdown.innerHTML = ccts.map(c => {
+    const name = getCCTName(c);
+    const bg = bgMap[c.branch] || '#F5F5F3';
+    const tag = c.is_dfo ? '<span class="d-tag">DFO</span>' : '';
+    return `<a class="dropdown-item" href="#" onclick="openSheet('${c.rs_number}');return false;">
+      <div class="d-icon" style="background:${bg}">${c.emoji||'📄'}</div>
+      <div class="d-info">
+        <div class="d-name">${name}</div>
+        <div class="d-meta">${c.branch||''} ${c.min_wage_chf?'· CHF '+Math.round(c.min_wage_chf)+'/m':''}</div>
+      </div>
+      ${tag}
+    </a>`;
+  }).join('');
+  dropdown.classList.add('open');
+}
+
+function clearSearch() {
+  const input = document.getElementById('mainSearch');
+  if(input) { input.value = ''; input.focus(); }
+  document.getElementById('searchClear')?.classList.remove('visible');
+  document.getElementById('searchDropdown')?.classList.remove('open');
+}
+
+// ═══════════════════════════════════════════════
+// CCT DETAIL SHEET
+// ═══════════════════════════════════════════════
+async function openSheet(rsNumber) {
+  const overlay = document.getElementById('sheetOverlay');
+  const sheet = document.getElementById('sheet');
+  const content = document.getElementById('sheetContent');
+  
+  // Find local first
+  let cct = allCCTs.find(c => c.rs_number === rsNumber);
+  
+  if(!cct) {
+    content.innerHTML = '<div style="padding:40px;text-align:center">Chargement…</div>';
+    overlay.classList.add('open');
+    sheet.classList.add('open');
+    try {
+      const r = await fetch(`/api/cct/${rsNumber}`);
+      cct = await r.json();
+    } catch(e) { return; }
+  }
+  
+  const name = getCCTName(cct);
+  const wage = cct.min_wage_chf ? `CHF ${Math.round(cct.min_wage_chf).toLocaleString('fr-CH')}` : '—';
+  const vac = cct.vacation_weeks ? `${cct.vacation_weeks} sem.` : '—';
+  const hrs = cct.weekly_hours ? `${cct.weekly_hours}h` : '—';
+  const has13 = cct.has_13th_salary ? '✅ Oui' : '❌ Non';
+  const dfoUntil = cct.dfo_until ? new Date(cct.dfo_until).toLocaleDateString('fr-CH') : null;
+  
+  content.innerHTML = `
+    <div class="sheet-header">
+      <span class="sheet-emoji">${cct.emoji||'📄'}</span>
+      <div class="sheet-title">${name}</div>
+      <div class="sheet-scope">${cct.scope_description_fr||''}</div>
+      ${cct.is_dfo ? `<div style="margin-top:8px"><span class="badge-dfo" style="font-size:11px;padding:4px 10px">${t('dfo_label')}${dfoUntil?` · jusqu'au ${dfoUntil}`:''}</span></div>` : ''}
+    </div>
+    
+    <div class="sheet-section">
+      <div class="sheet-section-title">Conditions principales</div>
+      <div class="sheet-grid">
+        <div class="sheet-stat"><span class="sheet-stat-val" style="color:var(--red)">${wage}</span><span class="sheet-stat-lbl">Salaire min./mois</span></div>
+        <div class="sheet-stat"><span class="sheet-stat-val">${vac}</span><span class="sheet-stat-lbl">Vacances/an</span></div>
+        <div class="sheet-stat"><span class="sheet-stat-val">${hrs}</span><span class="sheet-stat-lbl">Hebdomadaire</span></div>
+        <div class="sheet-stat"><span class="sheet-stat-val" style="font-size:16px">${has13}</span><span class="sheet-stat-lbl">13e salaire</span></div>
+      </div>
+    </div>
+    
+    <div class="share-grid">
+      <button class="share-btn whatsapp" onclick="shareWhatsApp('${rsNumber}','${name.replace(/'/g,"\\'")}')">
+        <span class="share-icon"></span>${t('share_wp')}
+      </button>
+      <button class="share-btn email" onclick="shareEmail('${rsNumber}','${name.replace(/'/g,"\\'")}')">
+        <span class="share-icon"></span>${t('share_email')}
+      </button>
+      <button class="share-btn copy" onclick="copyLink('${rsNumber}')">
+        <span class="share-icon"></span>${t('share_copy')}
+      </button>
+      <button class="share-btn print" onclick="printCCTDirect('${name.replace(/'/g,"\\'")}','${wage}','${vac}','${hrs}','${has13}','${cct.scope_description_fr||''}','${cct.source_url||''}')">
+        <span class="share-icon"></span>${t('share_print')}
+      </button>
+    </div>
+    
+    ${cct.source_url ? `
+    <a href="${cct.source_url}" target="_blank" class="source-link">
+      <span>📜 ${t('source_link')}</span>
+      <span style="color:var(--gray-3)">›</span>
+    </a>` : ''}
+    
+    <div class="disclaimer">⚠️ ${t('disclaimer')}</div>
+  `;
+  
+  overlay.classList.add('open');
+  sheet.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeSheet() {
+  document.getElementById('sheetOverlay').classList.remove('open');
+  document.getElementById('sheet').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+// Swipe down to close
+let touchStartY = 0;
+document.getElementById('sheet').addEventListener('touchstart', e => { touchStartY = e.touches[0].clientY; });
+document.getElementById('sheet').addEventListener('touchend', e => {
+  if(e.changedTouches[0].clientY - touchStartY > 80) closeSheet();
+});
+
+// ═══════════════════════════════════════════════
+// SHARE & PRINT
+// ═══════════════════════════════════════════════
+function shareCCT(event, rs, name) {
+  event.preventDefault(); event.stopPropagation();
+  openSheet(rs);
+}
+
+function shareWhatsApp(rs, name) {
+  const url = `${location.origin}/#cct-${rs}`;
+  const msg = `🇨🇭 ${name}\nVoir sur CCTswiss.ch: ${url}`;
+  window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, '_blank');
+}
+
+function shareEmail(rs, name) {
+  const url = `${location.origin}/#cct-${rs}`;
+  const sub = `Convention collective: ${name}`;
+  const body = `Bonjour,\n\nVoici les informations sur la convention collective:\n${name}\n\nConsultez la fiche complète: ${url}\n\n---\nCCTswiss.ch — Le répertoire suisse des CCT`;
+  window.open(`mailto:?subject=${encodeURIComponent(sub)}&body=${encodeURIComponent(body)}`);
+}
+
+function copyLink(rs) {
+  const url = `${location.origin}/#cct-${rs}`;
+  if(navigator.clipboard) {
+    navigator.clipboard.writeText(url).then(() => showToast('Lien copié ✓'));
+  } else {
+    const el = document.createElement('input');
+    el.value = url; document.body.appendChild(el);
+    el.select(); document.execCommand('copy'); document.body.removeChild(el);
+    showToast('Lien copié ✓');
   }
 }
 
-// Init on load
-window.addEventListener('DOMContentLoaded', () => { loadCCTs(); });
-</script>
+function printCCT(event, rs) {
+  event.preventDefault(); event.stopPropagation();
+  const cct = allCCTs.find(c => c.rs_number === rs);
+  if(!cct) { openSheet(rs); return; }
+  printCCTDirect(getCCTName(cct),
+    cct.min_wage_chf ? `CHF ${Math.round(cct.min_wage_chf)}` : '—',
+    cct.vacation_weeks ? `${cct.vacation_weeks} sem.` : '—',
+    cct.weekly_hours ? `${cct.weekly_hours}h` : '—',
+    cct.has_13th_salary ? 'Oui' : 'Non',
+    cct.scope_description_fr||'',
+    cct.source_url||'');
+}
 
+function printCCTDirect(name, wage, vac, hrs, has13, scope, source) {
+  const w = window.open('', '_blank', 'width=700,height=900');
+  w.document.write(`<!DOCTYPE html><html><head><meta charset="UTF-8">
+  <title>${name}</title>
+  <style>
+    body{font-family:Arial,sans-serif;padding:40px;color:#000;max-width:680px;margin:0 auto}
+    .logo{color:#C8102E;font-size:18px;font-weight:900;margin-bottom:24px}
+    h1{font-size:22px;margin-bottom:8px}
+    .scope{color:#666;font-size:14px;margin-bottom:24px}
+    table{width:100%;border-collapse:collapse;margin-bottom:20px}
+    td{padding:10px 14px;border:1px solid #ddd;font-size:14px}
+    td:first-child{font-weight:600;width:45%;background:#f9f9f9}
+    .dfo{background:#E8F5E9;color:#1B5E20;padding:4px 10px;border-radius:4px;font-size:12px;font-weight:700;display:inline-block;margin-bottom:16px}
+    .disclaimer{background:#FFFBEB;border:1px solid #FDE68A;padding:12px;font-size:11px;color:#92400E;border-radius:4px}
+    .footer{margin-top:24px;font-size:11px;color:#999;border-top:1px solid #eee;padding-top:12px}
+    @media print{body{padding:20px}}
+  </style></head><body>
+  <div class="logo">🇨🇭 CCTswiss.ch</div>
+  <h1>${name}</h1>
+  <div class="scope">${scope}</div>
+  <span class="dfo">✓ Déclarée de force obligatoire (DFO)</span>
+  <table>
+    <tr><td>Salaire minimum mensuel</td><td><strong>${wage}</strong></td></tr>
+    <tr><td>Vacances annuelles</td><td>${vac}</td></tr>
+    <tr><td>Durée hebdomadaire</td><td>${hrs}</td></tr>
+    <tr><td>13e salaire</td><td>${has13}</td></tr>
+    ${source?`<tr><td>Source officielle</td><td><a href="${source}">${source}</a></td></tr>`:''}
+  </table>
+  <div class="disclaimer">⚠️ Ce document est fourni à titre informatif uniquement. Il ne constitue pas un avis juridique. Consultez le texte officiel sur Fedlex ou un professionnel du droit du travail.</div>
+  <div class="footer">Généré le ${new Date().toLocaleDateString('fr-CH')} · CCTswiss.ch · Groupe NEO</div>
+  <script>window.onload=()=>{window.print();}<\/script>
+  </body></html>`);
+  w.document.close();
+}
+
+// ═══════════════════════════════════════════════
+// TOAST
+// ═══════════════════════════════════════════════
+let toastTimer;
+function showToast(msg) {
+  const toast = document.getElementById('toast');
+  toast.textContent = msg;
+  toast.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => toast.classList.remove('show'), 2200);
+}
+
+// ═══════════════════════════════════════════════
+// DEEP LINK (#cct-rs)
+// ═══════════════════════════════════════════════
+function handleHash() {
+  const hash = location.hash;
+  if(hash.startsWith('#cct-')) {
+    const rs = hash.replace('#cct-','');
+    setTimeout(() => openSheet(rs), 300);
+  }
+}
+
+// ═══════════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════════
+document.addEventListener('DOMContentLoaded', () => {
+  loadCCTs();
+  setupSearch('mainSearch','searchDropdown');
+  setupSearch('pageSearch','pageDropdown');
+  handleHash();
+  window.addEventListener('hashchange', handleHash);
+  
+  // Swipe/scroll behavior for filters
+  const hero = document.querySelector('.hero');
+  if(hero) hero.style.paddingBottom = '20px';
+});
+</script>
 </body>
 </html>
