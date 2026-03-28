@@ -140,7 +140,7 @@ Input: {json.dumps(names, ensure_ascii=False)}"""
     return {"translated": translated, "errors": errors}
 
 
-@router.delete("/clear")
+@router.post("/clear")
 async def clear_ccts(request: Request):
     """Clear all CCT data for fresh reseed"""
     secret = request.headers.get("X-Seed-Secret","")
