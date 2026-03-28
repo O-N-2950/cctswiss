@@ -22,9 +22,8 @@ async def seed_database(request: Request, x_seed_secret: str = Header(None)):
     async with pool.acquire() as conn:
         for cct in CCT_SEED_DATA:
             try:
-                existing = await conn.fetchval("SELECT content_hash FROM cct WHERE rs_number=$1", cct["rs_number"])
                 cantons = cct.get("scope_cantons")
-                if existing is None:
+                if True:  # Always upsert
                     await conn.execute("""
                         INSERT INTO cct (
                             rs_number, name, name_de, name_it, name_en, name_pt, name_es,
@@ -60,8 +59,6 @@ async def seed_database(request: Request, x_seed_secret: str = Header(None)):
                         json.dumps({"from": "curated_dataset_2025"})
                     )
                     inserted += 1
-                else:
-                    updated += 1
             except Exception as e:
                 errors.append({"rs": cct["rs_number"], "error": str(e)})
     return JSONResponse({"status":"ok","inserted":inserted,"updated":updated,"errors":errors,"total":len(CCT_SEED_DATA)})
