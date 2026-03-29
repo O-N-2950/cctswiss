@@ -64,14 +64,16 @@ body { font-family:'DM Sans',sans-serif; background:var(--gray-1); color:var(--b
 
 /* Lang pills in header */
 .lang-row {
-  display:flex; gap:4px; align-items:center; flex-wrap:wrap;
+  display:flex; gap:3px; align-items:center; flex-wrap:nowrap;
+  overflow-x:auto; scrollbar-width:none;
   justify-content:flex-end; flex:1;
 }
+.lang-row::-webkit-scrollbar{display:none}
 .lang-pill {
-  height:28px; padding:0 9px;
+  flex-shrink:0; height:26px; padding:0 8px;
   border:1.5px solid var(--gray-3);
   border-radius:20px; background:transparent;
-  font-family:'DM Sans',sans-serif; font-size:11px; font-weight:600;
+  font-family:'DM Mono',monospace; font-size:10px; font-weight:500;
   color:var(--gray-5); cursor:pointer; transition:all .15s;
   white-space:nowrap;
 }
@@ -82,6 +84,7 @@ body { font-family:'DM Sans',sans-serif; background:var(--gray-1); color:var(--b
 .hero {
   background:#fff;
   padding: 28px 16px 24px;
+  overflow:hidden;
 }
 .hero-badge {
   display:inline-flex; align-items:center; gap:6px;
@@ -90,7 +93,7 @@ body { font-family:'DM Sans',sans-serif; background:var(--gray-1); color:var(--b
   font-size:11px; font-weight:700; letter-spacing:.06em; text-transform:uppercase;
   margin-bottom:16px;
 }
-.hero-badge span { width:6px; height:6px; background:var(--red); border-radius:50%; animation:pulse 2s infinite; display:block; }
+.badge-dot { width:6px; height:6px; min-width:6px; background:var(--red); border-radius:50%; animation:pulse 2s infinite; display:inline-block; }
 @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.4;transform:scale(1.4)} }
 
 .hero h1 {
@@ -494,7 +497,7 @@ body { font-family:'DM Sans',sans-serif; background:var(--gray-1); color:var(--b
 
   <!-- HERO SEARCH -->
   <section class="hero">
-    <div class="hero-badge"><span></span> <span data-i18n="live_badge">Mis à jour automatiquement · Fedlex officiel</span></div>
+    <div class="hero-badge"><span class="badge-dot"></span><span data-i18n="live_badge">Fedlex officiel · Mis à jour chaque nuit</span></div>
     <h1 data-i18n="hero_title">Votre <em>convention collective</em> en 30 secondes</h1>
     <p class="hero-sub" data-i18n="hero_sub">Cherchez votre CCT par branche, métier ou secteur. Gratuit, sans inscription.</p>
     <div class="search-wrap">
