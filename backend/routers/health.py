@@ -1,5 +1,7 @@
+"""CCTswiss — /health"""
 from fastapi import APIRouter, Request
 from fastapi.responses import JSONResponse
+from datetime import datetime
 
 router = APIRouter()
 
@@ -8,15 +10,20 @@ router = APIRouter()
 async def health(request: Request):
     pool = getattr(request.app.state, "pool", None)
     db_ok = False
+    total_ccts = 0
+    
     if pool:
         try:
-            async with pool.acquire() as conn:
-                await conn.fetchval("SELECT 1")
+            total_ccts = await pool.fetchval("SELECT COUNT(*) FROM cct")
             db_ok = True
         except:
-            pass
+            db_ok = False
+    
     return JSONResponse({
-        "status": "ok",
+        "status": "ok" if db_ok else "degraded",
         "app": "CCTswiss.ch",
-        "db": "connected" if db_ok else "starting"
+        "version": "2.0",
+        "db": "connected" if db_ok else "error",
+        "total_ccts": total_ccts,
+        "timestamp": datetime.utcnow().isoformat() + "Z",
     })

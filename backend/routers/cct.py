@@ -37,7 +37,8 @@ async def list_ccts(
                    branch, emoji, is_dfo, dfo, scope_cantons, scope_description_fr,
                    min_wage_chf, salary_min_hourly, salary_min_monthly,
                    vacation_weeks, weekly_hours, has_13th_salary,
-                   source_url, dfo_until, data_complete, updated_at
+                   source_url, dfo_until, data_complete, updated_at,
+                   noga_codes, ijm_min_rate, laa_min_rate, membership_required
             FROM cct {where}
             ORDER BY is_dfo DESC, name ASC
         """, *params)
