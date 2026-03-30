@@ -310,6 +310,58 @@ async def check_compliance(request: Request, pool: asyncpg.Pool = Depends(get_po
     })
 
 
+# ── GET /ccnt-contribution-rules — backward compat (before /{rs_number}) ─
+@router.get("/ccnt-contribution-rules")
+async def ccnt_contribution_rules_compat():
+    """
+    Backward compatibility — maintenu pour SwissRH < v2025-06.
+    Migrez vers /api/cct/paritaire-rules?rs_number=221.215.329.4
+    """
+    return {
+        "_deprecated": True,
+        "_successor": "/api/cct/paritaire-rules?rs_number=221.215.329.4",
+        "_note": "Ce endpoint est maintenu pour compatibilité. Migrez vers /api/cct/paritaire-rules.",
+        "cct": "CCNT Hôtels, Restaurants et Cafés",
+        "rs_number": "221.215.329.4",
+        "version": "2025",
+        "emetteur": "CCNT · Dufourstrasse 23 · Case postale 357 · 4010 Bâle",
+        "contact": "info@ccnt.ch · www.ccnt.ch",
+        "invoice_number_formula": "{ccnt_etablissement_number}0{year}{seq_padded_2}",
+        "employer_contribution_rate": 0.3333,
+        "tva_rate": 0.04,
+        "roles": {
+            "soumis": {
+                "label": "Collaborateur soumis à la CCNT",
+                "rules": [
+                    {"duration_min_months": 1, "duration_max_months": 6,  "amount_chf": 49.50},
+                    {"duration_min_months": 7, "duration_max_months": 12, "amount_chf": 99.00},
+                ]
+            },
+            "chef_etablissement": {
+                "label": "Chef d'établissement / Directeur",
+                "rules": [{"duration_min_months": 1, "duration_max_months": 12, "amount_chf": 0.00}]
+            },
+            "apprenti": {
+                "label": "Apprenti",
+                "rules": [{"duration_min_months": 1, "duration_max_months": 12, "amount_chf": 0.00}]
+            },
+            "exclu": {
+                "label": "Exclu du champ d'application",
+                "rules": [{"duration_min_months": 1, "duration_max_months": 12, "amount_chf": 0.00}]
+            }
+        },
+        "logic": (
+            "1. Calculer la durée d'engagement en mois pour l'année déclarée. "
+            "2. Appliquer le montant selon la tranche (1-6 mois = 49.50 CHF, 7-12 mois = 99.00 CHF). "
+            "3. Les chefs d'établissement, directeurs, apprentis et exclus = 0.00 CHF. "
+            "4. Total collaborateurs = somme des montants individuels. "
+            "5. Contribution établissement = Total collaborateurs / 3 (arrondi au centime). "
+            "6. Total à verser = Total collaborateurs + Contribution établissement. "
+            "7. Numéro facture = ccnt_etablissement_number + '0' + année + séquence (01)."
+        )
+    }
+
+
 # ── GET /{rs_number} — MUST BE LAST ──────────────────────────────────
 @router.get("/{rs_number}")
 async def get_cct(rs_number: str, lang: str = Query("fr"), pool: asyncpg.Pool = Depends(get_pool)):
