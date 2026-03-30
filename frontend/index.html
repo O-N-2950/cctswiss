@@ -2,1148 +2,1222 @@
 <html lang="fr" data-lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="description" content="CCTswiss.ch — Conventions collectives de travail en Suisse. Gratuit, multilingue, à jour.">
-<meta name="theme-color" content="#C8102E">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover">
+<meta name="description" content="CCTswiss.ch — Le répertoire suisse des conventions collectives. Gratuit, 11 langues, mis à jour chaque nuit depuis Fedlex.">
+<meta name="theme-color" content="#0A0A0A">
+<meta property="og:title" content="CCTswiss.ch">
+<meta property="og:description" content="Votre convention collective en 30 secondes. 41 CCTs, 11 langues.">
+<meta property="og:url" content="https://cctswiss.ch">
 <title>CCTswiss.ch</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%23C8102E'/><text x='50%25' y='22' font-family='Arial Black' font-weight='900' font-size='11' fill='white' text-anchor='middle'>CCT</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Instrument+Serif:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-/* ═══════════════════════════════════════════════
-   DESIGN SYSTEM — Swiss Precision / Mobile App
-═══════════════════════════════════════════════ */
+/* ╔══════════════════════════════════════════════╗
+   ║  CCTSWISS — SWISS BRUTALIST EDITORIAL        ║
+   ║  Bebas Neue headers · Instrument Serif accent ║
+   ║  DM Sans body · DM Mono data                 ║
+   ╚══════════════════════════════════════════════╝ */
+
 :root {
+  /* Core palette */
   --red:      #C8102E;
-  --red-d:    #9B0B22;
-  --red-pale: #FFF0F2;
-  --winwin:   #1a6eb5;
-  --winwin-d: #124f87;
-  --winwin-pale: #EBF4FF;
+  --red-d:    #8B0B1F;
+  --off-white:#F5F3EF;
+  --paper:    #FAFAF8;
   --black:    #0A0A0A;
-  --gray-9:   #1C1C1E;
-  --gray-7:   #3A3A3C;
-  --gray-5:   #8E8E93;
-  --gray-3:   #C7C7CC;
-  --gray-1:   #F2F2F7;
+  --ink:      #1A1A1A;
+  --gray-1:   #F0EDE8;
+  --gray-2:   #E2DED8;
+  --gray-3:   #B0AAA2;
+  --gray-4:   #706B64;
   --white:    #FFFFFF;
-  --safe-top: env(safe-area-inset-top, 0px);
-  --safe-bot: env(safe-area-inset-bottom, 0px);
-  --r-sm: 10px;
-  --r-md: 14px;
-  --r-lg: 20px;
-  --shadow: 0 2px 12px rgba(0,0,0,.07), 0 1px 3px rgba(0,0,0,.05);
-  --shadow-lg: 0 8px 32px rgba(0,0,0,.12);
+
+  /* WIN WIN */
+  --ww:       #1a6eb5;
+  --ww-d:     #0d4a80;
+  --ww-pale:  #E8F2FC;
+
+  /* System */
+  --safe-t:   env(safe-area-inset-top,0px);
+  --safe-b:   env(safe-area-inset-bottom,0px);
+
+  /* Typography scale */
+  --display:  'Bebas Neue', sans-serif;
+  --serif:    'Instrument Serif', Georgia, serif;
+  --sans:     'DM Sans', system-ui, sans-serif;
+  --mono:     'DM Mono', monospace;
 }
 
-*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
-html { scroll-behavior: smooth; font-size: 16px; }
-body { font-family:'DM Sans',sans-serif; background:var(--gray-1); color:var(--black); overflow-x:hidden; -webkit-font-smoothing:antialiased; }
+/* ── RESET ─────────────────────────────────────── */
+*,*::before,*::after { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+html { scroll-behavior:smooth; }
+body {
+  font-family:var(--sans);
+  background:var(--off-white);
+  color:var(--ink);
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
 
-/* ── HEADER MOBILE-FIRST ── */
-.header {
-  position: sticky; top:0; z-index:100;
-  background:rgba(255,255,255,.95);
-  backdrop-filter: blur(20px) saturate(1.8);
-  -webkit-backdrop-filter: blur(20px) saturate(1.8);
-  border-bottom: 1px solid rgba(0,0,0,.06);
-  padding-top: var(--safe-top);
+/* ── HEADER ─────────────────────────────────────── */
+.hdr {
+  position:sticky; top:0; z-index:200;
+  background:var(--black);
+  padding-top:var(--safe-t);
+  border-bottom:2px solid var(--red);
 }
-.header-inner {
-  display:flex; align-items:center; justify-content:space-between;
-  padding: 12px 16px; gap:12px;
+.hdr-inner {
+  display:flex; align-items:center;
+  padding:0 24px; height:52px;
+  max-width:1200px; margin:0 auto; gap:16px;
 }
-.logo { display:flex; align-items:center; gap:9px; text-decoration:none; flex-shrink:0; }
-.logo-badge {
-  width:32px; height:32px; background:var(--red); border-radius:8px;
+.logo {
+  display:flex; align-items:center; gap:10px;
+  text-decoration:none; flex-shrink:0;
+}
+.logo-mark {
+  width:30px; height:30px;
+  background:var(--red); border-radius:6px;
   display:flex; align-items:center; justify-content:center;
-  font-family:'DM+Mono',monospace; font-size:10px; font-weight:600;
-  color:#fff; letter-spacing:-.5px; flex-shrink:0;
 }
-.logo-text { font-family:'Syne',sans-serif; font-size:17px; font-weight:700; color:var(--black); letter-spacing:-.5px; }
-.logo-text b { color:var(--red); font-weight:700; }
+.logo-mark svg { width:20px; height:20px; }
+.logo-wordmark {
+  font-family:var(--display);
+  font-size:22px; letter-spacing:.06em;
+  color:var(--white); line-height:1;
+}
+.logo-wordmark span { color:var(--red); }
 
-/* Lang pills in header */
-.lang-row {
-  display:flex; gap:3px; align-items:center; flex-wrap:nowrap;
+/* Lang row */
+.langs {
+  display:flex; gap:2px; flex:1;
+  justify-content:flex-end; flex-wrap:nowrap;
   overflow-x:auto; scrollbar-width:none;
-  justify-content:flex-end; flex:1;
 }
-.lang-row::-webkit-scrollbar{display:none}
-.lang-pill {
-  flex-shrink:0; height:26px; padding:0 8px;
-  border:1.5px solid var(--gray-3);
-  border-radius:20px; background:transparent;
-  font-family:'DM Mono',monospace; font-size:10px; font-weight:500;
-  color:var(--gray-5); cursor:pointer; transition:all .15s;
+.langs::-webkit-scrollbar { display:none; }
+.lang {
+  flex-shrink:0; height:28px; padding:0 10px;
+  background:transparent; border:1px solid rgba(255,255,255,.15);
+  border-radius:4px;
+  font-family:var(--mono); font-size:10px; font-weight:500;
+  color:rgba(255,255,255,.45); cursor:pointer;
+  transition:all .15s; letter-spacing:.06em;
   white-space:nowrap;
 }
-.lang-pill.active { background:var(--red); border-color:var(--red); color:#fff; }
-.lang-pill:not(.active):hover { border-color:var(--gray-7); color:var(--gray-7); }
+.lang.on { background:var(--red); border-color:var(--red); color:#fff; }
+.lang:not(.on):hover { border-color:rgba(255,255,255,.4); color:rgba(255,255,255,.8); }
 
-/* ── HERO SEARCH ── */
+/* ── HERO ─────────────────────────────────────────
+   KEY DESIGN CHOICE: Full-bleed dark hero,
+   giant Bebas Neue display type, red accent,
+   Instrument Serif for the italic "collective"
+──────────────────────────────────────────────── */
 .hero {
-  background:#fff;
-  padding: 28px 16px 24px;
-  overflow:hidden;
+  background:var(--black);
+  padding:48px 24px 40px;
+  position:relative; overflow:hidden;
+  border-bottom:1px solid rgba(255,255,255,.08);
 }
-.hero-badge {
-  display:inline-flex; align-items:center; gap:6px;
-  background:var(--red-pale); color:var(--red);
-  padding:5px 12px; border-radius:20px;
-  font-size:11px; font-weight:700; letter-spacing:.06em; text-transform:uppercase;
-  margin-bottom:16px;
+.hero::before {
+  content:'';
+  position:absolute; top:-60px; right:-60px;
+  width:320px; height:320px; border-radius:50%;
+  background:radial-gradient(circle, rgba(200,16,46,.18) 0%, transparent 70%);
+  pointer-events:none;
 }
-.badge-dot { width:6px; height:6px; min-width:6px; background:var(--red); border-radius:50%; animation:pulse 2s infinite; display:inline-block; }
-@keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.4;transform:scale(1.4)} }
+.hero-inner { max-width:1200px; margin:0 auto; }
 
-.hero h1 {
-  font-family:'Syne',sans-serif;
-  font-size:clamp(26px,7vw,44px);
-  font-weight:800; line-height:1.08;
-  letter-spacing:-.03em; color:var(--black);
-  margin-bottom:8px;
+/* Live badge — FIXED: no span selector, uses .dot class only */
+.live-badge {
+  display:inline-flex; align-items:center; gap:8px;
+  background:rgba(200,16,46,.15);
+  border:1px solid rgba(200,16,46,.35);
+  padding:5px 14px; border-radius:3px;
+  margin-bottom:28px;
 }
-.hero h1 em { font-style:italic; color:var(--red); }
-.hero-sub { font-size:14px; color:var(--gray-5); line-height:1.6; margin-bottom:20px; }
+.live-dot {
+  width:6px; height:6px; min-width:6px;
+  background:var(--red); border-radius:50%;
+  animation:pulse 2.4s ease-in-out infinite;
+  display:block; flex-shrink:0;
+}
+.live-text {
+  font-family:var(--mono); font-size:10px;
+  color:rgba(255,255,255,.7); letter-spacing:.1em;
+  text-transform:uppercase;
+}
+@keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.3;transform:scale(1.5)} }
 
-/* SEARCH BOX */
-.search-wrap {
-  position:relative; margin-bottom:12px;
+/* Display headline */
+.hero-h1 {
+  font-family:var(--display);
+  font-size:clamp(52px, 10vw, 120px);
+  line-height:.95; letter-spacing:.02em;
+  color:var(--white);
+  margin-bottom:20px;
 }
+.hero-h1 .accent {
+  display:block;
+  font-family:var(--serif);
+  font-style:italic;
+  font-size:.75em;
+  color:var(--red);
+  letter-spacing:-.01em;
+  line-height:1.1;
+}
+.hero-sub {
+  font-size:15px; color:rgba(255,255,255,.55);
+  line-height:1.65; margin-bottom:32px;
+  max-width:520px; font-weight:300;
+}
+
+/* Search — premium */
+.search-wrap { position:relative; margin-bottom:20px; max-width:640px; }
 .search-input {
-  width:100%; height:52px;
-  padding:0 52px 0 48px;
-  border:2px solid var(--gray-3); border-radius:var(--r-lg);
-  font-family:'DM Sans',sans-serif; font-size:16px; color:var(--black);
-  background:#fff; outline:none; transition:border .2s, box-shadow .2s;
-  -webkit-appearance:none;
+  width:100%; height:56px;
+  padding:0 56px 0 52px;
+  background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.15);
+  border-radius:6px;
+  font-family:var(--sans); font-size:16px;
+  color:var(--white); outline:none;
+  transition:all .2s; -webkit-appearance:none;
 }
-.search-input:focus { border-color:var(--red); box-shadow:0 0 0 4px rgba(200,16,46,.1); }
-.search-input::placeholder { color:var(--gray-3); }
-.search-icon {
-  position:absolute; left:16px; top:50%; transform:translateY(-50%);
-  color:var(--gray-5); font-size:18px; pointer-events:none;
+.search-input:focus {
+  background:rgba(255,255,255,.1);
+  border-color:var(--red);
+  box-shadow:0 0 0 3px rgba(200,16,46,.2);
 }
-.search-clear {
-  position:absolute; right:16px; top:50%; transform:translateY(-50%);
-  width:24px; height:24px; background:var(--gray-3); border:none;
-  border-radius:50%; color:#fff; font-size:14px; cursor:pointer;
+.search-input::placeholder { color:rgba(255,255,255,.3); }
+.s-icon {
+  position:absolute; left:17px; top:50%; transform:translateY(-50%);
+  font-size:18px; pointer-events:none; opacity:.5;
+}
+.s-clear {
+  position:absolute; right:14px; top:50%; transform:translateY(-50%);
+  width:28px; height:28px;
+  background:rgba(255,255,255,.15); border:none; border-radius:50%;
+  color:rgba(255,255,255,.7); font-size:15px; cursor:pointer;
   display:none; align-items:center; justify-content:center;
+  font-family:var(--sans); transition:background .15s;
 }
-.search-clear.visible { display:flex; }
+.s-clear.on { display:flex; }
+.s-clear:hover { background:rgba(255,255,255,.25); }
 
-/* FILTERS */
-.filters {
-  display:flex; gap:7px; overflow-x:auto; padding-bottom:4px;
-  scrollbar-width:none;
+/* Dropdown */
+.s-drop {
+  position:absolute; top:calc(100% + 8px); left:0; right:0;
+  background:var(--ink); border:1px solid rgba(255,255,255,.12);
+  border-radius:6px; box-shadow:0 20px 60px rgba(0,0,0,.6);
+  max-height:380px; overflow-y:auto; z-index:300; display:none;
 }
-.filters::-webkit-scrollbar { display:none; }
-.filter-chip {
-  flex-shrink:0; height:32px; padding:0 14px;
-  border:1.5px solid var(--gray-3); border-radius:20px;
-  background:#fff; font-size:13px; font-weight:500; color:var(--gray-7);
-  cursor:pointer; transition:all .15s; white-space:nowrap;
-}
-.filter-chip.active { background:var(--red); border-color:var(--red); color:#fff; }
-
-/* ── SEARCH RESULTS DROPDOWN ── */
-.search-dropdown {
-  position:absolute; top:calc(100% + 6px); left:0; right:0;
-  background:#fff; border-radius:var(--r-md);
-  box-shadow: var(--shadow-lg);
-  border:1px solid rgba(0,0,0,.06);
-  max-height:380px; overflow-y:auto;
-  z-index:200; display:none;
-}
-.search-dropdown.open { display:block; }
-.dropdown-item {
+.s-drop.on { display:block; }
+.s-item {
   display:flex; align-items:center; gap:12px;
   padding:12px 16px; cursor:pointer;
-  transition:background .1s; text-decoration:none; color:inherit;
+  border-bottom:1px solid rgba(255,255,255,.06);
+  text-decoration:none; color:var(--white);
+  transition:background .1s;
 }
-.dropdown-item:hover, .dropdown-item:focus { background:var(--gray-1); }
-.dropdown-item + .dropdown-item { border-top:1px solid var(--gray-1); }
-.d-icon { width:36px; height:36px; border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:18px; flex-shrink:0; }
-.d-info { flex:1; min-width:0; }
-.d-name { font-size:14px; font-weight:600; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-.d-meta { font-size:12px; color:var(--gray-5); margin-top:1px; }
-.d-tag { font-size:10px; font-weight:700; background:#E8F5E9; color:#1B5E20; padding:2px 7px; border-radius:8px; flex-shrink:0; }
-.dropdown-empty { padding:20px; text-align:center; color:var(--gray-5); font-size:14px; }
+.s-item:last-child { border-bottom:none; }
+.s-item:hover { background:rgba(255,255,255,.06); }
+.s-ico { width:36px; height:36px; border-radius:6px; display:flex; align-items:center; justify-content:center; font-size:18px; flex-shrink:0; }
+.s-name { font-size:13px; font-weight:500; flex:1; min-width:0; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.s-meta { font-family:var(--mono); font-size:10px; color:rgba(255,255,255,.4); margin-top:2px; }
+.s-tag { font-family:var(--mono); font-size:9px; background:rgba(200,16,46,.3); color:#ff6b6b; padding:2px 7px; border-radius:3px; flex-shrink:0; letter-spacing:.05em; }
+.s-empty { padding:20px; text-align:center; color:rgba(255,255,255,.4); font-size:14px; }
 
-/* ── STATS BAR ── */
-.stats-bar {
+/* Filters */
+.filters { display:flex; gap:6px; overflow-x:auto; scrollbar-width:none; padding-bottom:2px; }
+.filters::-webkit-scrollbar { display:none; }
+.chip {
+  flex-shrink:0; height:32px; padding:0 14px;
+  background:transparent;
+  border:1px solid rgba(255,255,255,.2);
+  border-radius:3px;
+  font-family:var(--mono); font-size:10px; font-weight:500;
+  color:rgba(255,255,255,.5); cursor:pointer;
+  transition:all .15s; white-space:nowrap; letter-spacing:.05em;
+  text-transform:uppercase;
+}
+.chip.on { background:var(--red); border-color:var(--red); color:#fff; }
+.chip:not(.on):hover { border-color:rgba(255,255,255,.5); color:rgba(255,255,255,.9); }
+
+/* ── STATS TICKER ─────────────────────────────── */
+.stats-band {
+  background:var(--red);
+  padding:0;
+}
+.stats-inner {
   display:grid; grid-template-columns:repeat(4,1fr);
-  gap:1px; background:var(--gray-3);
-  border-top:1px solid var(--gray-3);
+  max-width:1200px; margin:0 auto;
 }
 .stat {
-  background:#fff; padding:12px 8px; text-align:center;
+  padding:14px 20px; text-align:center;
+  border-right:1px solid rgba(255,255,255,.2);
 }
-.stat-val { font-family:'Syne',sans-serif; font-size:20px; font-weight:800; color:var(--black); display:block; }
-.stat-lbl { font-size:10px; color:var(--gray-5); font-weight:500; text-transform:uppercase; letter-spacing:.05em; }
-
-/* ── WIN WIN BANNER ── */
-.winwin-banner {
-  margin:16px; border-radius:var(--r-lg);
-  background:linear-gradient(135deg, var(--winwin-d) 0%, var(--winwin) 100%);
-  padding:20px; position:relative; overflow:hidden;
+.stat:last-child { border-right:none; }
+.stat-val {
+  font-family:var(--display);
+  font-size:clamp(28px,4vw,42px);
+  color:#fff; display:block; line-height:1;
+  letter-spacing:.04em;
 }
-.winwin-banner::after {
-  content:''; position:absolute; right:-30px; top:-30px;
-  width:140px; height:140px; border-radius:50%;
-  background:rgba(255,255,255,.07);
-}
-.winwin-badge {
-  display:inline-flex; align-items:center; gap:6px;
-  background:rgba(255,255,255,.15); color:#fff;
-  padding:4px 10px; border-radius:20px;
-  font-size:10px; font-weight:700; letter-spacing:.08em; text-transform:uppercase;
-  margin-bottom:10px;
-}
-.winwin-banner h2 {
-  font-family:'Syne',sans-serif; font-size:19px; font-weight:800;
-  color:#fff; line-height:1.2; margin-bottom:6px;
-}
-.winwin-banner p { font-size:13px; color:rgba(255,255,255,.8); line-height:1.5; margin-bottom:14px; }
-.winwin-cta {
-  display:inline-flex; align-items:center; gap:6px;
-  background:#fff; color:var(--winwin-d);
-  padding:10px 18px; border-radius:10px;
-  font-size:13px; font-weight:700; text-decoration:none;
-  transition:transform .15s, box-shadow .15s;
-}
-.winwin-cta:hover { transform:translateY(-1px); box-shadow:0 4px 16px rgba(0,0,0,.2); }
-.winwin-claim {
-  position:absolute; right:16px; bottom:16px;
-  font-size:10px; color:rgba(255,255,255,.5);
-  text-align:right; line-height:1.4;
+.stat-lbl {
+  font-family:var(--mono); font-size:9px;
+  color:rgba(255,255,255,.65); text-transform:uppercase; letter-spacing:.12em;
+  margin-top:2px; display:block;
 }
 
-/* ── SECTION ── */
-.section { padding:0 16px 20px; }
-.section-header {
-  display:flex; align-items:center; justify-content:space-between;
-  margin-bottom:14px; padding-top:20px;
-}
-.section-title { font-family:'Syne',sans-serif; font-size:18px; font-weight:800; letter-spacing:-.02em; }
-.section-more { font-size:13px; color:var(--red); font-weight:600; text-decoration:none; }
-
-/* ── CCT CARDS ── */
-.cct-list { display:flex; flex-direction:column; gap:10px; }
-.cct-card {
-  background:#fff; border-radius:var(--r-md);
-  padding:16px; box-shadow:var(--shadow);
-  text-decoration:none; color:inherit;
-  transition:transform .15s, box-shadow .15s;
+/* ── WIN WIN STRIP ────────────────────────────── */
+.ww-strip {
+  background:linear-gradient(90deg, var(--ww-d) 0%, var(--ww) 100%);
+  padding:20px 24px;
   position:relative; overflow:hidden;
+}
+.ww-strip::after {
+  content:'';
+  position:absolute; right:-100px; top:-80px;
+  width:350px; height:350px; border-radius:50%;
+  background:rgba(255,255,255,.05);
+  pointer-events:none;
+}
+.ww-inner {
+  max-width:1200px; margin:0 auto;
+  display:flex; align-items:center; gap:20px;
+  flex-wrap:wrap;
+}
+.ww-badge-label {
+  font-family:var(--mono); font-size:9px;
+  background:rgba(255,255,255,.2); color:#fff;
+  padding:3px 10px; border-radius:3px;
+  letter-spacing:.12em; text-transform:uppercase;
+  white-space:nowrap; flex-shrink:0;
+}
+.ww-title {
+  font-family:var(--display);
+  font-size:clamp(20px,3vw,28px);
+  color:#fff; letter-spacing:.04em; flex:1;
+}
+.ww-desc {
+  font-size:13px; color:rgba(255,255,255,.75);
+  font-weight:300; max-width:360px; flex:2;
+  display:none;
+}
+.ww-cta {
+  display:inline-flex; align-items:center; gap:8px;
+  background:#fff; color:var(--ww-d);
+  padding:10px 20px; border-radius:4px;
+  font-size:13px; font-weight:600; text-decoration:none;
+  transition:transform .15s, box-shadow .15s;
+  white-space:nowrap; flex-shrink:0;
+}
+.ww-cta:hover { transform:translateY(-2px); box-shadow:0 6px 20px rgba(0,0,0,.25); }
+.ww-cta:active { transform:translateY(0); }
+.ww-finma {
+  font-family:var(--mono); font-size:9px;
+  color:rgba(255,255,255,.35);
+  flex-shrink:0; text-align:right; line-height:1.7;
+  display:none;
+}
+@media(min-width:700px) { .ww-desc{display:block;} .ww-finma{display:block;} }
+
+/* ── MAIN CONTENT ─────────────────────────────── */
+.main { max-width:1200px; margin:0 auto; padding:0 24px; }
+
+.section-hdr {
+  display:flex; align-items:baseline; justify-content:space-between;
+  padding:32px 0 18px;
+  border-bottom:2px solid var(--black);
+  margin-bottom:24px;
+}
+.section-title {
+  font-family:var(--display);
+  font-size:clamp(22px,3vw,32px);
+  letter-spacing:.06em; color:var(--black);
+}
+.section-meta {
+  font-family:var(--mono); font-size:10px;
+  color:var(--gray-3); letter-spacing:.08em;
+  text-transform:uppercase;
+}
+
+/* ── CCT GRID ─────────────────────────────────── */
+.cct-grid { display:grid; grid-template-columns:1fr; gap:2px; }
+
+@media(min-width:600px) { .cct-grid { grid-template-columns:1fr 1fr; } }
+@media(min-width:900px) { .cct-grid { grid-template-columns:1fr 1fr 1fr; } }
+
+.cct-card {
+  background:var(--paper);
+  padding:20px; cursor:pointer;
+  text-decoration:none; color:inherit;
   display:block;
+  transition:background .15s, transform .2s cubic-bezier(.4,0,.2,1);
+  position:relative;
+  border:1px solid var(--gray-2);
+  border-radius:2px;
 }
-.cct-card:active { transform:scale(.98); }
-.cct-card::before {
-  content:''; position:absolute; left:0; top:0; bottom:0; width:3px;
-  background:var(--red); border-radius:3px 0 0 3px;
-  opacity:0; transition:opacity .2s;
+.cct-card::after {
+  content:''; position:absolute;
+  bottom:0; left:0; right:0; height:2px;
+  background:var(--red); transform:scaleX(0); transform-origin:left;
+  transition:transform .25s cubic-bezier(.4,0,.2,1);
 }
-.cct-card:hover::before { opacity:1; }
+.cct-card:hover { background:var(--white); transform:translateY(-3px); box-shadow:0 8px 24px rgba(0,0,0,.1); }
+.cct-card:hover::after { transform:scaleX(1); }
+.cct-card:active { transform:translateY(0); }
 
-.cct-card-top { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:10px; }
-.cct-card-left { display:flex; align-items:center; gap:10px; }
-.cct-emoji { width:44px; height:44px; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:20px; flex-shrink:0; }
-.cct-name { font-family:'Syne',sans-serif; font-size:14px; font-weight:700; line-height:1.3; }
-.cct-branch { font-size:12px; color:var(--gray-5); margin-top:2px; }
+.cc-header { display:flex; align-items:flex-start; justify-content:space-between; margin-bottom:14px; gap:10px; }
+.cc-emoji-wrap { width:48px; height:48px; border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:22px; flex-shrink:0; }
+.cc-badges { display:flex; gap:4px; flex-direction:column; align-items:flex-end; }
+.bdg {
+  font-family:var(--mono); font-size:8px; font-weight:500;
+  padding:2px 7px; border-radius:2px; letter-spacing:.06em; white-space:nowrap;
+}
+.bdg-dfo { background:var(--black); color:#fff; }
+.bdg-fed { background:var(--red); color:#fff; }
+.bdg-reg { background:var(--gray-1); color:var(--gray-4); border:1px solid var(--gray-2); }
 
-.cct-badges { display:flex; gap:5px; align-items:center; flex-shrink:0; flex-wrap:wrap; justify-content:flex-end; }
-.badge-dfo { font-size:10px; font-weight:700; background:#E8F5E9; color:#1B5E20; padding:3px 8px; border-radius:8px; }
-.badge-reg { font-size:10px; font-weight:700; background:#EEF2FF; color:#3730A3; padding:3px 8px; border-radius:8px; }
-.badge-fed { font-size:10px; font-weight:700; background:var(--red-pale); color:var(--red); padding:3px 8px; border-radius:8px; }
+.cc-name {
+  font-family:var(--display); font-size:clamp(15px,2vw,18px);
+  letter-spacing:.03em; line-height:1.15;
+  color:var(--black); margin-bottom:5px;
+}
+.cc-scope { font-size:11px; color:var(--gray-3); font-weight:300; line-height:1.4; }
 
-.cct-stats {
+.cc-data {
   display:grid; grid-template-columns:repeat(3,1fr);
-  gap:1px; background:var(--gray-1);
-  border-radius:8px; overflow:hidden; margin-bottom:12px;
+  gap:1px; background:var(--gray-2); border-radius:3px;
+  overflow:hidden; margin:14px 0;
 }
-.cct-stat { background:#fff; padding:8px 10px; }
-.cct-stat-val { font-size:13px; font-weight:700; color:var(--black); display:block; }
-.cct-stat-lbl { font-size:10px; color:var(--gray-5); }
+.cc-datum { background:var(--paper); padding:8px 10px; }
+.cct-card:hover .cc-datum { background:var(--white); }
+.cc-dval {
+  font-family:var(--mono); font-size:12px; font-weight:500;
+  color:var(--black); display:block;
+}
+.cc-dlbl { font-size:10px; color:var(--gray-3); }
 
-/* Action buttons */
-.cct-actions { display:flex; gap:8px; }
+.cc-actions { display:flex; gap:6px; }
 .btn-action {
-  flex:1; height:36px; border-radius:8px; border:none; cursor:pointer;
-  font-family:'DM Sans',sans-serif; font-size:12px; font-weight:600;
+  flex:1; height:32px; border-radius:3px; border:none; cursor:pointer;
+  font-family:var(--mono); font-size:10px; font-weight:500;
+  letter-spacing:.05em; text-transform:uppercase;
   display:flex; align-items:center; justify-content:center; gap:5px;
   transition:all .15s; text-decoration:none;
 }
-.btn-detail { background:var(--red-pale); color:var(--red); }
-.btn-share { background:var(--gray-1); color:var(--gray-7); }
-.btn-print { background:var(--gray-1); color:var(--gray-7); }
-.btn-detail:hover { background:var(--red); color:#fff; }
-.btn-share:hover { background:#E8F5FB; color:#0C8CE9; }
+.btn-primary { background:var(--black); color:#fff; }
+.btn-primary:hover { background:var(--red); }
+.btn-ghost { background:var(--gray-1); color:var(--gray-4); border:1px solid var(--gray-2); }
+.btn-ghost:hover { background:var(--gray-2); color:var(--ink); }
 
-/* ── PARTNER APPS ── */
-.apps-grid { display:flex; flex-direction:column; gap:10px; }
-.app-card {
+/* Skeletons */
+.skel {
+  background:linear-gradient(90deg,var(--gray-1) 25%,var(--gray-2) 50%,var(--gray-1) 75%);
+  background-size:200% 100%; animation:shimmer 1.5s infinite;
+  border-radius:2px;
+}
+@keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+
+/* ── PARTNERS ─────────────────────────────────── */
+.partners-grid {
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:2px; margin-bottom:2px;
+}
+@media(min-width:600px) { .partners-grid { grid-template-columns:repeat(3,1fr); } }
+@media(min-width:900px) { .partners-grid { grid-template-columns:repeat(6,1fr); } }
+
+.partner-card {
+  background:var(--paper); padding:16px 14px;
+  display:flex; flex-direction:column; align-items:flex-start; gap:8px;
+  text-decoration:none; color:inherit;
+  border:1px solid var(--gray-2); border-radius:2px;
+  transition:all .15s; position:relative; overflow:hidden;
+}
+.partner-card::before {
+  content:''; position:absolute; top:0; left:0; right:0; height:2px;
+  background:var(--red); transform:scaleX(0); transform-origin:left;
+  transition:transform .2s;
+}
+.partner-card:hover { background:var(--white); transform:translateY(-2px); box-shadow:0 4px 16px rgba(0,0,0,.08); }
+.partner-card:hover::before { transform:scaleX(1); }
+.partner-card.feat { background:var(--ww-pale); border-color:rgba(26,110,181,.3); }
+.partner-card.feat::before { background:var(--ww); }
+.p-ico { width:40px; height:40px; border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:20px; flex-shrink:0; }
+.p-name { font-family:var(--display); font-size:16px; letter-spacing:.04em; color:var(--black); }
+.p-url { font-family:var(--mono); font-size:9px; color:var(--gray-3); letter-spacing:.05em; }
+.p-desc { font-size:11px; color:var(--gray-4); line-height:1.4; font-weight:300; }
+
+/* Soluris dark */
+.sol-strip {
+  background:var(--black);
+  margin-bottom:2px;
   display:flex; align-items:center; gap:14px;
-  background:#fff; border-radius:var(--r-md); padding:14px 16px;
-  box-shadow:var(--shadow); text-decoration:none; color:inherit;
-  transition:transform .15s;
+  padding:18px 20px; text-decoration:none;
+  border-radius:2px; border:1px solid rgba(255,255,255,.06);
+  transition:background .15s;
 }
-.app-card:active { transform:scale(.98); }
-.app-icon {
-  width:48px; height:48px; border-radius:12px;
-  display:flex; align-items:center; justify-content:center;
-  font-size:22px; flex-shrink:0;
-}
-.app-info { flex:1; min-width:0; }
-.app-name { font-family:'Syne',sans-serif; font-size:14px; font-weight:700; }
-.app-url { font-size:11px; color:var(--gray-5); font-family:monospace; }
-.app-desc { font-size:12px; color:var(--gray-7); margin-top:3px; line-height:1.4; }
-.app-arrow { color:var(--gray-3); font-size:18px; flex-shrink:0; }
+.sol-strip:hover { background:#111; }
+.sol-ico { font-size:26px; flex-shrink:0; }
+.sol-name { font-family:var(--display); font-size:18px; letter-spacing:.04em; color:#fff; }
+.sol-desc { font-size:12px; color:rgba(255,255,255,.4); line-height:1.4; font-weight:300; }
+.sol-arr { color:rgba(255,255,255,.2); font-size:20px; margin-left:auto; flex-shrink:0; }
 
-/* Winwin app card special */
-.app-card.featured {
-  border:2px solid var(--winwin);
-  background:var(--winwin-pale);
-}
-.app-card.featured .app-name { color:var(--winwin-d); }
-
-/* ── BOTTOM NAV (mobile only) ── */
-.bottom-nav {
-  position:fixed; bottom:0; left:0; right:0;
-  background:rgba(255,255,255,.96);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border-top:1px solid rgba(0,0,0,.08);
+/* ── BOTTOM NAV (mobile) ───────────────────────── */
+.bot-nav {
+  position:fixed; bottom:0; left:0; right:0; z-index:200;
+  background:rgba(10,10,10,.96);
+  backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px);
+  border-top:1px solid rgba(255,255,255,.1);
   display:flex; align-items:stretch;
-  padding-bottom:var(--safe-bot);
-  z-index:100;
+  padding-bottom:var(--safe-b);
 }
 .nav-tab {
-  flex:1; padding:8px 4px 6px;
+  flex:1; padding:9px 4px 7px;
   display:flex; flex-direction:column; align-items:center; gap:3px;
   cursor:pointer; border:none; background:none;
-  font-family:'DM Sans',sans-serif; font-size:10px; color:var(--gray-5);
-  transition:color .15s; text-decoration:none;
+  font-family:var(--mono); font-size:9px; font-weight:500;
+  color:rgba(255,255,255,.35); transition:color .15s; text-decoration:none;
+  letter-spacing:.08em; text-transform:uppercase;
 }
-.nav-tab .nav-icon { font-size:22px; line-height:1; }
-.nav-tab.active { color:var(--red); }
-.nav-tab.active .nav-icon { transform:scale(1.1); }
+.nav-ico { font-size:20px; line-height:1; }
+.nav-tab.on { color:var(--red); }
+.nav-tab.on .nav-ico { transform:scale(1.1); }
 
-/* ── CCT DETAIL SHEET ── */
-.sheet-overlay {
-  position:fixed; inset:0; background:rgba(0,0,0,.5);
-  z-index:300; opacity:0; pointer-events:none; transition:opacity .25s;
+/* ── SHEET ────────────────────────────────────── */
+.overlay {
+  position:fixed; inset:0;
+  background:rgba(0,0,0,.7);
+  z-index:300; opacity:0; pointer-events:none;
+  transition:opacity .25s;
 }
-.sheet-overlay.open { opacity:1; pointer-events:all; }
-
+.overlay.on { opacity:1; pointer-events:all; }
 .sheet {
   position:fixed; bottom:0; left:0; right:0;
-  background:#fff; border-radius:20px 20px 0 0;
+  background:var(--paper);
+  border-radius:16px 16px 0 0;
   z-index:400; transform:translateY(100%);
   transition:transform .3s cubic-bezier(.4,0,.2,1);
   max-height:92vh; overflow-y:auto;
-  padding-bottom:calc(80px + var(--safe-bot));
+  padding-bottom:calc(80px + var(--safe-b));
 }
-.sheet.open { transform:translateY(0); }
+.sheet.on { transform:translateY(0); }
+.sh-handle { width:36px; height:3px; background:var(--gray-2); border-radius:2px; margin:12px auto 0; }
+.sh-hdr {
+  padding:18px 20px 14px;
+  border-bottom:2px solid var(--black);
+  margin-bottom:0;
+}
+.sh-emoji { font-size:40px; display:block; margin-bottom:14px; }
+.sh-title {
+  font-family:var(--display); font-size:clamp(22px,5vw,32px);
+  letter-spacing:.04em; color:var(--black); line-height:1.1;
+  margin-bottom:6px;
+}
+.sh-scope { font-size:13px; color:var(--gray-4); line-height:1.5; font-weight:300; }
+.sh-dfo-tag {
+  display:inline-flex; align-items:center; gap:5px;
+  margin-top:10px;
+  background:var(--black); color:#fff;
+  padding:4px 10px; border-radius:2px;
+  font-family:var(--mono); font-size:9px; letter-spacing:.08em;
+}
+.sh-section {
+  padding:16px 20px 0;
+  font-family:var(--mono); font-size:9px;
+  color:var(--gray-3); letter-spacing:.12em; text-transform:uppercase;
+  margin-bottom:10px;
+}
+.sh-data-grid { display:grid; grid-template-columns:1fr 1fr; gap:2px; padding:0 20px; }
+.sh-datum {
+  background:var(--gray-1); padding:14px;
+}
+.sh-dval {
+  font-family:var(--display); font-size:26px;
+  letter-spacing:.03em; color:var(--black);
+  display:block; margin-bottom:2px;
+}
+.sh-dlbl { font-size:11px; color:var(--gray-3); font-weight:300; }
+.sh-red { color:var(--red); }
 
-.sheet-handle {
-  width:36px; height:4px; background:var(--gray-3); border-radius:2px;
-  margin:10px auto 0;
+/* Share buttons */
+.sh-share { display:grid; grid-template-columns:repeat(4,1fr); gap:2px; padding:0 20px; margin:14px 0; }
+.sh-share-btn {
+  display:flex; flex-direction:column; align-items:center; gap:6px;
+  background:var(--gray-1); padding:14px 8px; border:none; cursor:pointer;
+  font-family:var(--mono); font-size:9px; letter-spacing:.06em; text-transform:uppercase;
+  color:var(--gray-4); transition:background .15s; border-radius:2px;
 }
-.sheet-header { padding:16px 16px 12px; }
-.sheet-emoji { font-size:40px; margin-bottom:10px; display:block; }
-.sheet-title { font-family:'Syne',sans-serif; font-size:22px; font-weight:800; line-height:1.2; margin-bottom:6px; }
-.sheet-scope { font-size:13px; color:var(--gray-5); line-height:1.5; }
+.sh-share-btn:hover { background:var(--gray-2); }
+.sh-share-btn .si { font-size:20px; }
+.sh-share-btn.wp { background:#E7F8EF; color:#128C7E; }
+.sh-share-btn.em { background:var(--ww-pale); color:var(--ww-d); }
 
-.sheet-section { padding:0 16px 16px; }
-.sheet-section-title {
-  font-size:11px; font-weight:700; letter-spacing:.08em;
-  text-transform:uppercase; color:var(--gray-5);
-  margin-bottom:10px; margin-top:16px;
-}
-.sheet-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
-.sheet-stat {
-  background:var(--gray-1); border-radius:10px; padding:12px;
-}
-.sheet-stat-val { font-family:'Syne',sans-serif; font-size:20px; font-weight:800; display:block; margin-bottom:2px; }
-.sheet-stat-lbl { font-size:11px; color:var(--gray-5); }
-
-.disclaimer {
-  background:#FFFBEB; border:1px solid #FDE68A;
-  border-radius:10px; padding:12px 14px; margin:0 16px 16px;
-  font-size:12px; color:#92400E; line-height:1.5;
-}
-
-/* Share actions in sheet */
-.share-grid {
-  display:grid; grid-template-columns:repeat(4,1fr); gap:10px;
-  margin:0 16px 16px;
-}
-.share-btn {
-  display:flex; flex-direction:column; align-items:center; gap:5px;
-  background:var(--gray-1); border-radius:var(--r-sm); padding:12px 8px;
-  border:none; cursor:pointer; font-family:'DM Sans',sans-serif;
-  font-size:11px; font-weight:500; color:var(--gray-7);
-  transition:background .15s;
-}
-.share-btn:hover { background:var(--gray-3); }
-.share-btn .share-icon { font-size:22px; }
-.share-btn.whatsapp .share-icon::before { content:'📱'; }
-.share-btn.email .share-icon::before { content:'📧'; }
-.share-btn.copy .share-icon::before { content:'🔗'; }
-.share-btn.print .share-icon::before { content:'🖨️'; }
-.share-btn.whatsapp { background:#E7F8EF; color:#128C7E; }
-.share-btn.email { background:#EBF4FF; color:#1A6EB5; }
-
-/* Source link */
-.source-link {
+.sh-src {
   display:flex; align-items:center; justify-content:space-between;
-  background:var(--gray-1); border-radius:10px; padding:14px;
-  margin:0 16px 16px; text-decoration:none; color:var(--black);
+  background:var(--gray-1); padding:14px 16px; margin:0 20px 12px;
+  text-decoration:none; color:var(--ink); transition:background .15s;
+  font-size:13px; font-weight:500; border-radius:2px;
 }
-.source-link:hover { background:var(--gray-3); }
+.sh-src:hover { background:var(--gray-2); }
+.sh-disc {
+  margin:0 20px 16px; padding:12px 14px;
+  background:#FFFBEB; border-left:3px solid #F59E0B;
+  font-size:11px; color:#92400E; line-height:1.6;
+}
 
-/* ── DESKTOP OVERRIDES ── */
 @media(min-width:680px) {
-  .header-inner { padding:14px 32px; }
-  .hero { padding:48px 32px 36px; max-width:800px; margin:0 auto; }
-  .section { padding:0 32px 24px; max-width:800px; margin:0 auto; }
-  .winwin-banner { margin:16px 32px; max-width:736px; margin-left:auto; margin-right:auto; }
-  .stats-bar { max-width:800px; margin:0 auto; }
-  .cct-list { display:grid; grid-template-columns:1fr 1fr; }
-  .apps-grid { display:grid; grid-template-columns:1fr 1fr; }
-  .bottom-nav { display:none; }
-  .sheet { max-width:480px; left:50%; transform:translateX(-50%) translateY(100%); border-radius:20px; bottom:20px; }
-  .sheet.open { transform:translateX(-50%) translateY(0); }
+  .sheet {
+    max-width:520px; left:50%;
+    transform:translateX(-50%) translateY(100%);
+    border-radius:12px; bottom:24px;
+  }
+  .sheet.on { transform:translateX(-50%) translateY(0); }
+}
+
+/* ── PAGES ────────────────────────────────────── */
+.page { display:none; }
+.page.on { display:block; }
+
+/* ── INFO ─────────────────────────────────────── */
+.info-block {
+  background:var(--paper); padding:24px;
+  border:1px solid var(--gray-2); border-radius:2px;
+  font-size:14px; line-height:1.8; color:var(--gray-4);
+  margin-bottom:16px;
+}
+.info-block h3 {
+  font-family:var(--display); font-size:20px;
+  letter-spacing:.04em; color:var(--black); margin-bottom:12px;
+}
+.info-warn {
+  border-left:3px solid #F59E0B;
+  background:#FFFBEB; padding:12px 14px;
+  font-size:12px; color:#92400E; margin-top:14px; line-height:1.5;
+}
+.footer-credits {
+  text-align:center; padding:24px 0 12px;
+  font-family:var(--mono); font-size:9px;
+  color:var(--gray-3); letter-spacing:.08em;
+}
+.footer-credits a { color:var(--ww); text-decoration:none; }
+
+/* ── TOAST ────────────────────────────────────── */
+.toast {
+  position:fixed;
+  bottom:calc(64px + var(--safe-b));
+  left:50%; transform:translateX(-50%) translateY(10px);
+  background:var(--black); color:#fff;
+  padding:10px 22px; border-radius:3px;
+  font-family:var(--mono); font-size:11px; letter-spacing:.06em;
+  opacity:0; transition:all .25s; pointer-events:none;
+  white-space:nowrap; z-index:500;
+  border-left:3px solid var(--red);
+}
+.toast.on { opacity:1; transform:translateX(-50%) translateY(0); }
+
+/* ── DESKTOP ───────────────────────────────────── */
+@media(min-width:680px) {
+  .bot-nav { display:none; }
   body { padding-bottom:0; }
+  .hero { padding:64px 32px 52px; }
+  .toast { bottom:30px; }
+  .stats-inner { grid-template-columns:repeat(4,1fr); }
 }
 @media(max-width:679px) {
-  body { padding-bottom:calc(56px + var(--safe-bot)); }
+  body { padding-bottom:calc(56px + var(--safe-b)); }
+  .main { padding:0 12px; }
+  .ww-strip { padding:16px; }
+  .partners-grid { grid-template-columns:repeat(2,1fr); }
 }
 
-/* ── PRINT ── */
+/* ── PRINT ────────────────────────────────────── */
 @media print {
-  .header, .bottom-nav, .sheet-overlay, .winwin-banner, .apps-grid, .cct-actions, .search-wrap, .filters, .stats-bar { display:none!important; }
+  .hdr,.bot-nav,.ww-strip,.sol-strip,.partners-grid,
+  .cc-actions,.filters,.stats-band,.overlay,.sheet,.toast { display:none!important; }
   .cct-card { break-inside:avoid; box-shadow:none; border:1px solid #ddd; }
-  body { background:#fff; padding:0; }
-  .section { padding:8px 0; max-width:none; }
+  body { background:#fff; padding:0; font-size:12px; }
+  .main { padding:0; max-width:none; }
+  .hero { display:none; }
 }
-
-/* ── SKELETON LOADING ── */
-.skeleton { background:linear-gradient(90deg,var(--gray-1) 25%,var(--gray-3) 50%,var(--gray-1) 75%); background-size:200% 100%; animation:shimmer 1.5s infinite; border-radius:8px; }
-@keyframes shimmer { 0%{background-position:200% 0} 100%{background-position:-200% 0} }
-
-/* ── TOAST ── */
-.toast {
-  position:fixed; bottom:calc(72px + var(--safe-bot)); left:50%; transform:translateX(-50%) translateY(20px);
-  background:var(--gray-9); color:#fff; padding:10px 20px;
-  border-radius:20px; font-size:13px; font-weight:500;
-  opacity:0; transition:all .3s; pointer-events:none; white-space:nowrap; z-index:500;
-}
-.toast.show { opacity:1; transform:translateX(-50%) translateY(0); }
-@media(min-width:680px) { .toast { bottom:40px; } }
-
-/* ── UPDATE INDICATOR ── */
-.update-dot {
-  display:inline-flex; align-items:center; gap:5px;
-  font-size:11px; color:#16a34a; font-weight:600;
-}
-.update-dot::before { content:''; width:6px; height:6px; background:#22c55e; border-radius:50%; animation:pulse 2s infinite; }
-
-/* ACTIVE TAB PAGES */
-.page { display:none; }
-.page.active { display:block; }
-
-/* Soluris card */
-.soluris-card {
-  margin:0 16px 16px; background:linear-gradient(135deg,#1a1a2e,#16213e);
-  border-radius:var(--r-lg); padding:18px; display:flex; gap:14px; align-items:center;
-  text-decoration:none;
-}
-.soluris-card:hover { opacity:.9; }
-.soluris-icon { font-size:32px; flex-shrink:0; }
-.soluris-info { flex:1; }
-.soluris-name { font-family:'Syne',sans-serif; font-size:15px; font-weight:700; color:#fff; margin-bottom:4px; }
-.soluris-desc { font-size:12px; color:rgba(255,255,255,.6); line-height:1.4; }
-.soluris-arrow { color:rgba(255,255,255,.4); font-size:20px; }
 </style>
 </head>
 <body>
 
-<!-- HEADER -->
-<header class="header">
-  <div class="header-inner">
-    <a href="#" class="logo" onclick="showPage('home')">
-      <div class="logo-badge">CCT</div>
-      <span class="logo-text">swiss<b>.ch</b></span>
+<!-- ════ HEADER ════════════════════════════════ -->
+<header class="hdr">
+  <div class="hdr-inner">
+    <a href="#" class="logo" onclick="showPage('home');return false">
+      <div class="logo-mark">
+        <svg viewBox="0 0 20 20" fill="none">
+          <text x="10" y="15" font-family="Arial Black,sans-serif" font-weight="900"
+                font-size="10" fill="white" text-anchor="middle">CCT</text>
+        </svg>
+      </div>
+      <span class="logo-wordmark">SWISS<span>.CH</span></span>
     </a>
-    <div class="lang-row" id="langRow">
-      <button class="lang-pill active" data-lang="fr">FR</button>
-      <button class="lang-pill" data-lang="de">DE</button>
-      <button class="lang-pill" data-lang="it">IT</button>
-      <button class="lang-pill" data-lang="en">EN</button>
-      <button class="lang-pill" data-lang="pt">PT</button>
-      <button class="lang-pill" data-lang="es">ES</button>
-      <button class="lang-pill" data-lang="sq">SQ</button>
-      <button class="lang-pill" data-lang="bs">BS</button>
-      <button class="lang-pill" data-lang="tr">TR</button>
-      <button class="lang-pill" data-lang="uk">UK</button>
+    <div class="langs" id="langs">
+      <button class="lang on" data-lang="fr">FR</button>
+      <button class="lang" data-lang="de">DE</button>
+      <button class="lang" data-lang="it">IT</button>
+      <button class="lang" data-lang="en">EN</button>
+      <button class="lang" data-lang="pt">PT</button>
+      <button class="lang" data-lang="es">ES</button>
+      <button class="lang" data-lang="sq">SQ</button>
+      <button class="lang" data-lang="bs">BS</button>
+      <button class="lang" data-lang="tr">TR</button>
+      <button class="lang" data-lang="uk">UK</button>
     </div>
   </div>
 </header>
 
-<!-- HOME PAGE -->
-<div id="page-home" class="page active">
+<!-- ════ PAGE HOME ══════════════════════════════ -->
+<div id="pg-home" class="page on">
 
-  <!-- HERO SEARCH -->
-  <section class="hero">
-    <div class="hero-badge"><span class="badge-dot"></span><span data-i18n="live_badge">Fedlex officiel · Mis à jour chaque nuit</span></div>
-    <h1 data-i18n="hero_title">Votre <em>convention collective</em> en 30 secondes</h1>
-    <p class="hero-sub" data-i18n="hero_sub">Cherchez votre CCT par branche, métier ou secteur. Gratuit, sans inscription.</p>
-    <div class="search-wrap">
-      <span class="search-icon">🔍</span>
-      <input type="search" id="mainSearch" class="search-input"
-        placeholder="restaurant, construction, nettoyage…"
-        autocomplete="off" autocorrect="off" spellcheck="false">
-      <button class="search-clear" id="searchClear" onclick="clearSearch()">✕</button>
-      <div class="search-dropdown" id="searchDropdown"></div>
-    </div>
-    <div class="filters" id="filters">
-      <button class="filter-chip active" data-filter="all" onclick="setFilter(this,'all')" data-i18n="filter_all">Toutes</button>
-      <button class="filter-chip" data-filter="dfo" onclick="setFilter(this,'dfo')" data-i18n="filter_dfo">DFO ✓</button>
-      <button class="filter-chip" data-filter="restauration" onclick="setFilter(this,'restauration')">🍽️ Restau</button>
-      <button class="filter-chip" data-filter="construction" onclick="setFilter(this,'construction')">🏗️ Construc.</button>
-      <button class="filter-chip" data-filter="nettoyage" onclick="setFilter(this,'nettoyage')">🧹 Nettoyage</button>
-      <button class="filter-chip" data-filter="horlogerie" onclick="setFilter(this,'horlogerie')">⌚ Horlogerie</button>
-      <button class="filter-chip" data-filter="artisanat" onclick="setFilter(this,'artisanat')">🪵 Artisanat</button>
-      <button class="filter-chip" data-filter="industrie" onclick="setFilter(this,'industrie')">⚙️ Industrie</button>
-    </div>
-  </section>
+  <!-- HERO (dark) -->
+  <div class="hero">
+    <div class="hero-inner">
+      <!-- Live badge — dot uses class, not span selector -->
+      <div class="live-badge">
+        <span class="live-dot"></span>
+        <span class="live-text" data-i18n="badge">FEDLEX OFFICIEL · MIS À JOUR CHAQUE NUIT</span>
+      </div>
 
-  <!-- STATS -->
-  <div class="stats-bar">
-    <div class="stat"><span class="stat-val" id="statTotal">—</span><span class="stat-lbl" data-i18n="stat_ccts">CCTs</span></div>
-    <div class="stat"><span class="stat-val" id="statDfo">—</span><span class="stat-lbl">DFO</span></div>
-    <div class="stat"><span class="stat-val">11</span><span class="stat-lbl" data-i18n="stat_langs">Langues</span></div>
-    <div class="stat"><span class="stat-val">26</span><span class="stat-lbl" data-i18n="stat_cantons">Cantons</span></div>
-  </div>
+      <h1 class="hero-h1">
+        VOTRE
+        <span class="accent" data-i18n="h1-accent">convention collective</span>
+        <span data-i18n="h1-end">EN 30 SEC.</span>
+      </h1>
+      <p class="hero-sub" data-i18n="sub">Cherchez votre CCT par branche, métier ou secteur. Gratuit, sans inscription, en 11 langues.</p>
 
-  <!-- WIN WIN BANNER -->
-  <div class="winwin-banner">
-    <div class="winwin-badge">⭐ Partenaire principal</div>
-    <h2>WIN WIN Finance Group</h2>
-    <p>Assurances obligatoires liées à votre CCT — LAA, LPP, perte de gain. Courtage indépendant. Mieux assuré. Sans payer plus.</p>
-    <a href="https://winwin.swiss" target="_blank" class="winwin-cta">
-      🛡️ Obtenir mon offre gratuite
-    </a>
-    <div class="winwin-claim">FINMA F01042365<br>Groupe NEO</div>
-  </div>
+      <div class="search-wrap">
+        <span class="s-icon">🔍</span>
+        <input type="search" id="srch-home" class="search-input"
+          placeholder="restaurant, construction, coiffure…"
+          autocomplete="off" autocorrect="off" spellcheck="false">
+        <button class="s-clear" id="srch-clr" onclick="clearSearch()">×</button>
+        <div class="s-drop" id="srch-drop"></div>
+      </div>
 
-  <!-- CCT LIST -->
-  <section class="section">
-    <div class="section-header">
-      <span class="section-title" data-i18n="section_ccts">Conventions collectives</span>
-      <span class="update-dot" id="updateDot">À jour</span>
-    </div>
-    <div class="cct-list" id="cctList">
-      <!-- Skeletons -->
-      <div style="height:160px;border-radius:14px" class="skeleton"></div>
-      <div style="height:160px;border-radius:14px" class="skeleton"></div>
-      <div style="height:160px;border-radius:14px" class="skeleton"></div>
-    </div>
-  </section>
-
-  <!-- PARTNER APPS -->
-  <section class="section">
-    <div class="section-header">
-      <span class="section-title" data-i18n="section_apps">Outils partenaires</span>
-    </div>
-    <div class="apps-grid">
-      <a href="https://swissrh.ch" target="_blank" class="app-card">
-        <div class="app-icon" style="background:#FFF0F2">👥</div>
-        <div class="app-info">
-          <div class="app-name">SwissRH</div>
-          <div class="app-url">swissrh.ch</div>
-          <div class="app-desc">Salaires & RH conformes CCT</div>
-        </div>
-        <span class="app-arrow">›</span>
-      </a>
-      <a href="https://matcho.digital" target="_blank" class="app-card">
-        <div class="app-icon" style="background:#EBF4FF">💳</div>
-        <div class="app-info">
-          <div class="app-name">Matcho</div>
-          <div class="app-url">matcho.digital</div>
-          <div class="app-desc">Réconciliation bancaire auto</div>
-        </div>
-        <span class="app-arrow">›</span>
-      </a>
-      <a href="https://devispro.ch" target="_blank" class="app-card">
-        <div class="app-icon" style="background:#FFFAF0">📋</div>
-        <div class="app-info">
-          <div class="app-name">DevisPro</div>
-          <div class="app-url">devispro.ch</div>
-          <div class="app-desc">Devis artisans avec coûts CCT</div>
-        </div>
-        <span class="app-arrow">›</span>
-      </a>
-      <a href="https://boom.contact" target="_blank" class="app-card">
-        <div class="app-icon" style="background:#F5F0FF">🚗</div>
-        <div class="app-info">
-          <div class="app-name">Boom</div>
-          <div class="app-url">boom.contact</div>
-          <div class="app-desc">Constat numérique 42 langues</div>
-        </div>
-        <span class="app-arrow">›</span>
-      </a>
-      <a href="https://horlogis.ch" target="_blank" class="app-card">
-        <div class="app-icon" style="background:#F0FAFF">⌚</div>
-        <div class="app-info">
-          <div class="app-name">Horlogis</div>
-          <div class="app-url">horlogis.ch</div>
-          <div class="app-desc">Portail métiers horlogerie</div>
-        </div>
-        <span class="app-arrow">›</span>
-      </a>
-      <a href="https://devispro.ch" target="_blank" class="app-card">
-        <div class="app-icon" style="background:#FFF0F2">🏠</div>
-        <div class="app-info">
-          <div class="app-name">immo.cool</div>
-          <div class="app-url">immo.cool</div>
-          <div class="app-desc">Immobilier 100% gratuit</div>
-        </div>
-        <span class="app-arrow">›</span>
-      </a>
-    </div>
-  </section>
-
-  <!-- SOLURIS -->
-  <a href="https://soluris.ch" target="_blank" class="soluris-card">
-    <div class="soluris-icon">⚖️</div>
-    <div class="soluris-info">
-      <div class="soluris-name">Soluris.ch — IA juridique suisse</div>
-      <div class="soluris-desc">Questions complexes sur votre CCT ? Fedlex, jurisprudence TF, droit du travail suisse.</div>
-    </div>
-    <span class="soluris-arrow">›</span>
-  </a>
-
-  <div style="height:8px"></div>
-</div>
-
-<!-- SEARCH PAGE -->
-<div id="page-search" class="page">
-  <section class="section">
-    <div class="section-header" style="padding-top:16px">
-      <span class="section-title" data-i18n="search_title">Recherche</span>
-    </div>
-    <div class="search-wrap" style="margin-bottom:16px">
-      <span class="search-icon">🔍</span>
-      <input type="search" id="pageSearch" class="search-input" placeholder="CCT, branche, métier…">
-      <div class="search-dropdown" id="pageDropdown"></div>
-    </div>
-    <div id="searchResults" class="cct-list"></div>
-  </section>
-</div>
-
-<!-- INFO PAGE -->
-<div id="page-info" class="page">
-  <section class="section">
-    <div class="section-header" style="padding-top:16px">
-      <span class="section-title">À propos</span>
-    </div>
-    <div style="background:#fff;border-radius:var(--r-md);padding:18px;font-size:14px;line-height:1.7;color:var(--gray-7)">
-      <p style="margin-bottom:12px"><strong>CCTswiss.ch</strong> est le répertoire suisse indépendant des conventions collectives de travail (CCT).</p>
-      <p style="margin-bottom:12px">Gratuit, sans publicité intrusive, disponible en <strong>11 langues</strong> — français, allemand, italien, romanche, anglais, portugais, espagnol, albanais, BCMS, turc et ukrainien.</p>
-      <p style="margin-bottom:12px">Les données sont mises à jour <strong>chaque nuit à 02:00 CET</strong> depuis Fedlex (source officielle de la Confédération suisse).</p>
-      <div style="background:#FFFBEB;border:1px solid #FDE68A;border-radius:8px;padding:12px;font-size:12px;color:#92400E;margin-top:16px">
-        ⚠️ CCTswiss.ch est un outil d'orientation. Il ne remplace pas un avis juridique. Consultez toujours le texte officiel sur Fedlex ou un spécialiste du droit du travail.
+      <div class="filters" id="filters">
+        <button class="chip on" data-f="all" onclick="setFilter(this,'all')" data-i18n="f-all">TOUTES</button>
+        <button class="chip" data-f="dfo" onclick="setFilter(this,'dfo')">DFO ✓</button>
+        <button class="chip" data-f="restauration" onclick="setFilter(this,'restauration')">🍽 RESTAU.</button>
+        <button class="chip" data-f="construction" onclick="setFilter(this,'construction')">🏗 CONSTRUC.</button>
+        <button class="chip" data-f="nettoyage" onclick="setFilter(this,'nettoyage')">🧹 NETTOYAGE</button>
+        <button class="chip" data-f="horlogerie" onclick="setFilter(this,'horlogerie')">⌚ HORLOGERIE</button>
+        <button class="chip" data-f="industrie" onclick="setFilter(this,'industrie')">⚙️ INDUSTRIE</button>
+        <button class="chip" data-f="artisanat" onclick="setFilter(this,'artisanat')">🪵 ARTISANAT</button>
       </div>
     </div>
-    <div style="text-align:center;padding:24px 0;font-size:12px;color:var(--gray-5)">
-      🇨🇭 Fait en Suisse · Groupe NEO · © 2025 CCTswiss.ch<br>
-      <a href="https://winwin.swiss" style="color:var(--winwin)">winwin.swiss</a> ·
-      <a href="https://soluris.ch" style="color:var(--gray-5)">soluris.ch</a>
+  </div>
+
+  <!-- STATS BAND (red) -->
+  <div class="stats-band">
+    <div class="stats-inner">
+      <div class="stat">
+        <span class="stat-val" id="st-total">41</span>
+        <span class="stat-lbl" data-i18n="st-ccts">CCTs</span>
+      </div>
+      <div class="stat">
+        <span class="stat-val" id="st-dfo">36</span>
+        <span class="stat-lbl">DFO</span>
+      </div>
+      <div class="stat">
+        <span class="stat-val">11</span>
+        <span class="stat-lbl" data-i18n="st-langs">Langues</span>
+      </div>
+      <div class="stat">
+        <span class="stat-val">26</span>
+        <span class="stat-lbl" data-i18n="st-cantons">Cantons</span>
+      </div>
     </div>
-  </section>
+  </div>
+
+  <!-- WIN WIN (blue strip) -->
+  <div class="ww-strip">
+    <div class="ww-inner">
+      <span class="ww-badge-label">★ PARTENAIRE PRINCIPAL</span>
+      <span class="ww-title">WIN WIN FINANCE GROUP</span>
+      <span class="ww-desc">Assurances obligatoires liées à votre CCT — LAA, LPP, perte de gain. Courtage indépendant.</span>
+      <a href="https://winwin.swiss" target="_blank" rel="noopener" class="ww-cta">
+        🛡️ Offre gratuite
+      </a>
+      <span class="ww-finma">FINMA F01042365<br>Groupe NEO</span>
+    </div>
+  </div>
+
+  <!-- CCT GRID -->
+  <div class="main">
+    <div class="section-hdr">
+      <span class="section-title" data-i18n="sec-ccts">CONVENTIONS COLLECTIVES</span>
+      <span class="section-meta" id="upd-meta">— FEDLEX</span>
+    </div>
+    <div class="cct-grid" id="cct-grid">
+      <div class="skel" style="height:190px"></div>
+      <div class="skel" style="height:190px"></div>
+      <div class="skel" style="height:190px"></div>
+      <div class="skel" style="height:190px"></div>
+      <div class="skel" style="height:190px"></div>
+      <div class="skel" style="height:190px"></div>
+    </div>
+
+    <!-- PARTNERS -->
+    <div class="section-hdr" style="margin-top:32px">
+      <span class="section-title" data-i18n="sec-apps">OUTILS PARTENAIRES</span>
+    </div>
+    <div class="partners-grid">
+      <a href="https://winwin.swiss" target="_blank" rel="noopener" class="partner-card feat">
+        <div class="p-ico" style="background:var(--ww-pale)">🛡️</div>
+        <div class="p-name">WIN WIN</div>
+        <div class="p-url">winwin.swiss</div>
+        <div class="p-desc">Assurances CCT — FINMA F01042365</div>
+      </a>
+      <a href="https://swissrh.ch" target="_blank" rel="noopener" class="partner-card">
+        <div class="p-ico" style="background:#FFF0F2">👥</div>
+        <div class="p-name">SWISSRH</div>
+        <div class="p-url">swissrh.ch</div>
+        <div class="p-desc">Salaires & RH conformes CCT</div>
+      </a>
+      <a href="https://matcho.digital" target="_blank" rel="noopener" class="partner-card">
+        <div class="p-ico" style="background:#EBF4FF">💳</div>
+        <div class="p-name">MATCHO</div>
+        <div class="p-url">matcho.digital</div>
+        <div class="p-desc">Réconciliation bancaire automatique</div>
+      </a>
+      <a href="https://devispro.ch" target="_blank" rel="noopener" class="partner-card">
+        <div class="p-ico" style="background:#FFFAF0">📋</div>
+        <div class="p-name">DEVISPRO</div>
+        <div class="p-url">devispro.ch</div>
+        <div class="p-desc">Devis artisans avec coûts CCT</div>
+      </a>
+      <a href="https://boom.contact" target="_blank" rel="noopener" class="partner-card">
+        <div class="p-ico" style="background:#F5F0FF">🚗</div>
+        <div class="p-name">BOOM</div>
+        <div class="p-url">boom.contact</div>
+        <div class="p-desc">Constat numérique 42 langues</div>
+      </a>
+      <a href="https://horlogis.ch" target="_blank" rel="noopener" class="partner-card">
+        <div class="p-ico" style="background:#F0FAFF">⌚</div>
+        <div class="p-name">HORLOGIS</div>
+        <div class="p-url">horlogis.ch</div>
+        <div class="p-desc">Portail métiers horlogerie</div>
+      </a>
+    </div>
+
+    <!-- SOLURIS -->
+    <a href="https://soluris.ch" target="_blank" rel="noopener" class="sol-strip">
+      <span class="sol-ico">⚖️</span>
+      <div>
+        <div class="sol-name">SOLURIS.CH</div>
+        <div class="sol-desc">IA juridique suisse — Questions CCT, Fedlex, TF, droit du travail</div>
+      </div>
+      <span class="sol-arr">›</span>
+    </a>
+
+    <div style="height:24px"></div>
+  </div>
+</div><!-- /pg-home -->
+
+<!-- ════ PAGE SEARCH ════════════════════════════ -->
+<div id="pg-search" class="page">
+  <div class="main">
+    <div class="section-hdr">
+      <span class="section-title" data-i18n="search-title">RECHERCHE</span>
+    </div>
+    <div class="search-wrap" style="margin-bottom:20px">
+      <span class="s-icon" style="color:rgba(0,0,0,.3)">🔍</span>
+      <input type="search" id="srch-page" class="search-input"
+        style="background:var(--paper);border-color:var(--gray-2);color:var(--ink)"
+        placeholder="CCT, branche, secteur, NOGA…"
+        autocomplete="off">
+      <div class="s-drop" id="srch-drop-p"
+        style="background:var(--paper);border-color:var(--gray-2)"></div>
+    </div>
+    <div class="cct-grid" id="pg-results">
+      <p style="grid-column:1/-1;padding:32px;text-align:center;color:var(--gray-3);font-family:var(--mono);font-size:11px;letter-spacing:.08em" data-i18n="search-hint">COMMENCEZ À TAPER POUR CHERCHER…</p>
+    </div>
+  </div>
 </div>
 
-<!-- BOTTOM NAV -->
-<nav class="bottom-nav">
-  <button class="nav-tab active" id="tab-home" onclick="showPage('home')">
-    <span class="nav-icon">🏠</span>
-    <span data-i18n="nav_home">Accueil</span>
+<!-- ════ PAGE INFO ══════════════════════════════ -->
+<div id="pg-info" class="page">
+  <div class="main">
+    <div class="section-hdr">
+      <span class="section-title">À PROPOS</span>
+    </div>
+    <div class="info-block">
+      <h3>CCTSWISS.CH</h3>
+      <p>Le répertoire suisse des conventions collectives de travail (CCT). Gratuit, sans publicité, disponible en <strong>11 langues</strong>.</p>
+      <p>Données mises à jour <strong>chaque nuit à 02:00 CET</strong> depuis Fedlex, la source officielle de la Confédération suisse.</p>
+      <p>Construit par <strong>Groupe NEO</strong> — WIN WIN Finance, SwissRH, Soluris.</p>
+      <div class="info-warn">
+        ⚠️ CCTswiss.ch est un outil d'orientation. Il ne remplace pas un avis juridique. Consultez toujours le texte officiel sur Fedlex ou un spécialiste du droit du travail suisse.
+      </div>
+    </div>
+    <div class="footer-credits">
+      🇨🇭 FAIT EN SUISSE · GROUPE NEO · © 2025 ·
+      <a href="https://winwin.swiss">WINWIN.SWISS</a> ·
+      <a href="https://soluris.ch" style="color:var(--gray-3)">SOLURIS.CH</a>
+    </div>
+  </div>
+</div>
+
+<!-- ════ BOTTOM NAV ═════════════════════════════ -->
+<nav class="bot-nav">
+  <button class="nav-tab on" id="nav-home" onclick="showPage('home')">
+    <span class="nav-ico">🏠</span>
+    <span data-i18n="nav-home">ACCUEIL</span>
   </button>
-  <button class="nav-tab" id="tab-search" onclick="showPage('search')">
-    <span class="nav-icon">🔍</span>
-    <span data-i18n="nav_search">Recherche</span>
+  <button class="nav-tab" id="nav-search" onclick="showPage('search')">
+    <span class="nav-ico">🔍</span>
+    <span data-i18n="nav-search">CHERCHER</span>
   </button>
-  <button class="nav-tab" id="tab-info" onclick="showPage('info')">
-    <span class="nav-icon">ℹ️</span>
-    <span data-i18n="nav_info">Info</span>
+  <button class="nav-tab" id="nav-info" onclick="showPage('info')">
+    <span class="nav-ico">ℹ️</span>
+    <span data-i18n="nav-info">INFO</span>
   </button>
 </nav>
 
-<!-- CCT DETAIL SHEET -->
-<div class="sheet-overlay" id="sheetOverlay" onclick="closeSheet()"></div>
+<!-- ════ CCT DETAIL SHEET ═══════════════════════ -->
+<div class="overlay" id="overlay" onclick="closeSheet()"></div>
 <div class="sheet" id="sheet">
-  <div class="sheet-handle"></div>
-  <div id="sheetContent"></div>
+  <div class="sh-handle"></div>
+  <div id="sh-content"></div>
 </div>
 
 <!-- TOAST -->
 <div class="toast" id="toast"></div>
 
 <script>
-// ═══════════════════════════════════════════════
-// DATA & STATE
-// ═══════════════════════════════════════════════
-let allCCTs = [];
-let currentLang = 'fr';
-let currentFilter = 'all';
-let searchTimeout;
+/* ═══════════════════════════════════════════════
+   STATE
+═══════════════════════════════════════════════ */
+let allCCTs = [], lang = 'fr', filter = 'all', searchTimer;
 
-// ── i18n translations ──
-const TRANSLATIONS = {
-  fr: { hero_title:"Votre <em>convention collective</em> en 30 secondes", hero_sub:"Cherchez votre CCT par branche ou métier. Gratuit, sans inscription.", live_badge:"Mis à jour · Fedlex officiel", filter_all:"Toutes", filter_dfo:"DFO ✓", stat_ccts:"CCTs", stat_langs:"Langues", stat_cantons:"Cantons", section_ccts:"Conventions collectives", section_apps:"Outils partenaires", search_title:"Recherche", nav_home:"Accueil", nav_search:"Recherche", nav_info:"Info", btn_detail:"Voir", btn_share:"Partager", btn_print:"Imprimer", share_wp:"WhatsApp", share_email:"Email", share_copy:"Copier", share_print:"Imprimer", disclaimer:"Ce résumé est fourni à titre informatif. Il ne constitue pas un avis juridique.", source_link:"Texte officiel →", dfo_label:"DFO · Force obligatoire", not_dfo:"Pas de DFO" },
-  de: { hero_title:"Ihr <em>Gesamtarbeitsvertrag</em> in 30 Sekunden", hero_sub:"Suchen Sie Ihren GAV nach Branche oder Beruf. Kostenlos, ohne Anmeldung.", live_badge:"Automatisch aktualisiert · Fedlex offiziell", filter_all:"Alle", filter_dfo:"AVE ✓", stat_ccts:"GAV", stat_langs:"Sprachen", stat_cantons:"Kantone", section_ccts:"Gesamtarbeitsverträge", section_apps:"Partner-Tools", search_title:"Suche", nav_home:"Startseite", nav_search:"Suche", nav_info:"Info", btn_detail:"Ansehen", btn_share:"Teilen", btn_print:"Drucken", share_wp:"WhatsApp", share_email:"E-Mail", share_copy:"Kopieren", share_print:"Drucken", disclaimer:"Diese Zusammenfassung ist nur informativ. Sie ersetzt keine Rechtsberatung.", source_link:"Offizieller Text →", dfo_label:"AVE · Allgemeinverbindlich", not_dfo:"Nicht AVE" },
-  it: { hero_title:"Il tuo <em>contratto collettivo</em> in 30 secondi", hero_sub:"Cerca il tuo CCL per settore o professione. Gratuito, senza registrazione.", live_badge:"Aggiornato · Fedlex ufficiale", filter_all:"Tutti", filter_dfo:"DCO ✓", stat_ccts:"CCL", stat_langs:"Lingue", stat_cantons:"Cantoni", section_ccts:"Contratti collettivi", section_apps:"Strumenti partner", search_title:"Ricerca", nav_home:"Home", nav_search:"Ricerca", nav_info:"Info", btn_detail:"Vedi", btn_share:"Condividi", btn_print:"Stampa", share_wp:"WhatsApp", share_email:"Email", share_copy:"Copia", share_print:"Stampa", disclaimer:"Questo riassunto è solo informativo. Non costituisce consulenza legale.", source_link:"Testo ufficiale →", dfo_label:"DCO · Obbligatorio", not_dfo:"No DCO" },
-  en: { hero_title:"Your <em>collective agreement</em> in 30 seconds", hero_sub:"Find your CLA by sector or profession. Free, no sign-up.", live_badge:"Auto-updated · Official Fedlex", filter_all:"All", filter_dfo:"ECB ✓", stat_ccts:"CLAs", stat_langs:"Languages", stat_cantons:"Cantons", section_ccts:"Collective agreements", section_apps:"Partner tools", search_title:"Search", nav_home:"Home", nav_search:"Search", nav_info:"About", btn_detail:"View", btn_share:"Share", btn_print:"Print", share_wp:"WhatsApp", share_email:"Email", share_copy:"Copy link", share_print:"Print", disclaimer:"This summary is for information only. It does not constitute legal advice.", source_link:"Official text →", dfo_label:"ECB · Extended", not_dfo:"Not ECB" },
-  pt: { hero_title:"A sua <em>convenção coletiva</em> em 30 segundos", hero_sub:"Procure a sua CCT por setor ou profissão. Gratuito, sem registo.", live_badge:"Atualizado · Fedlex oficial", filter_all:"Todas", filter_dfo:"DFO ✓", stat_ccts:"CCTs", stat_langs:"Línguas", stat_cantons:"Cantões", section_ccts:"Convenções coletivas", section_apps:"Ferramentas parceiras", search_title:"Pesquisa", nav_home:"Início", nav_search:"Pesquisa", nav_info:"Info", btn_detail:"Ver", btn_share:"Partilhar", btn_print:"Imprimir", share_wp:"WhatsApp", share_email:"Email", share_copy:"Copiar", share_print:"Imprimir", disclaimer:"Este resumo é apenas informativo. Não constitui aconselhamento jurídico.", source_link:"Texto oficial →", dfo_label:"DFO · Obrigatório", not_dfo:"Sem DFO" },
-  es: { hero_title:"Tu <em>convenio colectivo</em> en 30 segundos", hero_sub:"Busca tu CCT por sector o profesión. Gratis, sin registro.", live_badge:"Actualizado · Fedlex oficial", filter_all:"Todos", filter_dfo:"DFO ✓", stat_ccts:"CCTs", stat_langs:"Idiomas", stat_cantons:"Cantones", section_ccts:"Convenios colectivos", section_apps:"Herramientas", search_title:"Búsqueda", nav_home:"Inicio", nav_search:"Buscar", nav_info:"Info", btn_detail:"Ver", btn_share:"Compartir", btn_print:"Imprimir", share_wp:"WhatsApp", share_email:"Email", share_copy:"Copiar", share_print:"Imprimir", disclaimer:"Este resumen es solo informativo. No constituye asesoramiento jurídico.", source_link:"Texto oficial →", dfo_label:"DFO · Obligatorio", not_dfo:"Sin DFO" },
-  sq: { hero_title:"Marrëveshja juaj <em>kolektive</em> në 30 sekonda", hero_sub:"Kërkoni marrëveshjen kolektive sipas sektorit. Falas, pa regjistrim.", live_badge:"Përditësuar · Fedlex zyrtar", filter_all:"Të gjitha", filter_dfo:"DFO ✓", stat_ccts:"CCT", stat_langs:"Gjuhë", stat_cantons:"Kantone", section_ccts:"Marrëveshjet kolektive", section_apps:"Mjete partnere", search_title:"Kërkim", nav_home:"Kryefaqe", nav_search:"Kërkim", nav_info:"Info", btn_detail:"Shiko", btn_share:"Ndaj", btn_print:"Printo", share_wp:"WhatsApp", share_email:"Email", share_copy:"Kopjo", share_print:"Printo", disclaimer:"Ky përmbledhje është vetëm informuese. Nuk përbën këshillim juridik.", source_link:"Teksti zyrtar →", dfo_label:"DFO · E detyrueshme", not_dfo:"Jo DFO" },
-  bs: { hero_title:"Vaš <em>kolektivni ugovor</em> za 30 sekundi", hero_sub:"Pronađite KU po sektoru ili struci. Besplatno, bez registracije.", live_badge:"Ažurirano · Fedlex zvanično", filter_all:"Svi", filter_dfo:"DFO ✓", stat_ccts:"KU", stat_langs:"Jezici", stat_cantons:"Kantoni", section_ccts:"Kolektivni ugovori", section_apps:"Partnerski alati", search_title:"Pretraga", nav_home:"Početna", nav_search:"Pretraga", nav_info:"Info", btn_detail:"Pogledaj", btn_share:"Podijeli", btn_print:"Štampaj", share_wp:"WhatsApp", share_email:"Email", share_copy:"Kopiraj", share_print:"Štampaj", disclaimer:"Ovaj sažetak je samo informativan. Ne predstavlja pravni savjet.", source_link:"Zvanični tekst →", dfo_label:"DFO · Obavezno", not_dfo:"Nije DFO" },
-  tr: { hero_title:"30 saniyede <em>toplu iş sözleşmeniz</em>", hero_sub:"TİS'inizi sektöre veya mesleğe göre bulun. Ücretsiz, kayıt gerektirmez.", live_badge:"Otomatik güncellendi · Fedlex resmi", filter_all:"Tümü", filter_dfo:"DFO ✓", stat_ccts:"TİS", stat_langs:"Dil", stat_cantons:"Kanton", section_ccts:"Toplu iş sözleşmeleri", section_apps:"Ortak araçlar", search_title:"Arama", nav_home:"Ana sayfa", nav_search:"Arama", nav_info:"Hakkında", btn_detail:"Görüntüle", btn_share:"Paylaş", btn_print:"Yazdır", share_wp:"WhatsApp", share_email:"E-posta", share_copy:"Kopyala", share_print:"Yazdır", disclaimer:"Bu özet yalnızca bilgi amaçlıdır. Hukuki tavsiye niteliği taşımaz.", source_link:"Resmi metin →", dfo_label:"DFO · Zorunlu", not_dfo:"DFO yok" },
-  uk: { hero_title:"Ваша <em>колективна угода</em> за 30 секунд", hero_sub:"Знайдіть свою КУ за галуззю або професією. Безкоштовно, без реєстрації.", live_badge:"Автооновлення · Fedlex офіційний", filter_all:"Всі", filter_dfo:"ЗОБ ✓", stat_ccts:"КУ", stat_langs:"Мов", stat_cantons:"Кантони", section_ccts:"Колективні угоди", section_apps:"Інструменти партнерів", search_title:"Пошук", nav_home:"Головна", nav_search:"Пошук", nav_info:"Про нас", btn_detail:"Переглянути", btn_share:"Поділитись", btn_print:"Друкувати", share_wp:"WhatsApp", share_email:"Email", share_copy:"Копіювати", share_print:"Друкувати", disclaimer:"Цей огляд є лише інформативним. Не є юридичною консультацією.", source_link:"Офіційний текст →", dfo_label:"ЗОБ · Обов'язково", not_dfo:"Немає ЗОБ" },
+/* ═══════════════════════════════════════════════
+   i18n
+═══════════════════════════════════════════════ */
+const T = {
+  fr: { badge:"FEDLEX OFFICIEL · MIS À JOUR CHAQUE NUIT", "h1-accent":"convention collective", "h1-end":"EN 30 SEC.", sub:"Cherchez votre CCT par branche, métier ou secteur. Gratuit, sans inscription.", "f-all":"TOUTES", "st-ccts":"CCTs", "st-langs":"LANGUES", "st-cantons":"CANTONS", "sec-ccts":"CONVENTIONS COLLECTIVES", "sec-apps":"OUTILS PARTENAIRES", "search-title":"RECHERCHE", "search-hint":"COMMENCEZ À TAPER POUR CHERCHER…", "nav-home":"ACCUEIL", "nav-search":"CHERCHER", "nav-info":"INFO", dfo_label:"DFO", disclaimer:"Résumé informatif uniquement. Pas un avis juridique.", src_link:"Texte officiel →", share_wp:"WHATSAPP", share_em:"EMAIL", share_cp:"COPIER", share_pr:"IMPRIMER", btn_voir:"VOIR", btn_part:"PARTAGER", btn_imp:"IMPRIMER" },
+  de: { badge:"OFFIZ. FEDLEX · JEDE NACHT AKTUALISIERT", "h1-accent":"Gesamtarbeitsvertrag", "h1-end":"IN 30 SEK.", sub:"Suchen Sie Ihren GAV nach Branche oder Beruf. Kostenlos.", "f-all":"ALLE", "st-ccts":"GAV", "st-langs":"SPRACHEN", "st-cantons":"KANTONE", "sec-ccts":"GESAMTARBEITSVERTRÄGE", "sec-apps":"PARTNER-TOOLS", "search-title":"SUCHE", "search-hint":"TIPPEN SIE, UM ZU SUCHEN…", "nav-home":"START", "nav-search":"SUCHEN", "nav-info":"INFO", dfo_label:"AVE", disclaimer:"Nur informativ. Keine Rechtsberatung.", src_link:"Offizieller Text →", share_wp:"WHATSAPP", share_em:"E-MAIL", share_cp:"KOPIEREN", share_pr:"DRUCKEN", btn_voir:"ANSEHEN", btn_part:"TEILEN", btn_imp:"DRUCKEN" },
+  it: { badge:"FEDLEX UFFICIALE · AGGIORNATO OGNI NOTTE", "h1-accent":"contratto collettivo", "h1-end":"IN 30 SEC.", sub:"Cerca il tuo CCL per settore. Gratuito, senza registrazione.", "f-all":"TUTTI", "st-ccts":"CCL", "st-langs":"LINGUE", "st-cantons":"CANTONI", "sec-ccts":"CONTRATTI COLLETTIVI", "sec-apps":"STRUMENTI", "search-title":"RICERCA", "search-hint":"DIGITA PER CERCARE…", "nav-home":"HOME", "nav-search":"CERCA", "nav-info":"INFO", dfo_label:"DCO", disclaimer:"Solo informativo. Non è consulenza legale.", src_link:"Testo ufficiale →", share_wp:"WHATSAPP", share_em:"EMAIL", share_cp:"COPIA", share_pr:"STAMPA", btn_voir:"VEDI", btn_part:"CONDIVIDI", btn_imp:"STAMPA" },
+  en: { badge:"OFFICIAL FEDLEX · UPDATED NIGHTLY", "h1-accent":"collective agreement", "h1-end":"IN 30 SEC.", sub:"Find your CLA by sector or profession. Free, no sign-up.", "f-all":"ALL", "st-ccts":"CLAs", "st-langs":"LANGUAGES", "st-cantons":"CANTONS", "sec-ccts":"COLLECTIVE AGREEMENTS", "sec-apps":"PARTNER TOOLS", "search-title":"SEARCH", "search-hint":"START TYPING TO SEARCH…", "nav-home":"HOME", "nav-search":"SEARCH", "nav-info":"ABOUT", dfo_label:"ECB", disclaimer:"Information only. Not legal advice.", src_link:"Official text →", share_wp:"WHATSAPP", share_em:"EMAIL", share_cp:"COPY", share_pr:"PRINT", btn_voir:"VIEW", btn_part:"SHARE", btn_imp:"PRINT" },
+  pt: { badge:"FEDLEX OFICIAL · ATUALIZADO CADA NOITE", "h1-accent":"convenção coletiva", "h1-end":"EM 30 SEG.", sub:"Procure a sua CCT por setor. Gratuito, sem registo.", "f-all":"TODAS", "st-ccts":"CCTs", "st-langs":"LÍNGUAS", "st-cantons":"CANTÕES", "sec-ccts":"CONVENÇÕES COLETIVAS", "sec-apps":"FERRAMENTAS", "search-title":"PESQUISA", "search-hint":"COMECE A DIGITAR…", "nav-home":"INÍCIO", "nav-search":"PESQUISA", "nav-info":"INFO", dfo_label:"DFO", disclaimer:"Apenas informativo. Não é aconselhamento jurídico.", src_link:"Texto oficial →", share_wp:"WHATSAPP", share_em:"EMAIL", share_cp:"COPIAR", share_pr:"IMPRIMIR", btn_voir:"VER", btn_part:"PARTILHAR", btn_imp:"IMPRIMIR" },
+  es: { badge:"FEDLEX OFICIAL · ACTUALIZADO CADA NOCHE", "h1-accent":"convenio colectivo", "h1-end":"EN 30 SEG.", sub:"Busca tu CCT por sector. Gratis, sin registro.", "f-all":"TODOS", "st-ccts":"CCTs", "st-langs":"IDIOMAS", "st-cantons":"CANTONES", "sec-ccts":"CONVENIOS COLECTIVOS", "sec-apps":"HERRAMIENTAS", "search-title":"BÚSQUEDA", "search-hint":"EMPIEZA A ESCRIBIR…", "nav-home":"INICIO", "nav-search":"BUSCAR", "nav-info":"INFO", dfo_label:"DFO", disclaimer:"Solo informativo. No es asesoramiento jurídico.", src_link:"Texto oficial →", share_wp:"WHATSAPP", share_em:"EMAIL", share_cp:"COPIAR", share_pr:"IMPRIMIR", btn_voir:"VER", btn_part:"COMPARTIR", btn_imp:"IMPRIMIR" },
+  sq: { badge:"FEDLEX ZYRTAR · AZHURNUAR ÇDO NATË", "h1-accent":"marrëveshje kolektive", "h1-end":"NË 30 SEK.", sub:"Kërkoni CCT-në tuaj sipas sektorit. Falas.", "f-all":"TË GJITHA", "st-ccts":"CCT", "st-langs":"GJUHË", "st-cantons":"KANTONE", "sec-ccts":"MARRËVESHJET KOLEKTIVE", "sec-apps":"MJETE", "search-title":"KËRKIM", "search-hint":"FILLONI TË SHKRUANI…", "nav-home":"KRYEFAQE", "nav-search":"KËRKIM", "nav-info":"INFO", dfo_label:"DFO", disclaimer:"Vetëm informuese. Jo këshillim juridik.", src_link:"Teksti zyrtar →", share_wp:"WHATSAPP", share_em:"EMAIL", share_cp:"KOPJO", share_pr:"PRINTO", btn_voir:"SHIKO", btn_part:"NDAJ", btn_imp:"PRINTO" },
+  bs: { badge:"FEDLEX ZVANIČNO · AŽURIRANO SVAKE NOĆI", "h1-accent":"kolektivni ugovor", "h1-end":"ZA 30 SEK.", sub:"Pronađite KU po sektoru. Besplatno.", "f-all":"SVI", "st-ccts":"KU", "st-langs":"JEZICI", "st-cantons":"KANTONI", "sec-ccts":"KOLEKTIVNI UGOVORI", "sec-apps":"ALATI", "search-title":"PRETRAGA", "search-hint":"POČNITE DA TIPKATE…", "nav-home":"POČETNA", "nav-search":"PRETRAGA", "nav-info":"INFO", dfo_label:"DFO", disclaimer:"Samo informativno. Nije pravni savjet.", src_link:"Zvanični tekst →", share_wp:"WHATSAPP", share_em:"EMAIL", share_cp:"KOPIRAJ", share_pr:"ŠTAMPAJ", btn_voir:"POGLEDAJ", btn_part:"PODIJELI", btn_imp:"ŠTAMPAJ" },
+  tr: { badge:"RESMİ FEDLEX · HER GECE GÜNCELLENİYOR", "h1-accent":"toplu iş sözleşmesi", "h1-end":"30 SANİYEDE", sub:"Sektöre göre TİS'inizi bulun. Ücretsiz.", "f-all":"TÜMÜ", "st-ccts":"TİS", "st-langs":"DİL", "st-cantons":"KANTON", "sec-ccts":"TOPLU İŞ SÖZLEŞMELERİ", "sec-apps":"ARAÇLAR", "search-title":"ARAMA", "search-hint":"YAZMAYA BAŞLAYIN…", "nav-home":"ANA SAYFA", "nav-search":"ARAMA", "nav-info":"HAKKINDA", dfo_label:"DFO", disclaimer:"Yalnızca bilgi amaçlı. Hukuki tavsiye değildir.", src_link:"Resmi metin →", share_wp:"WHATSAPP", share_em:"E-POSTA", share_cp:"KOPYALA", share_pr:"YAZDIR", btn_voir:"GÖRÜNTÜLE", btn_part:"PAYLAŞ", btn_imp:"YAZDIR" },
+  uk: { badge:"ОФІЦ. FEDLEX · ЩОНОЧІ ОНОВЛЮЄТЬСЯ", "h1-accent":"колективна угода", "h1-end":"ЗА 30 СЕК.", sub:"Знайдіть свою КУ за галуззю. Безкоштовно.", "f-all":"ВСІ", "st-ccts":"КУ", "st-langs":"МОВ", "st-cantons":"КАНТОНИ", "sec-ccts":"КОЛЕКТИВНІ УГОДИ", "sec-apps":"ІНСТРУМЕНТИ", "search-title":"ПОШУК", "search-hint":"ПОЧНІТЬ ВВОДИТИ…", "nav-home":"ГОЛОВНА", "nav-search":"ПОШУК", "nav-info":"ПРО НАС", dfo_label:"ЗОБ", disclaimer:"Лише інформативно. Не є юридичною консультацією.", src_link:"Офіційний текст →", share_wp:"WHATSAPP", share_em:"EMAIL", share_cp:"КОПІЮВАТИ", share_pr:"ДРУКУВАТИ", btn_voir:"ПЕРЕГЛЯНУТИ", btn_part:"ПОДІЛИТИСЬ", btn_imp:"ДРУКУВАТИ" },
 };
+const t = k => (T[lang]||T.fr)[k] || (T.fr[k]||k);
 
-function t(key) { return (TRANSLATIONS[currentLang]||TRANSLATIONS['fr'])[key] || key; }
-
-function applyTranslations() {
+function applyTranslations(){
   document.querySelectorAll('[data-i18n]').forEach(el => {
-    const key = el.getAttribute('data-i18n');
-    const val = t(key);
-    if(key === 'hero_title') el.innerHTML = val;
-    else el.textContent = val;
+    const k = el.dataset.i18n;
+    el.textContent = t(k);
   });
-  document.documentElement.lang = currentLang;
-  // Re-render CCTs with new lang
-  if(allCCTs.length) renderCCTs(allCCTs);
+  document.documentElement.lang = lang;
+  if(allCCTs.length) renderGrid(allCCTs);
 }
 
-// ═══════════════════════════════════════════════
-// NAVIGATION
-// ═══════════════════════════════════════════════
-function showPage(page) {
-  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
-  document.getElementById('page-'+page).classList.add('active');
-  const tab = document.getElementById('tab-'+page);
-  if(tab) tab.classList.add('active');
-  window.scrollTo({top:0});
+/* ═══════════════════════════════════════════════
+   NAVIGATION
+═══════════════════════════════════════════════ */
+function showPage(p){
+  document.querySelectorAll('.page').forEach(el=>el.classList.remove('on'));
+  document.querySelectorAll('.nav-tab').forEach(el=>el.classList.remove('on'));
+  document.getElementById('pg-'+p).classList.add('on');
+  document.getElementById('nav-'+p)?.classList.add('on');
+  window.scrollTo({top:0,behavior:'instant'});
 }
 
-// ═══════════════════════════════════════════════
-// LANGUAGE SWITCHING
-// ═══════════════════════════════════════════════
-document.getElementById('langRow').addEventListener('click', e => {
-  const btn = e.target.closest('.lang-pill');
-  if(!btn) return;
-  document.querySelectorAll('.lang-pill').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  currentLang = btn.dataset.lang;
+/* ═══════════════════════════════════════════════
+   LANGUAGE
+═══════════════════════════════════════════════ */
+document.getElementById('langs').addEventListener('click',e=>{
+  const b = e.target.closest('.lang');
+  if(!b) return;
+  document.querySelectorAll('.lang').forEach(x=>x.classList.remove('on'));
+  b.classList.add('on');
+  lang = b.dataset.lang;
   applyTranslations();
-  showToast(getToastMsg(currentLang));
+  const msg={fr:'FR ✓',de:'DE ✓',it:'IT ✓',en:'EN ✓',pt:'PT ✓',es:'ES ✓',sq:'SQ ✓',bs:'BS ✓',tr:'TR ✓',uk:'UK ✓'};
+  toast(msg[lang]||lang);
 });
 
-function getToastMsg(lang) {
-  const msgs = {fr:'Français activé',de:'Deutsch aktiviert',it:'Italiano attivato',
-    en:'English activated',pt:'Português ativado',es:'Español activado',
-    sq:'Shqip aktivizuar',bs:'Bosanski aktiviran',tr:'Türkçe etkinleştirildi',uk:'Українська увімкнена'};
-  return msgs[lang] || lang;
-}
+/* ═══════════════════════════════════════════════
+   DATA
+═══════════════════════════════════════════════ */
+function getName(c){ return c['name_'+lang]||c.name||''; }
 
-// ═══════════════════════════════════════════════
-// API & DATA
-// ═══════════════════════════════════════════════
-async function loadCCTs() {
-  try {
-    const [r1, r2] = await Promise.all([
-      fetch('/api/cct/'),
-      fetch('/api/cct/status')
-    ]);
-    const data = await r1.json();
-    const status = await r2.json();
-    
-    allCCTs = data.data || [];
-    
-    // Update stats
-    document.getElementById('statTotal').textContent = allCCTs.length;
-    document.getElementById('statDfo').textContent = allCCTs.filter(c=>c.is_dfo).length;
-    
-    // Update indicator
-    if(status.last_auto_check) {
-      const d = new Date(status.last_auto_check);
-      document.getElementById('updateDot').innerHTML = 
-        `<span class="update-dot">Fedlex ${d.toLocaleDateString('fr-CH')}</span>`;
+async function loadData(){
+  try{
+    const [r1,r2] = await Promise.all([fetch('/api/cct/'),fetch('/api/cct/status')]);
+    const d1=await r1.json(), d2=await r2.json();
+    allCCTs = d1.data||[];
+    document.getElementById('st-total').textContent = allCCTs.length;
+    document.getElementById('st-dfo').textContent = allCCTs.filter(c=>c.is_dfo||c.dfo).length;
+    if(d2.last_auto_check){
+      const dt=new Date(d2.last_auto_check);
+      document.getElementById('upd-meta').textContent = '— '+dt.toLocaleDateString('fr-CH');
     }
-    
-    renderCCTs(allCCTs);
-  } catch(e) {
-    document.getElementById('cctList').innerHTML = 
-      '<p style="padding:20px;color:var(--gray-5);text-align:center">Chargement impossible. Réessayez.</p>';
+    renderGrid(allCCTs);
+  }catch(e){
+    document.getElementById('cct-grid').innerHTML='<p style="grid-column:1/-1;padding:40px;text-align:center;color:var(--gray-3);font-family:var(--mono);font-size:11px">CHARGEMENT IMPOSSIBLE — RÉESSAYEZ</p>';
   }
 }
 
-function getCCTName(cct) {
-  const key = 'name_' + currentLang;
-  return cct[key] || cct.name;
-}
+const BG={restauration:'#FFF0F2',construction:'#F0F4FF',nettoyage:'#F0FFF4',coiffure:'#FFF0FA',horlogerie:'#FFFAF0',industrie:'#F0F8FF',artisanat:'#FFFDF0',alimentation:'#FFF8F0',securite:'#F5F5FF',services:'#EFF9FF',automobile:'#F5F0FF',commerce:'#FFFFF0',sante:'#F0FFF8',electricite:'#FFFEF0',interim:'#FFF5F0',second_oeuvre:'#F8F5FF',location_services:'#F0F5FF'};
 
-function renderCCTs(ccts) {
-  const filtered = currentFilter === 'all' ? ccts :
-    currentFilter === 'dfo' ? ccts.filter(c=>c.is_dfo) :
-    ccts.filter(c=>c.branch===currentFilter);
-  
-  const container = document.getElementById('cctList');
-  if(!filtered.length) {
-    container.innerHTML = '<p style="padding:20px;color:var(--gray-5);text-align:center" data-i18n="no_results">Aucun résultat</p>';
+function renderGrid(ccts){
+  const data = filter==='all'? ccts
+    :filter==='dfo'? ccts.filter(c=>c.is_dfo||c.dfo)
+    :ccts.filter(c=>c.branch===filter);
+  const el=document.getElementById('cct-grid');
+  if(!data.length){
+    el.innerHTML='<p style="grid-column:1/-1;padding:40px;text-align:center;color:var(--gray-3);font-family:var(--mono);font-size:11px;letter-spacing:.08em">AUCUN RÉSULTAT</p>';
     return;
   }
-  
-  const bgMap = {restauration:'#FFF0F2',construction:'#F0F4FF',nettoyage:'#F0FFF4',
-    coiffure:'#FFF0FA',horlogerie:'#FFFAF0',industrie:'#F0F8FF',artisanat:'#FFFDF0',
-    alimentation:'#FFF8F0',securite:'#F5F5FF',services:'#EFF9FF',automobile:'#F5F0FF',
-    commerce:'#FFFFF0',sante:'#F0FFF8',electricite:'#FFFEF0',interim:'#FFF5F0',
-    second_oeuvre:'#F8F5FF',location_services:'#F0F5FF'};
-  
-  container.innerHTML = filtered.map(cct => {
-    const name = getCCTName(cct);
-    const bg = bgMap[cct.branch] || '#F5F5F3';
-    const wage = cct.min_wage_chf ? `CHF ${Math.round(cct.min_wage_chf).toLocaleString('fr-CH')}` : '—';
-    const vac = cct.vacation_weeks ? `${cct.vacation_weeks} sem.` : '—';
-    const hrs = cct.weekly_hours ? `${cct.weekly_hours}h` : '—';
-    const badgeDfo = cct.is_dfo ? `<span class="badge-dfo">DFO</span>` : '';
-    const badgeScope = cct.scope_cantons ? `<span class="badge-reg">Régionale</span>` : `<span class="badge-fed">CH</span>`;
-    
-    return `<a class="cct-card" href="#" onclick="openSheet('${cct.rs_number}');return false;">
-      <div class="cct-card-top">
-        <div class="cct-card-left">
-          <div class="cct-emoji" style="background:${bg}">${cct.emoji||'📄'}</div>
-          <div>
-            <div class="cct-name">${name}</div>
-            <div class="cct-branch">${cct.scope_description_fr||cct.branch||''}</div>
-          </div>
+  el.innerHTML=data.map(c=>{
+    const name=getName(c), bg=BG[c.branch]||'#F5F3EF';
+    const dfo=c.is_dfo||c.dfo;
+    const w=c.salary_min_hourly?'CHF '+Number(c.salary_min_hourly).toFixed(2)+'/h':c.min_wage_chf?'CHF '+Math.round(c.min_wage_chf)+'/m':'—';
+    const vac=c.vacation_weeks?c.vacation_weeks+' SEM':'—';
+    const hrs=c.weekly_hours?c.weekly_hours+'H':'—';
+    const rsSafe=c.rs_number.replace(/'/g,"\\'");
+    const nameSafe=name.replace(/'/g,"\\'").replace(/"/g,'&quot;');
+    return `<a class="cct-card" href="#cct-${c.rs_number}" onclick="openSheet('${rsSafe}');return false">
+      <div class="cc-header">
+        <div class="cc-emoji-wrap" style="background:${bg}">${c.emoji||'📄'}</div>
+        <div class="cc-badges">
+          ${dfo?'<span class="bdg bdg-dfo">DFO</span>':''}
+          <span class="bdg ${c.scope_cantons?'bdg-reg':'bdg-fed'}">${c.scope_cantons?'RÉG.':'CH'}</span>
         </div>
-        <div class="cct-badges">${badgeDfo}${badgeScope}</div>
       </div>
-      <div class="cct-stats">
-        <div class="cct-stat"><span class="cct-stat-val">${wage}</span><span class="cct-stat-lbl">Min./mois</span></div>
-        <div class="cct-stat"><span class="cct-stat-val">${vac}</span><span class="cct-stat-lbl">Vacances</span></div>
-        <div class="cct-stat"><span class="cct-stat-val">${hrs}</span><span class="cct-stat-lbl">Hebdo</span></div>
+      <div class="cc-name">${name}</div>
+      <div class="cc-scope">${c.scope_description_fr||c.branch||''}</div>
+      <div class="cc-data">
+        <div class="cc-datum"><span class="cc-dval">${w}</span><span class="cc-dlbl">Salaire min.</span></div>
+        <div class="cc-datum"><span class="cc-dval">${vac}</span><span class="cc-dlbl">Vacances</span></div>
+        <div class="cc-datum"><span class="cc-dval">${hrs}</span><span class="cc-dlbl">Hebdo</span></div>
       </div>
-      <div class="cct-actions">
-        <span class="btn-action btn-detail">${t('btn_detail')} →</span>
-        <span class="btn-action btn-share" onclick="shareCCT(event,'${cct.rs_number}','${name.replace(/'/g,"\\'")}')">⬆ ${t('btn_share')}</span>
-        <span class="btn-action btn-print" onclick="printCCT(event,'${cct.rs_number}')">⎙ ${t('btn_print')}</span>
+      <div class="cc-actions">
+        <span class="btn-action btn-primary">${t('btn_voir')} →</span>
+        <span class="btn-action btn-ghost" onclick="doShare(event,'${rsSafe}','${nameSafe}')">⬆</span>
+        <span class="btn-action btn-ghost" onclick="doPrint(event,'${rsSafe}')">⎙</span>
       </div>
     </a>`;
   }).join('');
 }
 
-// ═══════════════════════════════════════════════
-// FILTERS
-// ═══════════════════════════════════════════════
-function setFilter(el, filter) {
-  document.querySelectorAll('.filter-chip').forEach(c=>c.classList.remove('active'));
-  el.classList.add('active');
-  currentFilter = filter;
-  renderCCTs(allCCTs);
+/* ═══════════════════════════════════════════════
+   FILTERS
+═══════════════════════════════════════════════ */
+function setFilter(el,f){
+  document.querySelectorAll('.chip').forEach(c=>c.classList.remove('on'));
+  el.classList.add('on');filter=f;renderGrid(allCCTs);
 }
 
-// ═══════════════════════════════════════════════
-// SEARCH — Real-time with dropdown
-// ═══════════════════════════════════════════════
-function setupSearch(inputId, dropdownId) {
-  const input = document.getElementById(inputId);
-  const dropdown = document.getElementById(dropdownId);
-  if(!input) return;
-  
-  input.addEventListener('input', () => {
-    const q = input.value.trim();
-    const clearBtn = document.getElementById('searchClear');
-    if(clearBtn) clearBtn.classList.toggle('visible', q.length > 0);
-    
-    clearTimeout(searchTimeout);
-    if(q.length < 2) { dropdown.classList.remove('open'); return; }
-    
-    searchTimeout = setTimeout(async () => {
-      // Local search first (instant)
-      const local = allCCTs.filter(c => {
-        const haystack = [c.name, c.branch, c.scope_description_fr,
-          c['name_'+currentLang], c.name_de, c.name_it, c.name_en,
-          c.name_tr, c.name_uk, c.name_sq, c.name_bs].filter(Boolean).join(' ').toLowerCase();
-        return haystack.includes(q.toLowerCase());
-      }).slice(0,6);
-      
-      showDropdown(local, dropdown, q);
-      
-      // Then API search for better results
-      try {
-        const r = await fetch(`/api/search/?q=${encodeURIComponent(q)}`);
-        const d = await r.json();
-        if(d.data && d.data.length) showDropdown(d.data.slice(0,6), dropdown, q);
-      } catch(e) {}
-    }, 180);
+/* ═══════════════════════════════════════════════
+   SEARCH
+═══════════════════════════════════════════════ */
+function setupSearch(inId,dropId,isLight){
+  const inp=document.getElementById(inId), drop=document.getElementById(dropId);
+  if(!inp||!drop) return;
+  inp.addEventListener('input',()=>{
+    const q=inp.value.trim();
+    if(inId==='srch-home') document.getElementById('srch-clr')?.classList.toggle('on',q.length>0);
+    clearTimeout(searchTimer);
+    if(q.length<2){drop.classList.remove('on');return;}
+    searchTimer=setTimeout(()=>doSearch(q,drop,isLight),180);
   });
-  
-  input.addEventListener('keydown', e => {
-    if(e.key === 'Escape') { dropdown.classList.remove('open'); input.blur(); }
-    if(e.key === 'Enter' && allCCTs.length) {
-      const q = input.value.trim();
-      if(q) { dropdown.classList.remove('open'); }
-    }
-  });
-  
-  document.addEventListener('click', e => {
-    if(!input.contains(e.target) && !dropdown.contains(e.target))
-      dropdown.classList.remove('open');
-  });
+  inp.addEventListener('keydown',e=>{if(e.key==='Escape'){drop.classList.remove('on');inp.blur();}});
+  document.addEventListener('click',e=>{if(!inp.contains(e.target)&&!drop.contains(e.target)) drop.classList.remove('on');});
 }
 
-function showDropdown(ccts, dropdown, query) {
-  if(!ccts.length) {
-    dropdown.innerHTML = `<div class="dropdown-empty">Aucun résultat pour « ${query} »</div>`;
-    dropdown.classList.add('open');
-    return;
-  }
-  const bgMap = {restauration:'#FFF0F2',construction:'#F0F4FF',nettoyage:'#F0FFF4',coiffure:'#FFF0FA',horlogerie:'#FFFAF0'};
-  dropdown.innerHTML = ccts.map(c => {
-    const name = getCCTName(c);
-    const bg = bgMap[c.branch] || '#F5F5F3';
-    const tag = c.is_dfo ? '<span class="d-tag">DFO</span>' : '';
-    return `<a class="dropdown-item" href="#" onclick="openSheet('${c.rs_number}');return false;">
-      <div class="d-icon" style="background:${bg}">${c.emoji||'📄'}</div>
-      <div class="d-info">
-        <div class="d-name">${name}</div>
-        <div class="d-meta">${c.branch||''} ${c.min_wage_chf?'· CHF '+Math.round(c.min_wage_chf)+'/m':''}</div>
-      </div>
-      ${tag}
+function doSearch(q,drop,isLight){
+  const local=allCCTs.filter(c=>{
+    const hay=[c.name,c.branch,c.scope_description_fr,c['name_'+lang],c.name_de,c.name_it,c.name_en,c.name_tr,c.name_uk].filter(Boolean).join(' ').toLowerCase();
+    return hay.includes(q.toLowerCase());
+  }).slice(0,8);
+  showDrop(local,drop,q,isLight);
+  fetch('/api/search/?q='+encodeURIComponent(q)).then(r=>r.json()).then(d=>{if(d.data?.length) showDrop(d.data.slice(0,8),drop,q,isLight);}).catch(()=>{});
+}
+
+function showDrop(ccts,drop,q,isLight){
+  const c1=isLight?'var(--ink)':'rgba(255,255,255,.9)';
+  const c2=isLight?'var(--gray-4)':'rgba(255,255,255,.4)';
+  if(!ccts.length){drop.innerHTML=`<div class="s-empty" style="color:${c2}">Aucun résultat pour «${q}»</div>`;drop.classList.add('on');return;}
+  drop.innerHTML=ccts.map(c=>{
+    const nm=getName(c),bg=BG[c.branch]||'#F5F3EF',dfo=c.is_dfo||c.dfo;
+    const sal=c.salary_min_hourly?'CHF '+Number(c.salary_min_hourly).toFixed(0)+'/h':c.min_wage_chf?'CHF '+Math.round(c.min_wage_chf)+'/m':'';
+    return `<a class="s-item" href="#cct-${c.rs_number}" onclick="openSheet('${c.rs_number.replace(/'/g,"\\'")}');return false" style="color:${c1}">
+      <div class="s-ico" style="background:${bg}">${c.emoji||'📄'}</div>
+      <div><div class="s-name">${nm}</div><div class="s-meta">${c.branch||''} ${sal?'· '+sal:''}</div></div>
+      ${dfo?`<span class="s-tag">DFO</span>`:''}
     </a>`;
   }).join('');
-  dropdown.classList.add('open');
+  drop.classList.add('on');
 }
 
-function clearSearch() {
-  const input = document.getElementById('mainSearch');
-  if(input) { input.value = ''; input.focus(); }
-  document.getElementById('searchClear')?.classList.remove('visible');
-  document.getElementById('searchDropdown')?.classList.remove('open');
+function clearSearch(){
+  const inp=document.getElementById('srch-home');
+  if(inp){inp.value='';inp.focus();}
+  document.getElementById('srch-clr')?.classList.remove('on');
+  document.getElementById('srch-drop')?.classList.remove('on');
 }
 
-// ═══════════════════════════════════════════════
-// CCT DETAIL SHEET
-// ═══════════════════════════════════════════════
-async function openSheet(rsNumber) {
-  const overlay = document.getElementById('sheetOverlay');
-  const sheet = document.getElementById('sheet');
-  const content = document.getElementById('sheetContent');
-  
-  // Find local first
-  let cct = allCCTs.find(c => c.rs_number === rsNumber);
-  
-  if(!cct) {
-    content.innerHTML = '<div style="padding:40px;text-align:center">Chargement…</div>';
-    overlay.classList.add('open');
-    sheet.classList.add('open');
-    try {
-      const r = await fetch(`/api/cct/${rsNumber}`);
-      cct = await r.json();
-    } catch(e) { return; }
+/* ═══════════════════════════════════════════════
+   SHEET
+═══════════════════════════════════════════════ */
+async function openSheet(rs){
+  const overlay=document.getElementById('overlay'), sheet=document.getElementById('sheet'), content=document.getElementById('sh-content');
+  let cct=allCCTs.find(c=>c.rs_number===rs);
+  if(!cct){
+    content.innerHTML='<div style="padding:48px;text-align:center;color:var(--gray-3);font-family:var(--mono);font-size:11px">CHARGEMENT…</div>';
+    overlay.classList.add('on');sheet.classList.add('on');
+    try{const r=await fetch('/api/cct/'+encodeURIComponent(rs));cct=await r.json();}catch{return;}
   }
-  
-  const name = getCCTName(cct);
-  const wage = cct.min_wage_chf ? `CHF ${Math.round(cct.min_wage_chf).toLocaleString('fr-CH')}` : '—';
-  const vac = cct.vacation_weeks ? `${cct.vacation_weeks} sem.` : '—';
-  const hrs = cct.weekly_hours ? `${cct.weekly_hours}h` : '—';
-  const has13 = cct.has_13th_salary ? '✅ Oui' : '❌ Non';
-  const dfoUntil = cct.dfo_until ? new Date(cct.dfo_until).toLocaleDateString('fr-CH') : null;
-  
-  content.innerHTML = `
-    <div class="sheet-header">
-      <span class="sheet-emoji">${cct.emoji||'📄'}</span>
-      <div class="sheet-title">${name}</div>
-      <div class="sheet-scope">${cct.scope_description_fr||''}</div>
-      ${cct.is_dfo ? `<div style="margin-top:8px"><span class="badge-dfo" style="font-size:11px;padding:4px 10px">${t('dfo_label')}${dfoUntil?` · jusqu'au ${dfoUntil}`:''}</span></div>` : ''}
+  const name=getName(cct);
+  const w=cct.salary_min_hourly?'CHF '+Number(cct.salary_min_hourly).toFixed(2)+'/h':cct.min_wage_chf?'CHF '+Math.round(cct.min_wage_chf)+'/m':'—';
+  const vac=cct.vacation_weeks?cct.vacation_weeks+' sem.':'—';
+  const hrs=cct.weekly_hours?cct.weekly_hours+'h':'—';
+  const dfo=cct.is_dfo||cct.dfo;
+  const dfoUntil=cct.dfo_until?new Date(cct.dfo_until).toLocaleDateString('fr-CH'):null;
+  const has13=cct.has_13th_salary?'✅ Oui':'❌ Non';
+  const rs2=rs.replace(/'/g,"\\'"), nm2=name.replace(/'/g,"\\'").replace(/"/g,'&quot;');
+  content.innerHTML=`
+    <div class="sh-hdr">
+      <span class="sh-emoji">${cct.emoji||'📄'}</span>
+      <div class="sh-title">${name}</div>
+      <div class="sh-scope">${cct.scope_description_fr||''}</div>
+      ${dfo?`<span class="sh-dfo-tag">✓ ${t('dfo_label')}${dfoUntil?' — JUSQU\'AU '+dfoUntil:''}</span>`:''}
     </div>
-    
-    <div class="sheet-section">
-      <div class="sheet-section-title">Conditions principales</div>
-      <div class="sheet-grid">
-        <div class="sheet-stat"><span class="sheet-stat-val" style="color:var(--red)">${wage}</span><span class="sheet-stat-lbl">Salaire min./mois</span></div>
-        <div class="sheet-stat"><span class="sheet-stat-val">${vac}</span><span class="sheet-stat-lbl">Vacances/an</span></div>
-        <div class="sheet-stat"><span class="sheet-stat-val">${hrs}</span><span class="sheet-stat-lbl">Hebdomadaire</span></div>
-        <div class="sheet-stat"><span class="sheet-stat-val" style="font-size:16px">${has13}</span><span class="sheet-stat-lbl">13e salaire</span></div>
-      </div>
+    <div class="sh-section">CONDITIONS PRINCIPALES</div>
+    <div class="sh-data-grid">
+      <div class="sh-datum"><span class="sh-dval sh-red">${w}</span><span class="sh-dlbl">Salaire minimum</span></div>
+      <div class="sh-datum"><span class="sh-dval">${vac}</span><span class="sh-dlbl">Vacances / an</span></div>
+      <div class="sh-datum"><span class="sh-dval">${hrs}</span><span class="sh-dlbl">Hebdomadaire</span></div>
+      <div class="sh-datum"><span class="sh-dval" style="font-size:18px">${has13}</span><span class="sh-dlbl">13e salaire</span></div>
     </div>
-    
-    <div class="share-grid">
-      <button class="share-btn whatsapp" onclick="shareWhatsApp('${rsNumber}','${name.replace(/'/g,"\\'")}')">
-        <span class="share-icon"></span>${t('share_wp')}
-      </button>
-      <button class="share-btn email" onclick="shareEmail('${rsNumber}','${name.replace(/'/g,"\\'")}')">
-        <span class="share-icon"></span>${t('share_email')}
-      </button>
-      <button class="share-btn copy" onclick="copyLink('${rsNumber}')">
-        <span class="share-icon"></span>${t('share_copy')}
-      </button>
-      <button class="share-btn print" onclick="printCCTDirect('${name.replace(/'/g,"\\'")}','${wage}','${vac}','${hrs}','${has13}','${cct.scope_description_fr||''}','${cct.source_url||''}')">
-        <span class="share-icon"></span>${t('share_print')}
-      </button>
+    <div class="sh-section">PARTAGER</div>
+    <div class="sh-share">
+      <button class="sh-share-btn wp" onclick="shareWA('${rs2}','${nm2}')"><span class="si">📱</span>${t('share_wp')}</button>
+      <button class="sh-share-btn em" onclick="shareEmail('${rs2}','${nm2}')"><span class="si">📧</span>${t('share_em')}</button>
+      <button class="sh-share-btn" onclick="copyLink('${rs2}')"><span class="si">🔗</span>${t('share_cp')}</button>
+      <button class="sh-share-btn" onclick="doPrintDirect('${nm2}','${w}','${vac}','${hrs}','${has13}','${(cct.scope_description_fr||'').replace(/'/g,"\\'")}','${cct.source_url||''}')"><span class="si">🖨️</span>${t('share_pr')}</button>
     </div>
-    
-    ${cct.source_url ? `
-    <a href="${cct.source_url}" target="_blank" class="source-link">
-      <span>📜 ${t('source_link')}</span>
-      <span style="color:var(--gray-3)">›</span>
-    </a>` : ''}
-    
-    <div class="disclaimer">⚠️ ${t('disclaimer')}</div>
+    ${cct.source_url?`<a class="sh-src" href="${cct.source_url}" target="_blank" rel="noopener"><span>📜 ${t('src_link')}</span><span>›</span></a>`:''}
+    <div class="sh-disc">⚠️ ${t('disclaimer')}</div>
   `;
-  
-  overlay.classList.add('open');
-  sheet.classList.add('open');
-  document.body.style.overflow = 'hidden';
+  overlay.classList.add('on');sheet.classList.add('on');
+  document.body.style.overflow='hidden';
+  history.replaceState(null,'','#cct-'+rs);
 }
 
-function closeSheet() {
-  document.getElementById('sheetOverlay').classList.remove('open');
-  document.getElementById('sheet').classList.remove('open');
-  document.body.style.overflow = '';
+function closeSheet(){
+  document.getElementById('overlay').classList.remove('on');
+  document.getElementById('sheet').classList.remove('on');
+  document.body.style.overflow='';
+  history.replaceState(null,'',location.pathname);
 }
 
-// Swipe down to close
-let touchStartY = 0;
-document.getElementById('sheet').addEventListener('touchstart', e => { touchStartY = e.touches[0].clientY; });
-document.getElementById('sheet').addEventListener('touchend', e => {
-  if(e.changedTouches[0].clientY - touchStartY > 80) closeSheet();
-});
+let tY=0;
+document.getElementById('sheet').addEventListener('touchstart',e=>{tY=e.touches[0].clientY;},{passive:true});
+document.getElementById('sheet').addEventListener('touchend',e=>{if(e.changedTouches[0].clientY-tY>80) closeSheet();},{passive:true});
 
-// ═══════════════════════════════════════════════
-// SHARE & PRINT
-// ═══════════════════════════════════════════════
-function shareCCT(event, rs, name) {
-  event.preventDefault(); event.stopPropagation();
-  openSheet(rs);
-}
-
-function shareWhatsApp(rs, name) {
-  const url = `${location.origin}/#cct-${rs}`;
-  const msg = `🇨🇭 ${name}\nVoir sur CCTswiss.ch: ${url}`;
-  window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, '_blank');
-}
-
-function shareEmail(rs, name) {
-  const url = `${location.origin}/#cct-${rs}`;
-  const sub = `Convention collective: ${name}`;
-  const body = `Bonjour,\n\nVoici les informations sur la convention collective:\n${name}\n\nConsultez la fiche complète: ${url}\n\n---\nCCTswiss.ch — Le répertoire suisse des CCT`;
-  window.open(`mailto:?subject=${encodeURIComponent(sub)}&body=${encodeURIComponent(body)}`);
-}
-
-function copyLink(rs) {
-  const url = `${location.origin}/#cct-${rs}`;
-  if(navigator.clipboard) {
-    navigator.clipboard.writeText(url).then(() => showToast('Lien copié ✓'));
-  } else {
-    const el = document.createElement('input');
-    el.value = url; document.body.appendChild(el);
-    el.select(); document.execCommand('copy'); document.body.removeChild(el);
-    showToast('Lien copié ✓');
-  }
-}
-
-function printCCT(event, rs) {
-  event.preventDefault(); event.stopPropagation();
-  const cct = allCCTs.find(c => c.rs_number === rs);
-  if(!cct) { openSheet(rs); return; }
-  printCCTDirect(getCCTName(cct),
-    cct.min_wage_chf ? `CHF ${Math.round(cct.min_wage_chf)}` : '—',
-    cct.vacation_weeks ? `${cct.vacation_weeks} sem.` : '—',
-    cct.weekly_hours ? `${cct.weekly_hours}h` : '—',
-    cct.has_13th_salary ? 'Oui' : 'Non',
-    cct.scope_description_fr||'',
-    cct.source_url||'');
-}
-
-function printCCTDirect(name, wage, vac, hrs, has13, scope, source) {
-  const w = window.open('', '_blank', 'width=700,height=900');
-  w.document.write(`<!DOCTYPE html><html><head><meta charset="UTF-8">
-  <title>${name}</title>
-  <style>
-    body{font-family:Arial,sans-serif;padding:40px;color:#000;max-width:680px;margin:0 auto}
-    .logo{color:#C8102E;font-size:18px;font-weight:900;margin-bottom:24px}
-    h1{font-size:22px;margin-bottom:8px}
-    .scope{color:#666;font-size:14px;margin-bottom:24px}
-    table{width:100%;border-collapse:collapse;margin-bottom:20px}
-    td{padding:10px 14px;border:1px solid #ddd;font-size:14px}
-    td:first-child{font-weight:600;width:45%;background:#f9f9f9}
-    .dfo{background:#E8F5E9;color:#1B5E20;padding:4px 10px;border-radius:4px;font-size:12px;font-weight:700;display:inline-block;margin-bottom:16px}
-    .disclaimer{background:#FFFBEB;border:1px solid #FDE68A;padding:12px;font-size:11px;color:#92400E;border-radius:4px}
-    .footer{margin-top:24px;font-size:11px;color:#999;border-top:1px solid #eee;padding-top:12px}
-    @media print{body{padding:20px}}
+/* ═══════════════════════════════════════════════
+   SHARE / PRINT
+═══════════════════════════════════════════════ */
+function doShare(e,rs,name){e.preventDefault();e.stopPropagation();openSheet(rs);}
+function doPrint(e,rs){e.preventDefault();e.stopPropagation();const c=allCCTs.find(x=>x.rs_number===rs);if(c){const n=getName(c);const w=c.salary_min_hourly?'CHF '+Number(c.salary_min_hourly).toFixed(2)+'/h':c.min_wage_chf?'CHF '+Math.round(c.min_wage_chf)+'/m':'—';doPrintDirect(n,w,c.vacation_weeks?c.vacation_weeks+' sem.':'—',c.weekly_hours?c.weekly_hours+'h':'—',c.has_13th_salary?'Oui':'Non',c.scope_description_fr||'',c.source_url||'');}}
+function shareWA(rs,name){window.open('https://wa.me/?text='+encodeURIComponent('🇨🇭 '+name+'\nhttps://cctswiss.ch/#cct-'+rs),'_blank');}
+function shareEmail(rs,name){window.open('mailto:?subject='+encodeURIComponent('CCT: '+name)+'&body='+encodeURIComponent(name+'\n\nhttps://cctswiss.ch/#cct-'+rs+'\n\nCCTswiss.ch'));}
+function copyLink(rs){const url='https://cctswiss.ch/#cct-'+rs;if(navigator.clipboard)navigator.clipboard.writeText(url).then(()=>toast('LIEN COPIÉ ✓'));else{const el=document.createElement('input');el.value=url;document.body.appendChild(el);el.select();document.execCommand('copy');document.body.removeChild(el);toast('LIEN COPIÉ ✓');}}
+function doPrintDirect(name,w,vac,hrs,has13,scope,src){
+  const win=window.open('','_blank','width=700,height=900');
+  win.document.write(`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>${name}</title>
+  <style>body{font-family:Arial,sans-serif;padding:40px;max-width:660px;margin:0 auto}
+  .logo{font-weight:900;font-size:16px;margin-bottom:24px;letter-spacing:.1em}
+  h1{font-size:22px;font-weight:900;margin-bottom:8px;letter-spacing:.04em}
+  .scope{color:#666;font-size:13px;margin-bottom:20px}
+  .dfo{display:inline-block;background:#000;color:#fff;padding:3px 10px;font-size:10px;font-weight:700;letter-spacing:.12em;margin-bottom:18px}
+  table{width:100%;border-collapse:collapse;margin-bottom:20px}
+  td{padding:10px 14px;border:1px solid #ddd;font-size:13px}td:first-child{font-weight:700;width:45%;background:#f5f5f5;font-size:11px;letter-spacing:.08em;text-transform:uppercase}
+  .disc{background:#FFFBEB;border-left:3px solid #F59E0B;padding:12px;font-size:11px;color:#92400E}
+  .footer{margin-top:24px;font-size:10px;color:#999;border-top:1px solid #eee;padding-top:12px;letter-spacing:.06em}
   </style></head><body>
-  <div class="logo">🇨🇭 CCTswiss.ch</div>
+  <div class="logo">🇨🇭 CCTSWISS.CH</div>
   <h1>${name}</h1>
   <div class="scope">${scope}</div>
-  <span class="dfo">✓ Déclarée de force obligatoire (DFO)</span>
+  <span class="dfo">✓ DFO — DÉCLARÉE DE FORCE OBLIGATOIRE</span>
   <table>
-    <tr><td>Salaire minimum mensuel</td><td><strong>${wage}</strong></td></tr>
-    <tr><td>Vacances annuelles</td><td>${vac}</td></tr>
-    <tr><td>Durée hebdomadaire</td><td>${hrs}</td></tr>
-    <tr><td>13e salaire</td><td>${has13}</td></tr>
-    ${source?`<tr><td>Source officielle</td><td><a href="${source}">${source}</a></td></tr>`:''}
+    <tr><td>SALAIRE MINIMUM</td><td><strong>${w}</strong></td></tr>
+    <tr><td>VACANCES</td><td>${vac}</td></tr>
+    <tr><td>DURÉE HEBDOMADAIRE</td><td>${hrs}</td></tr>
+    <tr><td>13E SALAIRE</td><td>${has13}</td></tr>
+    ${src?`<tr><td>SOURCE OFFICIELLE</td><td><a href="${src}">${src}</a></td></tr>`:''}
   </table>
-  <div class="disclaimer">⚠️ Ce document est fourni à titre informatif uniquement. Il ne constitue pas un avis juridique. Consultez le texte officiel sur Fedlex ou un professionnel du droit du travail.</div>
-  <div class="footer">Généré le ${new Date().toLocaleDateString('fr-CH')} · CCTswiss.ch · Groupe NEO</div>
-  <script>window.onload=()=>{window.print();}<\/script>
-  </body></html>`);
-  w.document.close();
+  <div class="disc">⚠️ Document fourni à titre informatif uniquement. Il ne constitue pas un avis juridique. Consultez le texte officiel sur Fedlex.</div>
+  <div class="footer">GÉNÉRÉ LE ${new Date().toLocaleDateString('fr-CH')} · CCTSWISS.CH · GROUPE NEO</div>
+  <script>window.onload=()=>{window.print();}<\/script></body></html>`);
+  win.document.close();
 }
 
-// ═══════════════════════════════════════════════
-// TOAST
-// ═══════════════════════════════════════════════
+/* ═══════════════════════════════════════════════
+   TOAST
+═══════════════════════════════════════════════ */
 let toastTimer;
-function showToast(msg) {
-  const toast = document.getElementById('toast');
-  toast.textContent = msg;
-  toast.classList.add('show');
+function toast(msg){
+  const el=document.getElementById('toast');
+  el.textContent=msg;el.classList.add('on');
   clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => toast.classList.remove('show'), 2200);
+  toastTimer=setTimeout(()=>el.classList.remove('on'),2000);
 }
 
-// ═══════════════════════════════════════════════
-// DEEP LINK (#cct-rs)
-// ═══════════════════════════════════════════════
-function handleHash() {
-  const hash = location.hash;
-  if(hash.startsWith('#cct-')) {
-    const rs = hash.replace('#cct-','');
-    setTimeout(() => openSheet(rs), 300);
-  }
+/* ═══════════════════════════════════════════════
+   SEARCH PAGE
+═══════════════════════════════════════════════ */
+document.getElementById('srch-page')?.addEventListener('input',function(){
+  const q=this.value.trim();
+  if(q.length<2){document.getElementById('pg-results').innerHTML='<p style="grid-column:1/-1;padding:32px;text-align:center;color:var(--gray-3);font-family:var(--mono);font-size:11px;letter-spacing:.08em">'+t('search-hint')+'</p>';return;}
+  clearTimeout(searchTimer);
+  searchTimer=setTimeout(()=>{
+    const results=allCCTs.filter(c=>{
+      const hay=[c.name,c.branch,c.scope_description_fr,c['name_'+lang],c.name_de,c.name_it,c.name_en].filter(Boolean).join(' ').toLowerCase();
+      return hay.includes(q.toLowerCase());
+    });
+    const el=document.getElementById('pg-results');
+    if(!results.length){el.innerHTML='<p style="grid-column:1/-1;padding:32px;text-align:center;color:var(--gray-3);font-family:var(--mono);font-size:11px">AUCUN RÉSULTAT POUR «'+q+'»</p>';return;}
+    // Temporarily swap and render
+    const saved={ccts:allCCTs,filter};
+    allCCTs=results;filter='all';
+    renderGrid(results);
+    el.innerHTML=document.getElementById('cct-grid').innerHTML;
+    allCCTs=saved.ccts;filter=saved.filter;renderGrid(allCCTs);
+  },220);
+});
+
+/* ═══════════════════════════════════════════════
+   DEEP LINK
+═══════════════════════════════════════════════ */
+function handleHash(){
+  if(location.hash.startsWith('#cct-')) setTimeout(()=>openSheet(location.hash.replace('#cct-','')),400);
 }
 
-// ═══════════════════════════════════════════════
-// INIT
-// ═══════════════════════════════════════════════
-document.addEventListener('DOMContentLoaded', () => {
-  loadCCTs();
-  setupSearch('mainSearch','searchDropdown');
-  setupSearch('pageSearch','pageDropdown');
+/* ═══════════════════════════════════════════════
+   INIT
+═══════════════════════════════════════════════ */
+document.addEventListener('DOMContentLoaded',()=>{
+  loadData();
+  setupSearch('srch-home','srch-drop',false);
+  setupSearch('srch-page','srch-drop-p',true);
   handleHash();
-  window.addEventListener('hashchange', handleHash);
-  
-  // Swipe/scroll behavior for filters
-  const hero = document.querySelector('.hero');
-  if(hero) hero.style.paddingBottom = '20px';
+  window.addEventListener('hashchange',handleHash);
 });
 </script>
 </body>
