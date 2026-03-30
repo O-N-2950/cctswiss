@@ -152,6 +152,14 @@ rl = Depends(rate_limit(100))
 
 # ── Routers ────────────────────────────────────────────────────────────
 app.include_router(health.router,       prefix="/health",         tags=["health"])
+# Paritaire MUST be before cct.router (avoid /{rs_number} catching paritaire-rules)
+try:
+    from backend.routers.paritaire import router as paritaire_router
+    app.include_router(paritaire_router, prefix="/api/cct", tags=["paritaire"], dependencies=[rl])
+    log.info("✅ Paritaire router mounted before cct (avoids route collision)")
+except Exception as e:
+    log.warning(f"Paritaire: {e}")
+
 app.include_router(cct.router,          prefix="/api/cct",        tags=["cct"],        dependencies=[rl])
 app.include_router(search.router,       prefix="/api/search",     tags=["search"],     dependencies=[rl])
 app.include_router(changelog.router,    prefix="/api/changelog",  tags=["changelog"])

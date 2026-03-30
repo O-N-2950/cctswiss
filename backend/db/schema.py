@@ -116,6 +116,10 @@ MIGRATIONS = [
     "ALTER TABLE cct ADD COLUMN IF NOT EXISTS salary_min_updated     DATE",
     "ALTER TABLE cct ADD COLUMN IF NOT EXISTS data_complete          BOOLEAN DEFAULT FALSE",
 
+    # Paritaire contributions (cotisations paritaires)
+    "ALTER TABLE cct ADD COLUMN IF NOT EXISTS paritaire_contribution JSONB",
+    "CREATE INDEX IF NOT EXISTS idx_cct_paritaire ON cct USING gin(paritaire_contribution) WHERE paritaire_contribution IS NOT NULL",
+
     # Full-text search index
     "CREATE INDEX IF NOT EXISTS idx_cct_fts ON cct USING gin(to_tsvector('french', coalesce(name,'') || ' ' || coalesce(scope_description_fr,'') || ' ' || coalesce(content_fr,'')))",
 ]

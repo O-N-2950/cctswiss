@@ -321,8 +321,13 @@ async def ccnt_contribution_rules():
     Retourne les règles de calcul des cotisations CCNT (HRC).
     Utilisé par SwissRH pour générer automatiquement la déclaration annuelle.
     """
+    # ⚠️  DEPRECATED — utiliser /api/cct/paritaire-rules?rs_number=221.215.329.4
+    # Maintenu pour backward compatibility SwissRH < v2025-06
     return {
         "cct": "CCNT Hôtels, Restaurants et Cafés",
+        "_deprecated": True,
+        "_successor": "/api/cct/paritaire-rules?rs_number=221.215.329.4",
+        "_note": "Ce endpoint est maintenu pour compatibilité. Migrez vers /api/cct/paritaire-rules.",
         "rs_number": "221.131",
         "version": "2025",
         "emetteur": "CCNT · Dufourstrasse 23 · Case postale 357 · 4010 Bâle",

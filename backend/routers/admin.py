@@ -393,3 +393,94 @@ async def full_init(request: Request, x_seed_secret: str = Header(None)):
     results["dfo_ccts"] = dfo_count
     results["status"] = "ok"
     return JSONResponse(results)
+
+
+@router.post("/seed-paritaire")
+async def seed_paritaire(request: Request, x_seed_secret: str = Header(None)):
+    """
+    Peuple paritaire_contribution dans la table cct pour les CCTs concernées.
+    Migration additive — ne touche que les CCTs listées.
+    """
+    if x_seed_secret != SEED_SECRET:
+        raise HTTPException(403, "Invalid seed secret")
+    pool = getattr(request.app.state, "pool", None)
+    if not pool:
+        raise HTTPException(503, "DB not ready")
+
+    # Données canoniques à persister en DB
+    PARITAIRE_SEED = {
+        # CCNT HRC
+        "221.215.329.4": {
+            "type": "forfait_per_employee",
+            "beneficiary": "CCNT",
+            "beneficiary_full": "Commission paritaire nationale des hôtels, restaurants et cafés",
+            "address": "Dufourstrasse 23, Case postale 357, 4010 Bâle",
+            "contact": "info@ccnt.ch",
+            "url": "www.ccnt.ch",
+            "employer_share_ratio": 0.3333,
+            "tva_rate": 0.04,
+            "invoice_formula": "{ccnt_etablissement_number}0{year}{seq_padded_2}",
+            "rules": [
+                {"duration_min_months": 1,  "duration_max_months": 6,  "amount_chf": 49.50, "role": "soumis",             "label": "Collaborateur 1–6 mois"},
+                {"duration_min_months": 7,  "duration_max_months": 12, "amount_chf": 99.00, "role": "soumis",             "label": "Collaborateur 7–12 mois"},
+                {"duration_min_months": 1,  "duration_max_months": 12, "amount_chf": 0.00,  "role": "chef_etablissement", "label": "Chef d'établissement / Directeur"},
+                {"duration_min_months": 1,  "duration_max_months": 12, "amount_chf": 0.00,  "role": "apprenti",           "label": "Apprenti"},
+                {"duration_min_months": 1,  "duration_max_months": 12, "amount_chf": 0.00,  "role": "exclu",              "label": "Exclu du champ d'application"},
+            ],
+            "legal_basis": "CCNT art. 43",
+            "frequency": "annual",
+            "swissrh_calculator": "ccnt_hrc_v2025",
+        },
+        # Nettoyage — CPPREN (Romandie)
+        "221.215.329.6": {
+            "type": "percent_avs",
+            "rate": 0.007,
+            "basis": "avs_mass",
+            "beneficiary": "CPPREN",
+            "beneficiary_full": "Caisse de perfectionnement du personnel du nettoyage en Romandie",
+            "url": "www.cppren.ch",
+            "split": {"employer": 1.0, "employee": 0.0},
+            "cantons": ["GE","VD","VS","NE","FR","JU","BE"],
+            "notes": "0.7% masse salariale AVS. Employeur uniquement. Versement trimestriel.",
+            "legal_basis": "CCT Nettoyage art. 28",
+            "frequency": "quarterly",
+            "swissrh_calculator": "cppren_nettoyage_v2025",
+        },
+        # Construction — externe (SUVA / FAR)
+        "822.22": {
+            "type": "external",
+            "handler": "SUVA / FAR",
+            "handlers": [
+                {"name": "SUVA",    "type": "laa_accident",      "url": "www.suva.ch",       "notes": "LAA accidents pro et non-pro."},
+                {"name": "FAR",     "type": "retraite_anticipee", "url": "www.far.ch",        "rate": 0.03, "split": {"employer": 0.6667, "employee": 0.3333}, "notes": "FAR 3% masse brute."},
+            ],
+            "notes": "Cotisations gérées par SUVA/FAR. Pas de calcul SwissRH direct.",
+            "swissrh_calculator": None,
+        },
+    }
+
+    updated = 0
+    errors = []
+
+    async with pool.acquire() as conn:
+        for rs, data in PARITAIRE_SEED.items():
+            try:
+                result = await conn.execute(
+                    "UPDATE cct SET paritaire_contribution = $2::jsonb, updated_at = NOW() WHERE rs_number = $1",
+                    rs,
+                    json.dumps(data, ensure_ascii=False),
+                )
+                rows = int(result.split()[-1])
+                if rows > 0:
+                    updated += 1
+                else:
+                    errors.append(f"{rs}: CCT not found in DB (run /seed first)")
+            except Exception as e:
+                errors.append(f"{rs}: {str(e)[:100]}")
+
+    return JSONResponse({
+        "updated": updated,
+        "errors": errors,
+        "total": len(PARITAIRE_SEED),
+        "success": updated == len(PARITAIRE_SEED),
+    })
