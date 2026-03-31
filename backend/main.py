@@ -185,6 +185,14 @@ rl = Depends(rate_limit(100))
 # ── Routers ────────────────────────────────────────────────────────────
 app.include_router(health.router,       prefix="/health",         tags=["health"])
 
+# Alertes email abonnés CCT
+try:
+    from backend.routers.alerts import router as alerts_router
+    app.include_router(alerts_router, prefix="/api/alerts", tags=["alerts"])
+    log.info("✅ Alerts router (/subscribe, /confirm, /unsubscribe, /send, /stats)")
+except Exception as e:
+    log.warning(f"Alerts: {e}")
+
 # Config publique frontend (GA4 ID, feature flags)
 try:
     from backend.routers.config import router as config_router

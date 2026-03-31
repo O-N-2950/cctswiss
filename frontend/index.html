@@ -916,16 +916,16 @@ let allCCTs = [], lang = 'fr', filter = 'all', searchTimer;
    i18n
 ═══════════════════════════════════════════════ */
 const T = {
-  fr: { badge:"FEDLEX OFFICIEL · MIS À JOUR CHAQUE NUIT", "h1-accent":"convention collective", "h1-end":"EN 30 SEC.", sub:"Cherchez votre CCT par branche, métier ou secteur. Gratuit, sans inscription.", "f-all":"TOUTES", "st-ccts":"CCTs", "st-langs":"LANGUES", "st-cantons":"CANTONS", "sec-ccts":"CONVENTIONS COLLECTIVES", "sec-apps":"OUTILS PARTENAIRES", "search-title":"RECHERCHE", "search-hint":"COMMENCEZ À TAPER POUR CHERCHER…", "nav-home":"ACCUEIL", "nav-search":"CHERCHER", "nav-info":"INFO", dfo_label:"DFO", disclaimer:"Résumé informatif uniquement. Pas un avis juridique.", src_link:"Texte officiel →", share_wp:"WHATSAPP", share_em:"EMAIL", share_cp:"COPIER", share_pr:"IMPRIMER", btn_voir:"VOIR", btn_part:"PARTAGER", btn_imp:"IMPRIMER" },
-  de: { badge:"OFFIZ. FEDLEX · JEDE NACHT AKTUALISIERT", "h1-accent":"Gesamtarbeitsvertrag", "h1-end":"IN 30 SEK.", sub:"Suchen Sie Ihren GAV nach Branche oder Beruf. Kostenlos.", "f-all":"ALLE", "st-ccts":"GAV", "st-langs":"SPRACHEN", "st-cantons":"KANTONE", "sec-ccts":"GESAMTARBEITSVERTRÄGE", "sec-apps":"PARTNER-TOOLS", "search-title":"SUCHE", "search-hint":"TIPPEN SIE, UM ZU SUCHEN…", "nav-home":"START", "nav-search":"SUCHEN", "nav-info":"INFO", dfo_label:"AVE", disclaimer:"Nur informativ. Keine Rechtsberatung.", src_link:"Offizieller Text →", share_wp:"WHATSAPP", share_em:"E-MAIL", share_cp:"KOPIEREN", share_pr:"DRUCKEN", btn_voir:"ANSEHEN", btn_part:"TEILEN", btn_imp:"DRUCKEN" },
-  it: { badge:"FEDLEX UFFICIALE · AGGIORNATO OGNI NOTTE", "h1-accent":"contratto collettivo", "h1-end":"IN 30 SEC.", sub:"Cerca il tuo CCL per settore. Gratuito, senza registrazione.", "f-all":"TUTTI", "st-ccts":"CCL", "st-langs":"LINGUE", "st-cantons":"CANTONI", "sec-ccts":"CONTRATTI COLLETTIVI", "sec-apps":"STRUMENTI", "search-title":"RICERCA", "search-hint":"DIGITA PER CERCARE…", "nav-home":"HOME", "nav-search":"CERCA", "nav-info":"INFO", dfo_label:"DCO", disclaimer:"Solo informativo. Non è consulenza legale.", src_link:"Testo ufficiale →", share_wp:"WHATSAPP", share_em:"EMAIL", share_cp:"COPIA", share_pr:"STAMPA", btn_voir:"VEDI", btn_part:"CONDIVIDI", btn_imp:"STAMPA" },
-  en: { badge:"OFFICIAL FEDLEX · UPDATED NIGHTLY", "h1-accent":"collective agreement", "h1-end":"IN 30 SEC.", sub:"Find your CLA by sector or profession. Free, no sign-up.", "f-all":"ALL", "st-ccts":"CLAs", "st-langs":"LANGUAGES", "st-cantons":"CANTONS", "sec-ccts":"COLLECTIVE AGREEMENTS", "sec-apps":"PARTNER TOOLS", "search-title":"SEARCH", "search-hint":"START TYPING TO SEARCH…", "nav-home":"HOME", "nav-search":"SEARCH", "nav-info":"ABOUT", dfo_label:"ECB", disclaimer:"Information only. Not legal advice.", src_link:"Official text →", share_wp:"WHATSAPP", share_em:"EMAIL", share_cp:"COPY", share_pr:"PRINT", btn_voir:"VIEW", btn_part:"SHARE", btn_imp:"PRINT" },
+  fr: { badge:"FEDLEX OFFICIEL · MIS À JOUR CHAQUE NUIT", "h1-accent":"convention collective", "h1-end":"EN 30 SEC.", sub:"Cherchez votre CCT par branche, métier ou secteur. Gratuit, sans inscription.", "f-all":"TOUTES", "st-ccts":"CCTs", "st-langs":"LANGUES", "st-cantons":"CANTONS", "sec-ccts":"CONVENTIONS COLLECTIVES", "sec-apps":"OUTILS PARTENAIRES", "search-title":"RECHERCHE", "search-hint":"COMMENCEZ À TAPER POUR CHERCHER…", "nav-home":"ACCUEIL", "nav-search":"CHERCHER", "nav-info":"INFO", dfo_label:"DFO", disclaimer:"Résumé informatif uniquement. Pas un avis juridique.", src_link:"Texte officiel →", share_wp:"WHATSAPP", share_em:"EMAIL", share_cp:"COPIER", share_pr:"IMPRIMER", btn_voir:"VOIR", btn_part:"PARTAGER", btn_imp:"IMPRIMER", sub_title:"Recevoir les alertes", sub_desc:"Soyez notifié par email dès que cette CCT est mise à jour sur Fedlex.", sub_placeholder:"votre@email.ch", sub_company:"Entreprise (optionnel)", sub_btn:"M'ABONNER", sub_legal:"Vos données ne sont jamais vendues ni partagées.", sub_legal_link:"Politique de confidentialité", sub_ok:"✅ Vérifiez votre boîte mail pour confirmer.", sub_err:"Erreur — vérifiez votre email et réessayez." },
+  de: { badge:"OFFIZ. FEDLEX · JEDE NACHT AKTUALISIERT", "h1-accent":"Gesamtarbeitsvertrag", "h1-end":"IN 30 SEK.", sub:"Suchen Sie Ihren GAV nach Branche oder Beruf. Kostenlos.", "f-all":"ALLE", "st-ccts":"GAV", "st-langs":"SPRACHEN", "st-cantons":"KANTONE", "sec-ccts":"GESAMTARBEITSVERTRÄGE", "sec-apps":"PARTNER-TOOLS", "search-title":"SUCHE", "search-hint":"TIPPEN SIE, UM ZU SUCHEN…", "nav-home":"START", "nav-search":"SUCHEN", "nav-info":"INFO", dfo_label:"AVE", disclaimer:"Nur informativ. Keine Rechtsberatung.", src_link:"Offizieller Text →", share_wp:"WHATSAPP", share_em:"E-MAIL", share_cp:"KOPIEREN", share_pr:"DRUCKEN", btn_voir:"ANSEHEN", btn_part:"TEILEN", btn_imp:"DRUCKEN", sub_title:"Alerts erhalten", sub_desc:"Werden Sie per E-Mail benachrichtigt, wenn dieser GAV auf Fedlex aktualisiert wird.", sub_placeholder:"ihre@email.ch", sub_company:"Unternehmen (optional)", sub_btn:"ABONNIEREN", sub_legal:"Ihre Daten werden niemals verkauft oder weitergegeben.", sub_legal_link:"Datenschutzrichtlinie", sub_ok:"✅ Bitte überprüfen Sie Ihr Postfach.", sub_err:"Fehler — bitte überprüfen Sie Ihre E-Mail." },
+  it: { badge:"FEDLEX UFFICIALE · AGGIORNATO OGNI NOTTE", "h1-accent":"contratto collettivo", "h1-end":"IN 30 SEC.", sub:"Cerca il tuo CCL per settore. Gratuito, senza registrazione.", "f-all":"TUTTI", "st-ccts":"CCL", "st-langs":"LINGUE", "st-cantons":"CANTONI", "sec-ccts":"CONTRATTI COLLETTIVI", "sec-apps":"STRUMENTI", "search-title":"RICERCA", "search-hint":"DIGITA PER CERCARE…", "nav-home":"HOME", "nav-search":"CERCA", "nav-info":"INFO", dfo_label:"DCO", disclaimer:"Solo informativo. Non è consulenza legale.", src_link:"Testo ufficiale →", share_wp:"WHATSAPP", share_em:"EMAIL", share_cp:"COPIA", share_pr:"STAMPA", btn_voir:"VEDI", btn_part:"CONDIVIDI", btn_imp:"STAMPA", sub_title:"Ricevi avvisi", sub_desc:"Ricevi una email quando questo CCL viene aggiornato su Fedlex.", sub_placeholder:"tua@email.ch", sub_company:"Azienda (opzionale)", sub_btn:"ABBONATI", sub_legal:"I tuoi dati non vengono mai venduti né condivisi.", sub_legal_link:"Privacy", sub_ok:"✅ Controlla la tua casella di posta.", sub_err:"Errore — verifica la tua email." },
+  en: { badge:"OFFICIAL FEDLEX · UPDATED NIGHTLY", "h1-accent":"collective agreement", "h1-end":"IN 30 SEC.", sub:"Find your CLA by sector or profession. Free, no sign-up.", "f-all":"ALL", "st-ccts":"CLAs", "st-langs":"LANGUAGES", "st-cantons":"CANTONS", "sec-ccts":"COLLECTIVE AGREEMENTS", "sec-apps":"PARTNER TOOLS", "search-title":"SEARCH", "search-hint":"START TYPING TO SEARCH…", "nav-home":"HOME", "nav-search":"SEARCH", "nav-info":"ABOUT", dfo_label:"ECB", disclaimer:"Information only. Not legal advice.", src_link:"Official text →", share_wp:"WHATSAPP", share_em:"EMAIL", share_cp:"COPY", share_pr:"PRINT", btn_voir:"VIEW", btn_part:"SHARE", btn_imp:"PRINT", sub_title:"Get alerts", sub_desc:"Be notified by email when this CLA is updated on Fedlex.", sub_placeholder:"your@email.ch", sub_company:"Company (optional)", sub_btn:"SUBSCRIBE", sub_legal:"Your data is never sold or shared.", sub_legal_link:"Privacy policy", sub_ok:"✅ Check your inbox to confirm.", sub_err:"Error — check your email and try again." },
   pt: { badge:"FEDLEX OFICIAL · ATUALIZADO CADA NOITE", "h1-accent":"convenção coletiva", "h1-end":"EM 30 SEG.", sub:"Procure a sua CCT por setor. Gratuito, sem registo.", "f-all":"TODAS", "st-ccts":"CCTs", "st-langs":"LÍNGUAS", "st-cantons":"CANTÕES", "sec-ccts":"CONVENÇÕES COLETIVAS", "sec-apps":"FERRAMENTAS", "search-title":"PESQUISA", "search-hint":"COMECE A DIGITAR…", "nav-home":"INÍCIO", "nav-search":"PESQUISA", "nav-info":"INFO", dfo_label:"DFO", disclaimer:"Apenas informativo. Não é aconselhamento jurídico.", src_link:"Texto oficial →", share_wp:"WHATSAPP", share_em:"EMAIL", share_cp:"COPIAR", share_pr:"IMPRIMIR", btn_voir:"VER", btn_part:"PARTILHAR", btn_imp:"IMPRIMIR" },
   es: { badge:"FEDLEX OFICIAL · ACTUALIZADO CADA NOCHE", "h1-accent":"convenio colectivo", "h1-end":"EN 30 SEG.", sub:"Busca tu CCT por sector. Gratis, sin registro.", "f-all":"TODOS", "st-ccts":"CCTs", "st-langs":"IDIOMAS", "st-cantons":"CANTONES", "sec-ccts":"CONVENIOS COLECTIVOS", "sec-apps":"HERRAMIENTAS", "search-title":"BÚSQUEDA", "search-hint":"EMPIEZA A ESCRIBIR…", "nav-home":"INICIO", "nav-search":"BUSCAR", "nav-info":"INFO", dfo_label:"DFO", disclaimer:"Solo informativo. No es asesoramiento jurídico.", src_link:"Texto oficial →", share_wp:"WHATSAPP", share_em:"EMAIL", share_cp:"COPIAR", share_pr:"IMPRIMIR", btn_voir:"VER", btn_part:"COMPARTIR", btn_imp:"IMPRIMIR" },
   sq: { badge:"FEDLEX ZYRTAR · AZHURNUAR ÇDO NATË", "h1-accent":"marrëveshje kolektive", "h1-end":"NË 30 SEK.", sub:"Kërkoni CCT-në tuaj sipas sektorit. Falas.", "f-all":"TË GJITHA", "st-ccts":"CCT", "st-langs":"GJUHË", "st-cantons":"KANTONE", "sec-ccts":"MARRËVESHJET KOLEKTIVE", "sec-apps":"MJETE", "search-title":"KËRKIM", "search-hint":"FILLONI TË SHKRUANI…", "nav-home":"KRYEFAQE", "nav-search":"KËRKIM", "nav-info":"INFO", dfo_label:"DFO", disclaimer:"Vetëm informuese. Jo këshillim juridik.", src_link:"Teksti zyrtar →", share_wp:"WHATSAPP", share_em:"EMAIL", share_cp:"KOPJO", share_pr:"PRINTO", btn_voir:"SHIKO", btn_part:"NDAJ", btn_imp:"PRINTO" },
-  bs: { badge:"FEDLEX ZVANIČNO · AŽURIRANO SVAKE NOĆI", "h1-accent":"kolektivni ugovor", "h1-end":"ZA 30 SEK.", sub:"Pronađite KU po sektoru. Besplatno.", "f-all":"SVI", "st-ccts":"KU", "st-langs":"JEZICI", "st-cantons":"KANTONI", "sec-ccts":"KOLEKTIVNI UGOVORI", "sec-apps":"ALATI", "search-title":"PRETRAGA", "search-hint":"POČNITE DA TIPKATE…", "nav-home":"POČETNA", "nav-search":"PRETRAGA", "nav-info":"INFO", dfo_label:"DFO", disclaimer:"Samo informativno. Nije pravni savjet.", src_link:"Zvanični tekst →", share_wp:"WHATSAPP", share_em:"EMAIL", share_cp:"KOPIRAJ", share_pr:"ŠTAMPAJ", btn_voir:"POGLEDAJ", btn_part:"PODIJELI", btn_imp:"ŠTAMPAJ" },
-  tr: { badge:"RESMİ FEDLEX · HER GECE GÜNCELLENİYOR", "h1-accent":"toplu iş sözleşmesi", "h1-end":"30 SANİYEDE", sub:"Sektöre göre TİS'inizi bulun. Ücretsiz.", "f-all":"TÜMÜ", "st-ccts":"TİS", "st-langs":"DİL", "st-cantons":"KANTON", "sec-ccts":"TOPLU İŞ SÖZLEŞMELERİ", "sec-apps":"ARAÇLAR", "search-title":"ARAMA", "search-hint":"YAZMAYA BAŞLAYIN…", "nav-home":"ANA SAYFA", "nav-search":"ARAMA", "nav-info":"HAKKINDA", dfo_label:"DFO", disclaimer:"Yalnızca bilgi amaçlı. Hukuki tavsiye değildir.", src_link:"Resmi metin →", share_wp:"WHATSAPP", share_em:"E-POSTA", share_cp:"KOPYALA", share_pr:"YAZDIR", btn_voir:"GÖRÜNTÜLE", btn_part:"PAYLAŞ", btn_imp:"YAZDIR" },
-  uk: { badge:"ОФІЦ. FEDLEX · ЩОНОЧІ ОНОВЛЮЄТЬСЯ", "h1-accent":"колективна угода", "h1-end":"ЗА 30 СЕК.", sub:"Знайдіть свою КУ за галуззю. Безкоштовно.", "f-all":"ВСІ", "st-ccts":"КУ", "st-langs":"МОВ", "st-cantons":"КАНТОНИ", "sec-ccts":"КОЛЕКТИВНІ УГОДИ", "sec-apps":"ІНСТРУМЕНТИ", "search-title":"ПОШУК", "search-hint":"ПОЧНІТЬ ВВОДИТИ…", "nav-home":"ГОЛОВНА", "nav-search":"ПОШУК", "nav-info":"ПРО НАС", dfo_label:"ЗОБ", disclaimer:"Лише інформативно. Не є юридичною консультацією.", src_link:"Офіційний текст →", share_wp:"WHATSAPP", share_em:"EMAIL", share_cp:"КОПІЮВАТИ", share_pr:"ДРУКУВАТИ", btn_voir:"ПЕРЕГЛЯНУТИ", btn_part:"ПОДІЛИТИСЬ", btn_imp:"ДРУКУВАТИ" },
+  bs: { badge:"FEDLEX ZVANIČNO · AŽURIRANO SVAKE NOĆI", "h1-accent":"kolektivni ugovor", "h1-end":"ZA 30 SEK.", sub:"Pronađite KU po sektoru. Besplatno.", "f-all":"SVI", "st-ccts":"KU", "st-langs":"JEZICI", "st-cantons":"KANTONI", "sec-ccts":"KOLEKTIVNI UGOVORI", "sec-apps":"ALATI", "search-title":"PRETRAGA", "search-hint":"POČNITE DA TIPKATE…", "nav-home":"POČETNA", "nav-search":"PRETRAGA", "nav-info":"INFO", dfo_label:"DFO", disclaimer:"Samo informativno. Nije pravni savjet.", src_link:"Zvanični tekst →", share_wp:"WHATSAPP", share_em:"EMAIL", share_cp:"KOPIRAJ", share_pr:"ŠTAMPAJ", btn_voir:"POGLEDAJ", btn_part:"PODIJELI", btn_imp:"ŠTAMPAJ", sub_title:"Primaj upozorenja", sub_desc:"Budite obaviješteni emailom kada se ovaj KU ažurira.", sub_placeholder:"vaš@email.ch", sub_company:"Kompanija (opcionalno)", sub_btn:"PRETPLATI SE", sub_legal:"Vaši podaci se nikada ne prodaju niti dijele.", sub_legal_link:"Privatnost", sub_ok:"✅ Provjerite svoju pristiglu poštu.", sub_err:"Greška — provjerite svoju email adresu." },
+  tr: { badge:"RESMİ FEDLEX · HER GECE GÜNCELLENİYOR", "h1-accent":"toplu iş sözleşmesi", "h1-end":"30 SANİYEDE", sub:"Sektöre göre TİS'inizi bulun. Ücretsiz.", "f-all":"TÜMÜ", "st-ccts":"TİS", "st-langs":"DİL", "st-cantons":"KANTON", "sec-ccts":"TOPLU İŞ SÖZLEŞMELERİ", "sec-apps":"ARAÇLAR", "search-title":"ARAMA", "search-hint":"YAZMAYA BAŞLAYIN…", "nav-home":"ANA SAYFA", "nav-search":"ARAMA", "nav-info":"HAKKINDA", dfo_label:"DFO", disclaimer:"Yalnızca bilgi amaçlı. Hukuki tavsiye değildir.", src_link:"Resmi metin →", share_wp:"WHATSAPP", share_em:"E-POSTA", share_cp:"KOPYALA", share_pr:"YAZDIR", btn_voir:"GÖRÜNTÜLE", btn_part:"PAYLAŞ", btn_imp:"YAZDIR", sub_title:"Uyarı al", sub_desc:"Bu TİS Fedlex'te güncellendiğinde e-posta ile bildirim alın.", sub_placeholder:"email@adresi.ch", sub_company:"Şirket (isteğe bağlı)", sub_btn:"ABONE OL", sub_legal:"Verileriniz asla satılmaz veya paylaşılmaz.", sub_legal_link:"Gizlilik", sub_ok:"✅ Onaylamak için gelen kutunuzu kontrol edin.", sub_err:"Hata — e-posta adresinizi kontrol edin." },
+  uk: { badge:"ОФІЦ. FEDLEX · ЩОНОЧІ ОНОВЛЮЄТЬСЯ", "h1-accent":"колективна угода", "h1-end":"ЗА 30 СЕК.", sub:"Знайдіть свою КУ за галуззю. Безкоштовно.", "f-all":"ВСІ", "st-ccts":"КУ", "st-langs":"МОВ", "st-cantons":"КАНТОНИ", "sec-ccts":"КОЛЕКТИВНІ УГОДИ", "sec-apps":"ІНСТРУМЕНТИ", "search-title":"ПОШУК", "search-hint":"ПОЧНІТЬ ВВОДИТИ…", "nav-home":"ГОЛОВНА", "nav-search":"ПОШУК", "nav-info":"ПРО НАС", dfo_label:"ЗОБ", disclaimer:"Лише інформативно. Не є юридичною консультацією.", src_link:"Офіційний текст →", share_wp:"WHATSAPP", share_em:"EMAIL", share_cp:"КОПІЮВАТИ", share_pr:"ДРУКУВАТИ", btn_voir:"ПЕРЕГЛЯНУТИ", btn_part:"ПОДІЛИТИСЬ", btn_imp:"ДРУКУВАТИ", sub_title:"Отримати сповіщення", sub_desc:"Отримайте email коли цю КУ буде оновлено на Fedlex.", sub_placeholder:"ваш@email.ch", sub_company:"Компанія (необов'язково)", sub_btn:"ПІДПИСАТИСЬ", sub_legal:"Ваші дані ніколи не продаються.", sub_legal_link:"Конфіденційність", sub_ok:"✅ Перевірте вашу поштову скриньку.", sub_err:"Помилка — перевірте вашу адресу." },
 };
 const t = k => (T[lang]||T.fr)[k] || (T.fr[k]||k);
 
@@ -1103,7 +1103,7 @@ async function openSheet(rs){
   const dfo=cct.is_dfo||cct.dfo;
   const dfoUntil=cct.dfo_until?new Date(cct.dfo_until).toLocaleDateString('fr-CH'):null;
   const has13=cct.has_13th_salary?'✅ Oui':'❌ Non';
-  const rs2=rs.replace(/'/g,"\\'"), nm2=name.replace(/'/g,"\\'").replace(/"/g,'&quot;');
+  const rs2=rs.replace(/'/g,"\\'"), nm2=name.replace(/'/g,"\\'").replace(/"/g,'&quot;'); const c_rs=rs.replace(/[^a-zA-Z0-9._-]/g,'_');
   content.innerHTML=`
     <div class="sh-hdr">
       <span class="sh-emoji">${cct.emoji||'📄'}</span>
@@ -1126,6 +1126,24 @@ async function openSheet(rs){
       <button class="sh-share-btn" onclick="doPrintDirect('${nm2}','${w}','${vac}','${hrs}','${has13}','${(cct.scope_description_fr||'').replace(/'/g,"\\'")}','${cct.source_url||''}')"><span class="si">🖨️</span>${t('share_pr')}</button>
     </div>
     ${cct.source_url?`<a class="sh-src" href="${cct.source_url}" target="_blank" rel="noopener"><span>📜 ${t('src_link')}</span><span>›</span></a>`:''}
+
+    <!-- Subscribe box -->
+    <div class="sub-box" id="sub-box-${c_rs}">
+      <div class="sub-title">🔔 ${t('sub_title')}</div>
+      <div class="sub-desc">${t('sub_desc')}</div>
+      <div class="sub-form" id="sub-form-${c_rs}">
+        <input type="email" class="sub-input" id="sub-email-${c_rs}"
+          placeholder="${t('sub_placeholder')}" autocomplete="email">
+        <input type="text" class="sub-input" id="sub-company-${c_rs}"
+          placeholder="${t('sub_company')}" autocomplete="organization">
+        <button class="sub-btn" onclick="doSubscribe('${c_rs}')">${t('sub_btn')}</button>
+        <div class="sub-legal">
+          🔒 ${t('sub_legal')} · <a href="https://cctswiss.ch" target="_blank">${t('sub_legal_link')}</a>
+        </div>
+      </div>
+      <div id="sub-result-${c_rs}"></div>
+    </div>
+
     <div class="sh-disc">⚠️ ${t('disclaimer')}</div>
   `;
   overlay.classList.add('on');sheet.classList.add('on');
@@ -1221,6 +1239,56 @@ document.getElementById('srch-page')?.addEventListener('input',function(){
 ═══════════════════════════════════════════════ */
 function handleHash(){
   if(location.hash.startsWith('#cct-')) setTimeout(()=>openSheet(location.hash.replace('#cct-','')),400);
+}
+
+/* ═══════════════════════════════════════════════
+   SUBSCRIBE — Alertes email CCT
+═══════════════════════════════════════════════ */
+
+async function doSubscribe(rs) {
+  const emailEl   = document.getElementById(`sub-email-${rs}`);
+  const companyEl = document.getElementById(`sub-company-${rs}`);
+  const formEl    = document.getElementById(`sub-form-${rs}`);
+  const resultEl  = document.getElementById(`sub-result-${rs}`);
+  const btn       = formEl?.querySelector('.sub-btn');
+
+  if(!emailEl || !resultEl) return;
+  const email   = emailEl.value.trim();
+  const company = companyEl?.value.trim() || '';
+
+  if(!email || !email.includes('@')) {
+    resultEl.innerHTML = `<div class="sub-error">${t('sub_err')}</div>`;
+    emailEl.focus();
+    return;
+  }
+
+  if(btn) btn.disabled = true;
+
+  try {
+    const resp = await fetch('/api/alerts/subscribe', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({
+        email,
+        company: company || null,
+        lang,
+        rs_numbers: [rs],
+      })
+    });
+    const data = await resp.json();
+
+    if(resp.ok) {
+      if(formEl) formEl.style.display = 'none';
+      resultEl.innerHTML = `<div class="sub-success">${t('sub_ok')}</div>`;
+      gaEvent('alerte_abonnement', { rs_number: rs, lang });
+    } else {
+      resultEl.innerHTML = `<div class="sub-error">${data.detail || t('sub_err')}</div>`;
+      if(btn) btn.disabled = false;
+    }
+  } catch(e) {
+    resultEl.innerHTML = `<div class="sub-error">${t('sub_err')}</div>`;
+    if(btn) btn.disabled = false;
+  }
 }
 
 /* ═══════════════════════════════════════════════

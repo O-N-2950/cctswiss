@@ -299,12 +299,31 @@ async def run_auto_update(database_url: str) -> dict:
                 if changed:
                     report["updated"] += 1
                     report["ccts"].append({"rs": rs, "name": meta["name"], "status": "updated"})
+                    report.setdefault("changed_rs", []).append(rs)
                 else:
                     report["ccts"].append({"rs": rs, "name": meta["name"], "status": "unchanged"})
 
             except Exception as e:
                 log.error(f"Error updating RS {rs}: {e}")
                 report["errors"] += 1
+
+        # ── Déclencher les alertes email si des CCTs ont changé ──────────
+        changed_rs = report.get("changed_rs", [])
+        if changed_rs:
+            try:
+                import httpx as _httpx
+                import os as _os
+                seed_secret = _os.environ.get("SEED_SECRET", "cctswiss-neo-seed-2025")
+                base_url = _os.environ.get("BASE_URL", "http://localhost:8000")
+                async with _httpx.AsyncClient(timeout=30) as _client:
+                    _resp = await _client.post(
+                        f"{base_url}/api/alerts/send",
+                        json={"changed_rs_numbers": changed_rs},
+                        headers={"X-Seed-Secret": seed_secret}
+                    )
+                log.info(f"✅ Alertes déclenchées pour {len(changed_rs)} CCTs → {_resp.status_code}")
+            except Exception as _e:
+                log.warning(f"Alertes email: {_e}")
 
         # Mettre à jour les salaires L-GAV
         try:

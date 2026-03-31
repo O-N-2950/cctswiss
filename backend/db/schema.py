@@ -48,6 +48,29 @@ TABLES = [
     )
     """,
 
+
+    # ── Abonnés alertes CCT ────────────────────────────────────────────
+    """
+    CREATE TABLE IF NOT EXISTS cct_subscribers (
+        id              UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+        email           TEXT NOT NULL,
+        company         TEXT,
+        lang            VARCHAR(5) DEFAULT 'fr',
+        rs_numbers      TEXT[] NOT NULL,        -- CCTs suivies
+        confirmed       BOOLEAN DEFAULT FALSE,
+        confirm_token   VARCHAR(64) UNIQUE,     -- token double opt-in
+        unsub_token     VARCHAR(64) UNIQUE,     -- token désinscription 1-clic
+        confirmed_at    TIMESTAMPTZ,
+        created_at      TIMESTAMPTZ DEFAULT NOW(),
+        updated_at      TIMESTAMPTZ DEFAULT NOW(),
+        last_alerted_at TIMESTAMPTZ,
+        alert_count     INTEGER DEFAULT 0
+    )
+    """,
+    """CREATE UNIQUE INDEX IF NOT EXISTS idx_sub_email ON cct_subscribers(lower(email))""",
+    """CREATE INDEX IF NOT EXISTS idx_sub_rs ON cct_subscribers USING gin(rs_numbers) WHERE confirmed=true""",
+    """CREATE INDEX IF NOT EXISTS idx_sub_confirm_token ON cct_subscribers(confirm_token) WHERE confirm_token IS NOT NULL""",
+    """CREATE INDEX IF NOT EXISTS idx_sub_unsub_token ON cct_subscribers(unsub_token) WHERE unsub_token IS NOT NULL""",
     # ── Changelog ──────────────────────────────────────────────────────
     """
     CREATE TABLE IF NOT EXISTS cct_changelog (
