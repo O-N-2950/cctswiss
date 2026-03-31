@@ -10,28 +10,29 @@ from fastapi.responses import JSONResponse
 
 from backend.db.schema import init_schema
 
-# ── Sentry (backend monitoring) ───────────────────────────────────────
 import sentry_sdk
-SENTRY_DSN = os.environ.get("SENTRY_DSN", "")
-if SENTRY_DSN:
-    sentry_sdk.init(
-        dsn=SENTRY_DSN,
-        environment=os.environ.get("RAILWAY_ENVIRONMENT", "production"),
-        release=os.environ.get("RAILWAY_GIT_COMMIT_SHA", "unknown")[:12],
-        traces_sample_rate=0.2,        # 20% des transactions profilées
-        profiles_sample_rate=0.1,
-        send_default_pii=False,        # RGPD: pas d'IP ni d'email
-        ignore_errors=[KeyboardInterrupt],
-    )
-    log.info(f"✅ Sentry actif: {SENTRY_DSN[:30]}…")
-else:
-    log.info("ℹ️  Sentry désactivé (SENTRY_DSN non défini)")
 from backend.routers import cct, search, health, changelog
 from backend.scrapers.auto_updater import start_scheduler, run_auto_update
 from backend.services.rate_limiter import rate_limit
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
 log = logging.getLogger("cctswiss")
+
+# ── Sentry (backend monitoring) ─────────────────────────────────────
+SENTRY_DSN = os.environ.get("SENTRY_DSN", "")
+if SENTRY_DSN:
+    sentry_sdk.init(
+        dsn=SENTRY_DSN,
+        environment=os.environ.get("RAILWAY_ENVIRONMENT", "production"),
+        release=os.environ.get("RAILWAY_GIT_COMMIT_SHA", "unknown")[:12],
+        traces_sample_rate=0.2,
+        profiles_sample_rate=0.1,
+        send_default_pii=False,
+        ignore_errors=[KeyboardInterrupt],
+    )
+    log.info(f"✅ Sentry actif: {SENTRY_DSN[:30]}…")
+else:
+    log.info("ℹ️  Sentry désactivé (SENTRY_DSN non défini)")
 
 DATABASE_URL  = os.environ.get("DATABASE_URL", "")
 FRONTEND_PATH = "/app/frontend"
