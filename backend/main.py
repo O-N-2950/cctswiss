@@ -9,6 +9,23 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.responses import JSONResponse
 
 from backend.db.schema import init_schema
+
+# ── Sentry (backend monitoring) ───────────────────────────────────────
+import sentry_sdk
+SENTRY_DSN = os.environ.get("SENTRY_DSN", "")
+if SENTRY_DSN:
+    sentry_sdk.init(
+        dsn=SENTRY_DSN,
+        environment=os.environ.get("RAILWAY_ENVIRONMENT", "production"),
+        release=os.environ.get("RAILWAY_GIT_COMMIT_SHA", "unknown")[:12],
+        traces_sample_rate=0.2,        # 20% des transactions profilées
+        profiles_sample_rate=0.1,
+        send_default_pii=False,        # RGPD: pas d'IP ni d'email
+        ignore_errors=[KeyboardInterrupt],
+    )
+    log.info(f"✅ Sentry actif: {SENTRY_DSN[:30]}…")
+else:
+    log.info("ℹ️  Sentry désactivé (SENTRY_DSN non défini)")
 from backend.routers import cct, search, health, changelog
 from backend.scrapers.auto_updater import start_scheduler, run_auto_update
 from backend.services.rate_limiter import rate_limit
@@ -131,6 +148,21 @@ app = FastAPI(
     redoc_url="/api/redoc",
 )
 
+# ── Sentry middleware (capture exceptions HTTP) ──────────────────────
+if SENTRY_DSN:
+    try:
+        from sentry_sdk.integrations.asgi import SentryAsgiMiddleware
+        app.add_middleware(SentryAsgiMiddleware)
+        log.info("✅ Sentry ASGI middleware actif")
+    except Exception as e:
+        log.warning(f"Sentry middleware: {e}")
+
+# ── Test route Sentry (à ne pas appeler en prod normalement) ─────────
+@app.get("/api/sentry-test", tags=["monitoring"], include_in_schema=False)
+async def sentry_test():
+    """Route de test Sentry — génère une exception capturée."""
+    raise ValueError("CCTswiss Sentry test — si tu vois ça dans Sentry, ça fonctionne ✅")
+
 # CORS — autoriser WIN WIN, SwissRH et Railway
 app.add_middleware(
     CORSMiddleware,
@@ -152,6 +184,14 @@ rl = Depends(rate_limit(100))
 
 # ── Routers ────────────────────────────────────────────────────────────
 app.include_router(health.router,       prefix="/health",         tags=["health"])
+
+# Config publique frontend (GA4 ID, feature flags)
+try:
+    from backend.routers.config import router as config_router
+    app.include_router(config_router, prefix="/api", tags=["config"])
+    log.info("✅ Config router (/api/config)")
+except Exception as e:
+    log.warning(f"Config: {e}")
 # Paritaire MUST be before cct.router (avoid /{rs_number} catching paritaire-rules)
 try:
     from backend.routers.paritaire import router as paritaire_router
@@ -163,6 +203,16 @@ except Exception as e:
 app.include_router(cct.router,          prefix="/api/cct",        tags=["cct"],        dependencies=[rl])
 app.include_router(search.router,       prefix="/api/search",     tags=["search"],     dependencies=[rl])
 app.include_router(changelog.router,    prefix="/api/changelog",  tags=["changelog"])
+
+# Google Search Console — vérification HTML file method
+# Mettre le code dans SEARCH_CONSOLE_VERIFICATION Railway var
+import os as _os
+_sc_token = _os.environ.get("SEARCH_CONSOLE_VERIFICATION", "")
+if _sc_token:
+    @app.get(f"/google{_sc_token}.html", tags=["monitoring"], include_in_schema=False)
+    async def search_console_verify():
+        from fastapi.responses import PlainTextResponse
+        return PlainTextResponse(f"google-site-verification: google{_sc_token}.html")
 
 # Compliance endpoints are in cct.py (before /{rs_number})
 
