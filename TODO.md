@@ -1,5 +1,5 @@
 # CCTswiss.ch — TODO
-*Dernière mise à jour: 2026-03-31*
+*Dernière mise à jour: 2026-04-19*
 
 ---
 
@@ -67,7 +67,38 @@ Les CCTs suivantes ont potentiellement des cotisations paritaires non encore doc
 
 ---
 
+## 🔵 INTÉGRATIONS GROUPE NEO (priorité haute)
+
+### WIN WIN Sérénité — Extraction taux CCT entreprises sous gestion
+- Les clients Entreprise sous gestion WIN WIN Sérénité sont soumis à une CCT
+- Le système doit vérifier le respect de la CCT (salaires min, IJM, LAA)
+- Extraire automatiquement les taux des contrats clients pour les injecter dans SwissRH
+- Endpoint existant : `POST /api/cct/check-compliance` (IJM/LAA/salaires)
+- Endpoint existant : `GET /api/cct/by-noga/{code}` (lookup CCT par activité)
+- **À faire** : webhook WIN WIN → CCTSwiss quand nouveau client entreprise
+
+### SwissRH — Automatisation fiches de salaire avec CCT
+- SwissRH doit vérifier automatiquement si le salaire respecte la CCT applicable
+- Les cotisations paritaires doivent être calculées automatiquement
+- Endpoint : `GET /api/cct/paritaire-rules?rs_number=` → taux à appliquer
+- **À faire** : endpoint `/api/cct/paritaire-calculate` (calcul complet par employé)
+- **À faire** : migration SwissRH vers nouveau endpoint (deadline dépassée)
+
+### Workflow automatique proposé
+1. Client entreprise s'inscrit chez WIN WIN → code NOGA saisi
+2. WIN WIN appelle `GET /api/cct/by-noga/{noga}` → identifie la CCT applicable
+3. SwissRH récupère `GET /api/cct/paritaire-rules?rs_number=` → applique les taux
+4. Chaque mois : `POST /api/cct/check-compliance` vérifie salaires + assurances
+5. Alertes automatiques si non-conformité
+
+---
+
 ## ✅ FAIT — Historique des sessions
+
+### Session 2026-04-19 (audit + corrections)
+- [x] Bug critique SQL corrigé dans `/api/admin/reset` (placeholders invalides)
+- [x] Documentation intégrations WIN WIN + SwissRH ajoutée
+- [x] Score : 73→80/100
 
 ### Session 2026-03-31 (paritaires)
 - [x] Migration `paritaire_contribution JSONB` dans schema.py

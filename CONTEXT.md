@@ -1,5 +1,5 @@
 # CCTswiss.ch — Context Projet (v3)
-*Dernière mise à jour: 2026-03-31 — commit 68e60bf*
+*Dernière mise à jour: 2026-04-19 — bug SQL reset corrigé, intégrations WIN WIN/SwissRH documentées*
 
 ---
 

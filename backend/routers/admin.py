@@ -132,9 +132,9 @@ async def reset_and_reseed(request: Request, x_seed_secret: str = Header(None)):
                         source_url, fedlex_uri, last_consolidation_date,
                         content_hash, legal_disclaimer_fr
                     ) VALUES (
-                        ,,,,,,,,,0,1,
-                        2,3,4,5,6,7,8,9,0,
-                        1,2,3,4,5
+                        $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,
+                        $12,$13,$14,$15,$16,$17,$18,$19,$20,
+                        $21,$22,$23,$24,$25
                     )
                 """,
                     cct["rs_number"], cct["name"],
